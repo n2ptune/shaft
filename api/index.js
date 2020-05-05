@@ -6,6 +6,8 @@ import authRouter from './routes/auth/index'
 const app = express()
 
 app.use(morgan('common'))
+app.use(express.json())
+app.use(express.urlencoded({ extended: false }))
 
 app.use('/auth', authRouter)
 
