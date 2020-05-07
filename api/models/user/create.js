@@ -1,10 +1,7 @@
 import bcrypt from 'bcrypt'
 import db from '../../db/connection'
-
-export const validatePassword = (password) => {
-  // not finished
-  return !!password
-}
+import ValidateError from '../../utils/errors/validate'
+import { validatePassword } from './validate-universal'
 
 /**
  * Insert information of user into user table
@@ -29,6 +26,6 @@ export const createUser = async (nickname, email, password, cb) => {
       cb(new Error(error.message), false)
     }
   } else {
-    cb(new Error('패스워드 검증 실패'), false)
+    cb(new ValidateError('패스워드 검증 실패'), false)
   }
 }

@@ -1,6 +1,7 @@
 import db from '../../db/connection'
 import { parseCount } from '../../utils/parse-count'
 import ValidateError from '../../utils/errors/validate'
+import { validateEmail, validateNickname } from './validate-universal'
 
 /**
  * Validate nickname and email from database
@@ -12,15 +13,9 @@ import ValidateError from '../../utils/errors/validate'
  * But If error is truthy value then result is always null
  */
 export const validateNicknameAndEmail = async (nickname, email, cb) => {
-  if (nickname.length < 5 || nickname.length > 12) {
+  if (!validateNickname(email)) {
     return cb(new ValidateError('닉네임 길이 검증 실패'))
-  }
-
-  const isCorrectEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i.test(
-    email
-  )
-
-  if (!isCorrectEmail) {
+  } else if (!validateEmail(email)) {
     return cb(new ValidateError('유효한 이메일이 아님'))
   }
 
