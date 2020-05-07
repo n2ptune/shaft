@@ -10,7 +10,7 @@
         v-model="user.nickname.val"
         type="nickname"
         name="nickname"
-        @change.prevent="validateNickname"
+        @input="validateNickname"
       />
       <label for="email" :class="user.email.isValidated ? '' : 'no-validate'"
         >이메일</label
@@ -19,7 +19,7 @@
         v-model="user.email.val"
         type="email"
         name="email"
-        @change.prevent="validateEmail"
+        @input="validateEmail"
       />
       <label
         for="password"
@@ -30,10 +30,13 @@
         v-model="user.password.val"
         type="password"
         name="password"
-        @change.prevent="validatePassword"
+        @input="validatePassword"
       />
       <input type="submit" value="회원가입" @click.prevent="signUp" />
     </form>
+    <div v-if="signUpError">
+      {{ signUpError }}
+    </div>
   </div>
 </template>
 
@@ -59,7 +62,8 @@ export default {
         val: '',
         isValidated: true
       }
-    }
+    },
+    signUpError: null
   }),
 
   computed: {
@@ -82,33 +86,25 @@ export default {
     validatePassword() {
       this.user.password.isValidated = validatePassword(this.user.password.val)
     },
-    signUp() {
+    async signUp() {
+      this.signUpError = null
       this.validateNickname()
       this.validateEmail()
       this.validatePassword()
-      console.log(this.allValidated)
-      // if (!this.user.nickname || !this.user.email || !this.user.password) {
-      // }
-      //   if (this.user.nickname && this.user.email && this.user.password) {
-      //     try {
-      //       const { data: signUpResult } = await this.$axios.post(
-      //         '/api/auth/sign-up',
-      //         {
-      //           data: {
-      //             nickname: this.user.nickname,
-      //             email: this.user.email,
-      //             password: this.user.password
-      //           }
-      //         }
-      //       )
-      //       console.log(signUpResult)
-      //     } catch (error) {
-      //       console.error(error)
-      //     }
-      //   } else {
-      //     // console.error('required form')
-      //   }
-      // }
+
+      if (!this.allValidated) return
+
+      try {
+        await this.$axios.post('/api/auth/sign-up', {
+          data: {
+            nickname: this.user.nickname.val,
+            email: this.user.email.val,
+            password: this.user.password.val
+          }
+        })
+      } catch (error) {
+        this.signUpError = error
+      }
     }
   }
 }

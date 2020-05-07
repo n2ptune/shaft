@@ -13,7 +13,7 @@ import { validateEmail, validateNickname } from './validate-universal'
  * But If error is truthy value then result is always null
  */
 export const validateNicknameAndEmail = async (nickname, email, cb) => {
-  if (!validateNickname(email)) {
+  if (validateNickname(email)) {
     return cb(new ValidateError('닉네임 길이 검증 실패'))
   } else if (!validateEmail(email)) {
     return cb(new ValidateError('유효한 이메일이 아님'))
