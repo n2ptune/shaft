@@ -1,14 +1,16 @@
 import { validateNicknameAndEmail } from '../../models/user/validate'
 import { createUser } from '../../models/user/create'
+import ValidateError from '../../utils/errors/validate'
 
 export default function(req, res) {
   const { nickname, email, password } = req.body.data
 
   validateNicknameAndEmail(nickname, email, (error, possible) => {
     if (error) {
-      if (error instanceof RangeError) {
+      if (error instanceof ValidateError) {
         res.status(400).send({
-          message: '닉네임 길이 불충분 (5글자 이상 12글자 이하)'
+          code: error.code,
+          message: error.message
         })
       } else {
         res.status(500).send({
