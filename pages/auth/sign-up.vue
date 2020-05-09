@@ -1,6 +1,9 @@
 <template>
-  <div class="sign-up">
-    <form ref="signUpForm" @submit.prevent="signUp">
+  <div class="max-w-sm w-full px-4 py-8 bg-white rounded-lg shadow mx-2">
+    <div class="text-2xl font-bold text-center mb-6">
+      REGISTER
+    </div>
+    <form ref="signUpForm" class="flex flex-col" @submit.prevent="signUp">
       <label
         for="nickname"
         :class="user.nickname.isValidated ? '' : 'no-validate'"
@@ -10,6 +13,7 @@
         v-model="user.nickname.val"
         type="nickname"
         name="nickname"
+        class="w-full"
         @input="validateNickname"
       />
       <label for="email" :class="user.email.isValidated ? '' : 'no-validate'"
@@ -48,6 +52,8 @@ import {
 } from '@/api/models/user/validate-universal'
 
 export default {
+  layout: 'auth',
+
   data: () => ({
     user: {
       nickname: {
@@ -110,12 +116,14 @@ export default {
 }
 </script>
 
-<style scoped>
-.sign-up input {
-  display: block;
-  margin: 0.2rem 0 1rem 0;
+<style lang="postcss" scoped>
+form label {
+  @apply text-gray-600;
 }
-label.no-validate {
-  color: red;
+form input:not([type='submit']) {
+  @apply px-2 py-1 my-2;
+}
+form input:not([type='submit']):focus {
+  @apply outline-none;
 }
 </style>
