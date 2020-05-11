@@ -52,7 +52,7 @@ import {
 } from '@/api/models/user/validate-universal'
 
 export default {
-  layout: 'auth',
+  layout: 'auth-layout',
 
   data: () => ({
     user: {

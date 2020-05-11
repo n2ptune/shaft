@@ -40,6 +40,7 @@ module.exports = {
    ** Nuxt.js modules
    */
   modules: [
+    'nuxt-client-init-module',
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     // Doc: https://github.com/nuxt-community/dotenv-module

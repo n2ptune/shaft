@@ -4,6 +4,12 @@
   </div>
 </template>
 
+<script>
+export default {
+  name: 'AuthLayout'
+}
+</script>
+
 <style lang="postcss" scoped>
 .wrapper {
   background: linear-gradient(360deg, #242424, #111114);
