@@ -10,8 +10,11 @@ export const validatePassword = (password) => {
   return /^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/.test(password)
 }
 
+/**
+ * @param {String} nickname
+ */
 export const validateNickname = (nickname) => {
-  return !(nickname.length < 5 || nickname.length > 12)
+  return nickname.length >= 5 && nickname.length <= 11
 }
 
 export const validateEmail = (email) => {

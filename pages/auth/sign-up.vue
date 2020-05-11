@@ -6,8 +6,11 @@
     <form ref="signUpForm" class="flex flex-col" @submit.prevent="signUp">
       <label
         for="nickname"
-        :class="user.nickname.isValidated ? '' : 'no-validate'"
-        >닉네임</label
+        :class="user.nickname.isValidated === false ? 'no-validate' : ''"
+        >닉네임*
+        <span v-if="user.nickname.isValidated === false"
+          >5자 이상 11자 이하</span
+        ></label
       >
       <input
         v-model="user.nickname.val"
@@ -16,8 +19,13 @@
         class="w-full"
         @input="validateNickname"
       />
-      <label for="email" :class="user.email.isValidated ? '' : 'no-validate'"
-        >이메일</label
+      <label
+        for="email"
+        :class="user.email.isValidated === false ? 'no-validate' : ''"
+        >이메일*
+        <span v-if="user.email.isValidated === false"
+          >유효한 이메일이 아닙니다.</span
+        ></label
       >
       <input
         v-model="user.email.val"
@@ -27,8 +35,11 @@
       />
       <label
         for="password"
-        :class="user.password.isValidated ? '' : 'no-validate'"
-        >비밀번호</label
+        :class="user.password.isValidated === false ? 'no-validate' : ''"
+        >비밀번호*
+        <span v-if="user.password.isValidated === false"
+          >8자 이상 특수 문자 1개를 포함해야 합니다.</span
+        ></label
       >
       <input
         v-model="user.password.val"
@@ -36,10 +47,15 @@
         name="password"
         @input="validatePassword"
       />
-      <input type="submit" value="회원가입" @click.prevent="signUp" />
+      <input
+        type="submit"
+        :value="waiting ? '회원가입 중...' : '회원가입'"
+        :disabled="waiting"
+        @click.prevent="signUp"
+      />
     </form>
-    <div v-if="signUpError">
-      {{ signUpError }}
+    <div v-if="signUpError" class="mt-6 text-center text-red-500 font-bold">
+      무언가 잘못되었어요. 다시 시도해보세요.
     </div>
   </div>
 </template>
@@ -58,18 +74,19 @@ export default {
     user: {
       nickname: {
         val: '',
-        isValidated: true
+        isValidated: null
       },
       email: {
         val: '',
-        isValidated: true
+        isValidated: null
       },
       password: {
         val: '',
-        isValidated: true
+        isValidated: null
       }
     },
-    signUpError: null
+    signUpError: null,
+    waiting: null
   }),
 
   computed: {
@@ -94,11 +111,10 @@ export default {
     },
     async signUp() {
       this.signUpError = null
-      this.validateNickname()
-      this.validateEmail()
-      this.validatePassword()
 
       if (!this.allValidated) return
+
+      this.waiting = true
 
       try {
         await this.$axios.post('/api/auth/sign-up', {
@@ -108,8 +124,11 @@ export default {
             password: this.user.password.val
           }
         })
+        this.$router.push('/auth/sign-in')
       } catch (error) {
         this.signUpError = error
+      } finally {
+        this.waiting = false
       }
     }
   }
@@ -118,12 +137,24 @@ export default {
 
 <style lang="postcss" scoped>
 form label {
-  @apply text-gray-600;
+  @apply text-gray-600 font-bold;
+}
+form label.no-validate {
+  @apply text-red-500 font-bold;
+}
+form input[type='submit'] {
+  @apply mt-4 py-4 bg-gray-700 text-white rounded-lg cursor-pointer;
+}
+form input[type='submit']:hover {
+  @apply bg-gray-800;
+}
+form input[type='submit']:focus {
+  @apply outline-none;
 }
 form input:not([type='submit']) {
-  @apply px-2 py-1 my-2;
+  @apply p-2 my-2 bg-gray-300 rounded;
 }
 form input:not([type='submit']):focus {
-  @apply outline-none;
+  @apply outline-none bg-gray-400;
 }
 </style>
