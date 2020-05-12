@@ -1,8 +1,8 @@
 <template>
-  <div class="max-w-sm w-full px-4 py-8 bg-white rounded-lg shadow mx-2">
-    <div class="text-2xl font-bold text-center mb-6">
+  <AuthForm>
+    <template slot="header">
       REGISTER
-    </div>
+    </template>
     <form ref="signUpForm" class="flex flex-col" @submit.prevent="signUp">
       <label
         for="nickname"
@@ -16,7 +16,6 @@
         v-model="user.nickname.val"
         type="nickname"
         name="nickname"
-        class="w-full"
         @input="validateNickname"
       />
       <label
@@ -50,14 +49,14 @@
       <input
         type="submit"
         :value="waiting ? '회원가입 중...' : '회원가입'"
-        :disabled="waiting"
+        :disabled="waiting || !allValidated"
         @click.prevent="signUp"
       />
     </form>
     <div v-if="signUpError" class="mt-6 text-center text-red-500 font-bold">
       무언가 잘못되었어요. 다시 시도해보세요.
     </div>
-  </div>
+  </AuthForm>
 </template>
 
 <script>
@@ -66,9 +65,14 @@ import {
   validateEmail,
   validatePassword
 } from '@/api/models/user/validate-universal'
+import AuthForm from '@/components/auth/AuthForm'
 
 export default {
   layout: 'auth-layout',
+
+  components: {
+    AuthForm
+  },
 
   data: () => ({
     user: {
@@ -136,7 +140,7 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
-form label {
+/* form label {
   @apply text-gray-600 font-bold;
 }
 form label.no-validate {
@@ -151,10 +155,13 @@ form input[type='submit']:hover {
 form input[type='submit']:focus {
   @apply outline-none;
 }
+form input[type='submit']:disabled {
+  @apply bg-gray-500;
+}
 form input:not([type='submit']) {
   @apply p-2 my-2 bg-gray-300 rounded;
 }
 form input:not([type='submit']):focus {
   @apply outline-none bg-gray-400;
-}
+} */
 </style>
