@@ -29,4 +29,4 @@ async function test(email) {
   }
 }
 
-test('n2ptune@outlook.com')
+test('n2ptune@outlook.com2')

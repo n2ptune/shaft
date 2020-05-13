@@ -32,6 +32,7 @@
     "eslint-config-prettier": "^6.10.0",
     "eslint-plugin-nuxt": ">=0.4.2",
     "eslint-plugin-prettier": "^3.1.2",
+    "esm": "^3.2.25",
     "nodemon": "^1.18.9",
     "prettier": "^1.19.1"
   }
