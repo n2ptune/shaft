@@ -19,14 +19,3 @@ export const findByEmail = async (email) => {
     return error
   }
 }
-
-async function test(email) {
-  try {
-    const result = await findByEmail(email)
-    console.log(result)
-  } catch (error) {
-    console.error(error)
-  }
-}
-
-test('n2ptune@outlook.com2')

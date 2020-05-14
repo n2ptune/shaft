@@ -59,7 +59,8 @@ export default {
         val: '',
         isValidated: false
       }
-    }
+    },
+    isError: false
   }),
 
   computed: {
@@ -75,10 +76,23 @@ export default {
     validatePassword() {
       this.user.password.isValidated = validatePassword(this.user.password.val)
     },
-    signIn() {
+    async signIn() {
       if (!this.validated) return
 
-      console.log('passed')
+      this.isErorr = false
+
+      try {
+        const { data } = await this.$axios.post('/api/auth/login', {
+          data: {
+            email: this.user.email.val,
+            password: this.user.password.val
+          }
+        })
+
+        console.log(data)
+      } catch (error) {
+        this.isError = true
+      }
     }
   }
 }
