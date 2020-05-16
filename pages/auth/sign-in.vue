@@ -89,7 +89,7 @@ export default {
           }
         })
 
-        console.log(data)
+        await this.$store.dispatch('auth/setToken', data.accessToken)
       } catch (error) {
         this.isError = true
       }

@@ -26,4 +26,10 @@ export const mutations = {
   }
 }
 
-export const actions = {}
+export const actions = {
+  setToken({ dispatch }, token) {
+    localStorage.setItem('at', token)
+
+    dispatch('getUserDataWithAccessToken', null, { root: true })
+  }
+}
