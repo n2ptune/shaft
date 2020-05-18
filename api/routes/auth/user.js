@@ -1,19 +1,16 @@
 import { decodeToken } from '../../models/user/token'
 
 export default function(req, res) {
-  // const { token } = req.body.data
-  let token = req.headers.authorization
+  try {
+    if (!req.headers.authorization) throw new Error('Not Found AccessToken')
 
-  if (!token) {
-    return res.status(401).send({ message: 'Required Access Token' })
-  }
+    const token = req.headers.authorization.replace('Bearer ', '')
+    const decoded = decodeToken(token)
 
-  token = token.split('Bearer ')[1]
-  const decoded = decodeToken(token)
+    if (!decoded) throw new Error('Invalid Token')
 
-  if (decoded) {
-    res.status(200).send(decoded)
-  } else {
-    res.status(500).send({ message: 'error' })
+    return res.status(200).send(decoded)
+  } catch (error) {
+    return res.status(400).send({ message: error.message })
   }
 }
