@@ -6,7 +6,6 @@ import user from './user'
 const router = Router()
 
 router.post('/login', signIn)
-router.post('/logout', (req, res, next) => {})
 router.post('/sign-up', signUp)
 router.post('/user', user)
 
