@@ -6,10 +6,15 @@ export const actions = {
   },
   async getUserDataWithAccessToken({ commit }) {
     const token = localStorage.getItem('at')
-    const { data: userData } = await axios.post('/api/auth/user', {
-      data: { token }
-    })
 
-    commit('auth/setUser', userData)
+    if (token) {
+      const { data: userData } = await axios.post('/api/auth/user', null, {
+        headers: {
+          authorization: 'Bearer ' + token
+        }
+      })
+
+      commit('auth/setUser', userData)
+    }
   }
 }

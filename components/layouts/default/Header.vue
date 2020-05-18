@@ -4,14 +4,17 @@
       <div class="font-bold text-xl">Header</div>
       <div class="mx-6">
         <ClientOnly>
-          <div v-if="isAuth && user">
+          <div v-if="isAuth && user" class="auth">
             <img
               :src="user.avatar"
               :style="{ width: '40px' }"
               class="rounded-full"
             />
+            <div class="">
+              <button @click="logout">!!!</button>
+            </div>
           </div>
-          <div v-else class="not-auth">
+          <div v-else class="auth">
             <nuxt-link to="/auth/sign-in">
               SIGN IN
             </nuxt-link>
@@ -26,7 +29,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   computed: {
@@ -34,12 +37,21 @@ export default {
       isAuth: 'auth/getIsLogin',
       user: 'auth/getUser'
     })
+  },
+
+  methods: {
+    ...mapActions({
+      logout: 'auth/logout'
+    })
   }
 }
 </script>
 
 <style lang="postcss" scoped>
-.not-auth > a {
-  @apply mx-1;
+.auth {
+  @apply flex items-center;
+}
+.auth > * {
+  @apply mx-2;
 }
 </style>

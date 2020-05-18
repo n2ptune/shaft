@@ -22,6 +22,9 @@ export const mutations = {
     if (user) {
       state.user = user
       state.isLogin = true
+    } else if (user === null) {
+      state.user = null
+      state.isLogin = false
     }
   }
 }
@@ -31,5 +34,9 @@ export const actions = {
     localStorage.setItem('at', token)
 
     dispatch('getUserDataWithAccessToken', null, { root: true })
+  },
+  logout({ commit }) {
+    localStorage.removeItem('at')
+    commit('setUser', null)
   }
 }

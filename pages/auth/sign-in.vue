@@ -90,6 +90,7 @@ export default {
         })
 
         await this.$store.dispatch('auth/setToken', data.accessToken)
+        this.$router.push('/')
       } catch (error) {
         this.isError = true
       }
