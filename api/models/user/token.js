@@ -43,9 +43,9 @@ export const signRefreshToken = (userData, callback) => {
 }
 
 export const verifyToken = (token) => {
-  return !!verify(token, process.env.PRIVATE_KEY)
+  return verify(token, process.env.PRIVATE_KEY)
 }
 
-export const decodeToken = (token) => {
-  return decode(token)
-}
+// export const decodeToken = (token) => {
+//   return decode(token)
+// }
