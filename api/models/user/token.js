@@ -3,6 +3,10 @@ import { decode, sign, verify } from 'jsonwebtoken'
 import { updateRefreshToken } from './update'
 
 export const signAccessTokenWithRT = (refreshToken) => {
+  if (typeof refreshToken === 'object') {
+    refreshToken = refreshToken.token
+  }
+
   if (verifyToken(refreshToken)) {
     const decoded = decode(refreshToken)
     const userData = {
@@ -14,7 +18,7 @@ export const signAccessTokenWithRT = (refreshToken) => {
     }
 
     const accessToken = sign(userData, process.env.PRIVATE_KEY, {
-      expiresIn: '1h',
+      expiresIn: '30s',
       issuer: '.shaft.kr'
     })
 
@@ -46,6 +50,6 @@ export const verifyToken = (token) => {
   return verify(token, process.env.PRIVATE_KEY)
 }
 
-// export const decodeToken = (token) => {
-//   return decode(token)
-// }
+export const decodeToken = (token) => {
+  return decode(token)
+}
