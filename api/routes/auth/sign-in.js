@@ -27,7 +27,8 @@ export default async function(req, res) {
     const userData = {
       email: user.email,
       id: user.id,
-      nickname: user.nickname
+      nickname: user.nickname,
+      avatar: user.avatar
     }
 
     signRefreshToken(userData, (err, token) => {

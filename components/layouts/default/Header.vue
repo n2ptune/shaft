@@ -5,11 +5,13 @@
       <div class="mx-6">
         <ClientOnly>
           <div v-if="isAuth && user" class="auth">
-            <img
-              :src="user.avatar"
-              :style="{ width: '40px' }"
-              class="rounded-full"
-            />
+            <nuxt-link :to="`/users/${user.id}`">
+              <img
+                :src="user.avatar"
+                :style="{ width: '40px' }"
+                class="rounded-full"
+              />
+            </nuxt-link>
             <div class="">
               <button @click="logout">!!!</button>
             </div>

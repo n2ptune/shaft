@@ -1,5 +1,5 @@
 <template>
-  <main class="flex my-12 justify-center">
+  <main>
     <div>Main</div>
   </main>
 </template>

@@ -13,8 +13,9 @@ export const signAccessTokenWithRT = (refreshToken) => {
       email: decoded.email,
       id: decoded.id,
       nickname: decoded.nickname,
-      // test!!!
-      avatar: `https://api.adorable.io/avatars/100/${decoded.nickname}@${decoded.nickname}`
+      avatar:
+        decoded.avatar ||
+        'https://www.yourfirstpatient.com/assets/default-user-avatar-thumbnail-117c4e02d0bee9a424842ebb2a903cf71468999f79ce30bad99c07f100764064.png'
     }
 
     const accessToken = sign(userData, process.env.PRIVATE_KEY, {
