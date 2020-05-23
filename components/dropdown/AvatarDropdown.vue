@@ -1,18 +1,40 @@
 <template>
   <transition name="fade" appear>
     <div class="dropdown">
-      <ul class="dropdown-list">
-        <li class="dropdown-item">
-          새 1
-        </li>
+      <ul class="dropdown-list text-sm">
+        <nuxt-link to="/topics/new" class="dropdown-item">
+          <li>
+            새 토픽 작성하기
+          </li>
+        </nuxt-link>
+        <nuxt-link :to="`/users/${user.id}`" class="dropdown-item">
+          <li class="no-line">
+            내 정보 보기
+          </li>
+        </nuxt-link>
+        <a
+          href=""
+          class="dropdown-item"
+          @click.prevent="$store.dispatch('auth/logout')"
+        >
+          <li>
+            로그아웃
+          </li>
+        </a>
       </ul>
     </div>
   </transition>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
-  created() {}
+  computed: {
+    ...mapGetters({
+      user: 'auth/getUser'
+    })
+  }
 }
 </script>
 
@@ -32,6 +54,15 @@ export default {
 .dropdown {
   top: 45px;
   transform: translateX(-30%);
-  @apply absolute max-w-xl bg-white rounded p-3 shadow border border-gray-300;
+  @apply absolute max-w-xl bg-white rounded shadow border border-gray-300;
+}
+.dropdown-list a:hover {
+  @apply font-bold;
+}
+.dropdown-item li {
+  @apply px-3 py-2;
+}
+.dropdown-item:not(:last-child) li:not(.no-line) {
+  @apply border-b border-gray-300;
 }
 </style>
