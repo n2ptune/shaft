@@ -38,5 +38,6 @@ export const actions = {
   logout({ commit }) {
     localStorage.removeItem('at')
     commit('setUser', null)
+    this.$router.push('/')
   }
 }

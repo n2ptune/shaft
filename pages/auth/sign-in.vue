@@ -36,6 +36,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import {
   validateEmail,
   validatePassword
@@ -66,6 +67,17 @@ export default {
   computed: {
     validated() {
       return this.user.email.isValidated && this.user.password.isValidated
+    },
+    ...mapGetters({
+      isLogin: 'auth/getIsLogin'
+    })
+  },
+
+  watch: {
+    isLogin(c, p) {
+      if (c) {
+        this.$router.go(-1)
+      }
     }
   },
 

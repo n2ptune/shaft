@@ -23,11 +23,18 @@ module.exports = {
   /*
    ** Global CSS
    */
-  css: [],
+  css: [
+    'quill/dist/quill.core.css',
+    'quill/dist/quill.snow.css',
+    'quill/dist/quill.bubble.css'
+  ],
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [{ src: '~/plugins/axios', mode: 'client' }],
+  plugins: [
+    { src: '~/plugins/axios', mode: 'client' },
+    { src: '~/plugins/editor', mode: 'client' }
+  ],
   /*
    ** Nuxt.js dev-modules
    */
