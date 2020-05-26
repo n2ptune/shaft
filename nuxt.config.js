@@ -23,11 +23,7 @@ module.exports = {
   /*
    ** Global CSS
    */
-  css: [
-    'quill/dist/quill.core.css',
-    'quill/dist/quill.snow.css',
-    'quill/dist/quill.bubble.css'
-  ],
+  css: [],
   /*
    ** Plugins to load before mounting the App
    */
