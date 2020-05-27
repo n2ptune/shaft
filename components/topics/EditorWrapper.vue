@@ -1,28 +1,45 @@
 <template>
   <div class="wrapper mx-4 lg:mx-6">
-    <div class="flex head mb-6">
-      <div class="block p-2 lg:p-6">
+    <Block title="토픽 제목">
+      <input
+        v-model="topic.title"
+        type="text"
+        placeholder="토픽 제목을 입력하세요."
+        class="input-reset"
+      />
+    </Block>
+    <div class="flex flex-col lg:flex-row head mb-6">
+      <Block title="카테고리" class="separate">
         1 block
-      </div>
-      <div class="block p-2 lg:p-6">
+      </Block>
+      <Block title="서브 카테고리" class="separate">
         2 block
-      </div>
+      </Block>
     </div>
-    <div class="block p-2 lg:p-6">
+    <Block title="토픽 내용">
       <quill-editor
         ref="myQuillEditor"
-        v-model="content"
+        v-model="topic.content"
         :options="editorOption"
         class="w-full"
       />
-    </div>
+    </Block>
   </div>
 </template>
 
 <script>
+import Block from './EditorBlock'
+
 export default {
+  components: {
+    Block
+  },
+
   data: () => ({
-    content: '',
+    topic: {
+      title: '',
+      content: ''
+    },
     editorOption: {
       theme: 'bubble',
       placeholder: '토픽 내용을 작성하세요!'
@@ -61,20 +78,24 @@ export default {
 @import 'quill/dist/quill.core.css';
 @import 'quill/dist/quill.bubble.css';
 
+.input-reset {
+  @apply w-full py-2;
+}
+
+.input-reset:focus {
+  @apply outline-none border-b-2 border-orange-300;
+}
+
 .wrapper {
   width: 56rem;
   max-width: 56rem;
 }
 
-.block {
-  @apply border border-gray-300 rounded-lg;
-}
-
-.head > .block {
+.head .separate {
   flex-basis: 50%;
 }
 
-.head > .block:first-child {
+.head .separate:first-child {
   @apply mr-4;
 }
 
