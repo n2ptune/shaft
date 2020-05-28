@@ -1,0 +1,6 @@
+.ql-toolbar.ql-snow {
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  @apply border-b border-gray-300 mb-2;
+}

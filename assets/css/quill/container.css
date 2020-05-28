@@ -1,0 +1,9 @@
+.ql-editor {
+  min-height: 500px;
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.ql-container.ql-snow {
+  @apply border-none;
+}

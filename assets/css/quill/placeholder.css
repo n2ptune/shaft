@@ -1,0 +1,4 @@
+.ql-editor.ql-blank::before {
+  font-style: normal !important;
+  @apply text-gray-500 text-lg font-bold !important;
+}
