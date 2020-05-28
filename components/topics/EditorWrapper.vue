@@ -8,12 +8,12 @@
         class="input-reset"
       />
     </Block>
-    <div class="flex flex-col lg:flex-row head mb-6">
-      <Block title="카테고리" class="separate">
-        1 block
+    <div class="flex flex-col lg:flex-row head mb-12">
+      <Block title="카테고리(단일 지정)" class="separate">
+        <CategoryList :category="category.origin" />
       </Block>
-      <Block title="서브 카테고리" class="separate">
-        2 block
+      <Block title="서브 카테고리(복수 지정)" class="separate">
+        <CategoryList :category="category.sub" :multiselect="true" />
       </Block>
     </div>
     <Block title="토픽 내용">
@@ -29,10 +29,12 @@
 
 <script>
 import Block from './EditorBlock'
+import CategoryList from './CategoryList'
 
 export default {
   components: {
-    Block
+    Block,
+    CategoryList
   },
 
   data: () => ({
@@ -43,6 +45,10 @@ export default {
     editorOption: {
       theme: 'bubble',
       placeholder: '토픽 내용을 작성하세요!'
+    },
+    category: {
+      origin: null,
+      sub: null
     }
   }),
 
@@ -52,8 +58,22 @@ export default {
     }
   },
 
+  async created() {
+    try {
+      const { data } = await this.$axios.get('/api/topics/category')
+
+      data.category.forEach((item) => (item.selected = false))
+      data.sub.forEach((item) => (item.selected = false))
+
+      this.category.origin = data.category
+      this.category.sub = data.sub
+    } catch (error) {
+      // console.error(error)
+    }
+  },
+
   mounted() {
-    console.log('this is current quill instance object', this.editor)
+    // console.log('this is current quill instance object', this.editor)
   }
 
   // methods: {

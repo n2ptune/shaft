@@ -27,7 +27,7 @@ export default {
 }
 
 .block {
-  @apply border border-gray-300 rounded-lg p-2;
+  @apply border border-gray-300 rounded-lg p-2 h-full;
 }
 
 .block-title {
