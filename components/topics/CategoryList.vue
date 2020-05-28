@@ -37,7 +37,19 @@ export default {
   methods: {
     selectItem(item, $event) {
       if (this.multiselect) {
-        // @TODO
+        if (item.selected) {
+          item.selected = false
+          return
+        }
+
+        const selectedLength = this.category.filter((item) => item.selected)
+          .length
+
+        if (selectedLength >= 5) {
+          return
+        }
+
+        item.selected = true
       } else {
         this.category
           .filter((item) => item.selected)
@@ -57,6 +69,12 @@ export default {
 }
 .category-item:hover,
 .category-item.select {
-  @apply bg-black text-white border-black;
+  @apply text-white;
+}
+.category-item:hover {
+  @apply bg-orange-400 border-transparent;
+}
+.category-item.select {
+  @apply bg-orange-500 border-transparent;
 }
 </style>
