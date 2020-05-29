@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper mx-4 lg:mx-6">
+  <div class="wrapper-editor mx-4 lg:mx-6">
     <Block title="토픽 제목">
       <input
         v-model="topic.title"
@@ -23,6 +23,18 @@
         :options="editorOption"
         class="w-full"
       />
+      <template slot="footer">
+        <div class="flex justify-end mt-4">
+          <div class="area-button">
+            <button
+              :disabled="writing"
+              class="font-black text-white px-4 py-3 bg-orange-500 rounded-lg transition-colors duration-200 hover:bg-orange-700"
+            >
+              토픽 작성하기
+            </button>
+          </div>
+        </div>
+      </template>
     </Block>
   </div>
 </template>
@@ -60,7 +72,8 @@ export default {
     category: {
       origin: null,
       sub: null
-    }
+    },
+    writing: false
   }),
 
   computed: {
@@ -70,6 +83,8 @@ export default {
   },
 
   async created() {
+    this.initialize()
+
     try {
       const { data } = await this.$axios.get('/api/topics/category')
 
@@ -78,30 +93,20 @@ export default {
 
       this.category.origin = data.category
       this.category.sub = data.sub
-    } catch (error) {
-      // console.error(error)
-    }
+    } catch (error) {}
   },
 
-  mounted() {
-    // console.log('this is current quill instance object', this.editor)
-  }
+  beforeDestroy() {
+    this.initialize()
+  },
 
-  // methods: {
-  //   onEditorBlur(quill) {
-  //     console.log('editor blur!', quill)
-  //   },
-  //   onEditorFocus(quill) {
-  //     console.log('editor focus!', quill)
-  //   },
-  //   onEditorReady(quill) {
-  //     console.log('editor ready!', quill)
-  //   },
-  //   onEditorChange({ quill, html, text }) {
-  //     console.log('editor change!', quill, html, text)
-  //     this.content = html
-  //   }
-  // }
+  methods: {
+    initialize() {
+      this.topic.title = ''
+      this.topic.content = ''
+      this.writing = false
+    }
+  }
 }
 </script>
 
@@ -118,7 +123,7 @@ export default {
   @apply outline-none border-b-2 border-orange-300;
 }
 
-.wrapper {
+.wrapper-editor {
   width: 56rem;
   max-width: 56rem;
 }

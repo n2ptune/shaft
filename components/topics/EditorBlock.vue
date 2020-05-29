@@ -6,6 +6,7 @@
     <div class="block">
       <slot />
     </div>
+    <slot name="footer" />
   </div>
 </template>
 
