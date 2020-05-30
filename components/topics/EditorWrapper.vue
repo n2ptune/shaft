@@ -17,11 +17,17 @@
       </Block>
     </div>
     <Block title="토픽 내용" class="editor-wrapper">
-      <quill-editor
+      <!-- <quill-editor
         ref="myQuillEditor"
         v-model="topic.content"
         :options="editorOption"
         class="w-full"
+      /> -->
+      <QuillWrapper
+        :options="editorOption"
+        ref-bind="myQuillEditor"
+        class="w-full"
+        @ready="onEditorReady"
       />
       <template slot="footer">
         <div class="flex justify-end mt-4">
@@ -42,11 +48,13 @@
 <script>
 import Block from './EditorBlock'
 import CategoryList from './CategoryList'
+import QuillWrapper from './QuillWrapper'
 
 export default {
   components: {
     Block,
-    CategoryList
+    CategoryList,
+    QuillWrapper
   },
 
   data: () => ({
@@ -54,6 +62,7 @@ export default {
       title: '',
       content: ''
     },
+    editor: null,
     editorOption: {
       theme: 'snow',
       placeholder: '토픽 내용을 작성하세요!',
@@ -75,12 +84,6 @@ export default {
     },
     writing: false
   }),
-
-  computed: {
-    editor() {
-      return this.$refs.myQuillEditor ? this.$refs.myQuillEditor.quill : null
-    }
-  },
 
   async created() {
     this.initialize()
@@ -105,16 +108,16 @@ export default {
       this.topic.title = ''
       this.topic.content = ''
       this.writing = false
+    },
+    onEditorReady(editor) {
+      this.editor = editor
+      console.log(this.editor)
     }
   }
 }
 </script>
 
 <style lang="postcss">
-@import 'quill/dist/quill.core.css';
-@import 'quill/dist/quill.snow.css';
-@import '@/assets/css/quill/custom.css';
-
 .input-reset {
   @apply w-full py-2;
 }
