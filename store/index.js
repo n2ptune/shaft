@@ -29,7 +29,7 @@ export const actions = {
         }
       )
 
-      commit('auth/setUser', userData)
+      commit('auth/setUser', { userData, token })
     }
   }
 }

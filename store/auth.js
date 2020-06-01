@@ -1,6 +1,7 @@
 export const state = () => ({
   isLogin: null,
-  user: null
+  user: null,
+  token: null
 })
 
 export const getters = {
@@ -14,17 +15,27 @@ export const getters = {
     } else {
       return null
     }
+  },
+
+  getUserToken(state) {
+    if (state.token) {
+      return state.token
+    } else {
+      return null
+    }
   }
 }
 
 export const mutations = {
-  setUser(state, user) {
-    if (user) {
-      state.user = user
+  setUser(state, { userData, token }) {
+    if (userData) {
+      state.user = userData
       state.isLogin = true
-    } else if (user === null) {
+      state.token = token
+    } else if (!userData || !token) {
       state.user = null
       state.isLogin = false
+      state.token = null
     }
   }
 }

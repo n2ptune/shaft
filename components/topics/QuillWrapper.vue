@@ -33,7 +33,7 @@ export default {
       this.$emit('ready', this.editor)
     },
     onEditorChange({ html, text }) {
-      console.log(html, text)
+      this.$emit('input', { html, text })
     }
   }
 }

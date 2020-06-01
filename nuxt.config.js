@@ -29,7 +29,8 @@ module.exports = {
    */
   plugins: [
     { src: '~/plugins/axios', mode: 'client' },
-    { src: '~/plugins/editor', mode: 'client' }
+    { src: '~/plugins/editor', mode: 'client' },
+    { src: '~/plugins/date', mode: 'client' }
   ],
   /*
    ** Nuxt.js dev-modules

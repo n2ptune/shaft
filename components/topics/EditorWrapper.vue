@@ -17,17 +17,12 @@
       </Block>
     </div>
     <Block title="토픽 내용" class="editor-wrapper">
-      <!-- <quill-editor
-        ref="myQuillEditor"
-        v-model="topic.content"
-        :options="editorOption"
-        class="w-full"
-      /> -->
       <QuillWrapper
         :options="editorOption"
         ref-bind="myQuillEditor"
         class="w-full"
         @ready="onEditorReady"
+        @input="onEditorInput"
       />
       <template slot="footer">
         <div class="flex justify-end mt-4">
@@ -35,6 +30,7 @@
             <button
               :disabled="writing"
               class="font-black text-white px-4 py-3 bg-orange-500 rounded-lg transition-colors duration-200 hover:bg-orange-700"
+              @click="submitTopic"
             >
               토픽 작성하기
             </button>
@@ -46,6 +42,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import Block from './EditorBlock'
 import CategoryList from './CategoryList'
 import QuillWrapper from './QuillWrapper'
@@ -85,6 +82,12 @@ export default {
     writing: false
   }),
 
+  computed: {
+    ...mapGetters({
+      token: 'auth/getUserToken'
+    })
+  },
+
   async created() {
     this.initialize()
 
@@ -111,7 +114,58 @@ export default {
     },
     onEditorReady(editor) {
       this.editor = editor
-      console.log(this.editor)
+    },
+    onEditorInput({ html }) {
+      this.topic.content = html
+    },
+    validateTopic() {
+      const conditions = [
+        !!this.topic.content,
+        !!this.topic.title,
+        this.topic.title.length > 5
+      ]
+
+      if (conditions.includes(false)) {
+        return false
+      }
+
+      return true
+    },
+    async submitTopic() {
+      if (!this.validateTopic()) {
+        return
+      }
+
+      // 선택된 카테고리만 추출
+      const extractCategory = (o, s) => {
+        const origin = o.filter((item) => item.selected)
+        const sub = s.filter((item) => item.selected)
+
+        return {
+          origin,
+          sub
+        }
+      }
+
+      const categories = extractCategory(
+        this.category.origin,
+        this.category.sub
+      )
+
+      const topic = {
+        title: this.topic.title,
+        content: this.topic.content,
+        categories,
+        date: this.$convertDate(new Date())
+      }
+
+      try {
+        await this.$axios.post('/api/topics/new', topic, {
+          headers: {
+            authorization: `Bearer ${this.token}`
+          }
+        })
+      } catch (error) {}
     }
   }
 }
