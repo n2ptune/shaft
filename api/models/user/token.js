@@ -1,4 +1,3 @@
-// eslint-disable-next-line
 import { decode, sign, verify } from 'jsonwebtoken'
 import { updateRefreshToken } from './update'
 

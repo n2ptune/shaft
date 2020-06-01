@@ -29,10 +29,10 @@
           <div class="area-button">
             <button
               :disabled="writing"
-              class="font-black text-white px-4 py-3 bg-orange-500 rounded-lg transition-colors duration-200 hover:bg-orange-700"
+              class="font-black text-white px-4 py-3 bg-orange-500 rounded-lg transition-colors duration-200 hover:bg-orange-700 disabled:bg-gray-700"
               @click="submitTopic"
             >
-              토픽 작성하기
+              {{ waitingText }}
             </button>
           </div>
         </div>
@@ -85,7 +85,10 @@ export default {
   computed: {
     ...mapGetters({
       token: 'auth/getUserToken'
-    })
+    }),
+    waitingText() {
+      return this.writing ? '토픽 작성중...' : '토픽 작성하기'
+    }
   },
 
   async created() {
@@ -136,6 +139,9 @@ export default {
         return
       }
 
+      // 버튼 사용 불가 상태로 변경
+      this.writing = true
+
       // 선택된 카테고리만 추출
       const extractCategory = (o, s) => {
         const origin = o.filter((item) => item.selected)
@@ -165,7 +171,12 @@ export default {
             authorization: `Bearer ${this.token}`
           }
         })
-      } catch (error) {}
+      } catch (error) {
+        console.error(error)
+      } finally {
+        // 버튼 상태 변경
+        this.writing = false
+      }
     }
   }
 }
@@ -191,5 +202,9 @@ export default {
 
 .head .separate:first-child {
   @apply mr-4;
+}
+
+.area-button > button:disabled {
+  @apply bg-orange-800;
 }
 </style>
