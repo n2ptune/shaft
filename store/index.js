@@ -24,7 +24,7 @@ export const actions = {
         null,
         {
           headers: {
-            authorization: 'Bearer ' + token
+            Authorization: 'Bearer ' + token
           }
         }
       )

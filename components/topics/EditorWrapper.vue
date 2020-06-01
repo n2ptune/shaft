@@ -168,11 +168,10 @@ export default {
       try {
         await this.$axios.post('/api/topics/new', topic, {
           headers: {
-            authorization: `Bearer ${this.token}`
+            Authorization: `Bearer ${this.token}`
           }
         })
       } catch (error) {
-        console.error(error)
       } finally {
         // 버튼 상태 변경
         this.writing = false
