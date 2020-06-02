@@ -46,6 +46,7 @@ import { mapGetters } from 'vuex'
 import Block from './EditorBlock'
 import CategoryList from './CategoryList'
 import QuillWrapper from './QuillWrapper'
+import { validateTopic } from '@/api/models/topics/validate'
 
 export default {
   components: {
@@ -121,21 +122,17 @@ export default {
     onEditorInput({ html }) {
       this.topic.content = html
     },
-    validateTopic() {
-      const conditions = [
-        !!this.topic.content,
-        !!this.topic.title,
-        this.topic.title.length > 5
-      ]
-
-      if (conditions.includes(false)) {
-        return false
-      }
-
-      return true
-    },
     async submitTopic() {
-      if (!this.validateTopic()) {
+      const date = this.$convertDate(new Date())
+      const isValidated = validateTopic({
+        title: this.topic.title,
+        content: this.topic.content,
+        date
+      })
+
+      if (!isValidated) {
+        // 토픽의 내용과 제목이 검증되지 않았을 경우
+        // 이쪽에서 처리
         return
       }
 
@@ -162,15 +159,21 @@ export default {
         title: this.topic.title,
         content: this.topic.content,
         categories,
-        date: this.$convertDate(new Date())
+        date
       }
 
       try {
-        await this.$axios.post('/api/topics/new', topic, {
-          headers: {
-            Authorization: `Bearer ${this.token}`
+        const { data: topicData } = await this.$axios.post(
+          '/api/topics/new',
+          topic,
+          {
+            headers: {
+              Authorization: `Bearer ${this.token}`
+            }
           }
-        })
+        )
+
+        this.$router.push('/topics/' + topicData.topic.id)
       } catch (error) {
       } finally {
         // 버튼 상태 변경
