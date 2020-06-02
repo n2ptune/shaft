@@ -6,10 +6,8 @@
 
 <script>
 export default {
-  asyncData({ params }) {
-    return {
-      id: params.id
-    }
+  asyncData({ $axios, params }) {
+    // todo
   }
 }
 </script>
