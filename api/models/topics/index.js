@@ -1,8 +1,28 @@
 import db from '../../db/connection'
 
-export const readTopicByID = (id) => {}
+export const readTopicByID = async (id, cb) => {
+  if (!id) {
+    throw new Error('Not Given ID')
+  }
 
-export const readAllTopics = () => {}
+  try {
+    const [row] = await db.query(`CALL readTopicByID(${id})`)
+
+    cb(null, row[0][0])
+  } catch (error) {
+    cb(error, null)
+  }
+}
+
+export const readAllTopics = async (offset, cb) => {
+  const SQL = ``
+
+  try {
+    const [rows] = await db.query()
+  } catch (error) {
+    throw new Error(error)
+  }
+}
 
 export const writeTopic = async (topic, user) => {
   const SQL = `INSERT INTO ${process.env.DB_TOPIC_TABLE}
