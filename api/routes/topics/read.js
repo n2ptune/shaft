@@ -13,7 +13,17 @@ export const topicByID = function(req, res) {
 }
 
 export const allTopics = function(req, res) {
-  const { offset } = req.query
+  let { offset } = req.query
 
-  readAllTopics(parseInt(offset), (error, result) => {})
+  if (!offset) {
+    offset = 0
+  }
+
+  readAllTopics(parseInt(offset), (error, result) => {
+    if (error) {
+      return res.status(400).end()
+    } else {
+      return res.status(200).send(result)
+    }
+  })
 }

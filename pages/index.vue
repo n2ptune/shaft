@@ -1,20 +1,26 @@
 <template>
   <main>
-    <div>Main</div>
+    <div class="table-outer">
+      <TopicTableWrapper />
+    </div>
   </main>
 </template>
 
 <script>
-export default {
-  async asyncData({ $axios }) {
-    const offset = 0
+import TopicTableWrapper from '@/components/topics/TopicTableWrapper'
 
+export default {
+  components: {
+    TopicTableWrapper
+  },
+
+  async asyncData({ $axios }) {
     try {
-      const { data } = await $axios.get('/api/topics', {
-        params: {
-          offset
-        }
-      })
+      const { data: topicData } = await $axios.get('/api/topics')
+
+      return {
+        topics: topicData[0]
+      }
     } catch (error) {
       console.log(error)
     }

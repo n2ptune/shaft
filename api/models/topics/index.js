@@ -15,12 +15,13 @@ export const readTopicByID = async (id, cb) => {
 }
 
 export const readAllTopics = async (offset, cb) => {
-  const SQL = ``
+  const SQL = `CALL readTopicByOffset(${offset})`
 
   try {
-    const [rows] = await db.query()
+    const [rows] = await db.query(SQL)
+    cb(null, rows)
   } catch (error) {
-    throw new Error(error)
+    cb(error, null)
   }
 }
 
