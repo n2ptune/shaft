@@ -1,7 +1,7 @@
 <template>
   <div class="relative">
     <Header />
-    <nuxt class="my-12 container mx-auto" />
+    <nuxt class="my-12 container mx-auto px-4 lg:px-8" />
     <footer class="flex justify-center items-center p-4">
       <div class="font-bold text-xl">Footer</div>
     </footer>
