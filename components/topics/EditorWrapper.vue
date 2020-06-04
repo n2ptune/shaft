@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper-editor mx-4 lg:mx-6">
+  <div class="wrapper-editor mx-auto">
     <Block title="토픽 제목">
       <input
         v-model="topic.title"

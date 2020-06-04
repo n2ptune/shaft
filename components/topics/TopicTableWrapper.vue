@@ -26,6 +26,13 @@ export default {}
 </script>
 
 <style lang="postcss" scoped>
+table {
+  border-collapse: separate;
+  /* border-spacing: 0 2rem; */
+}
+table tbody {
+  border-spacing: 0 2rem;
+}
 table thead tr th {
   @apply text-left text-gray-600 font-normal text-sm;
 }
