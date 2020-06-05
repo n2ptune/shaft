@@ -19,7 +19,7 @@ export const readAllTopics = async (offset, cb) => {
 
   try {
     const [rows] = await db.query(SQL)
-    cb(null, rows)
+    cb(null, rows[0])
   } catch (error) {
     cb(error, null)
   }
@@ -49,5 +49,18 @@ export const writeTopic = async (topic, user) => {
     }
   } catch (error) {
     throw new Error('Write Topic Error')
+  }
+}
+
+export const countOfTopics = async () => {
+  try {
+    const SQL = `CALL getCountOfTopics();`
+    const [result] = await db.query(SQL)
+
+    if (!result.length) throw new Error('Database Error')
+
+    return result[0][0].count
+  } catch (error) {
+    throw new Error(error)
   }
 }

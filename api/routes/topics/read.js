@@ -1,4 +1,8 @@
-import { readTopicByID, readAllTopics } from '../../models/topics/index'
+import {
+  readTopicByID,
+  readAllTopics,
+  countOfTopics
+} from '../../models/topics/index'
 
 export const topicByID = function(req, res) {
   const { id } = req.params
@@ -19,11 +23,27 @@ export const allTopics = function(req, res) {
     offset = 0
   }
 
-  readAllTopics(parseInt(offset), (error, result) => {
+  readAllTopics(parseInt(offset), async (error, result) => {
     if (error) {
       return res.status(400).end()
     } else {
-      return res.status(200).send(result)
+      try {
+        const count = await countOfTopics()
+        const head = {}
+
+        head.currentOffset = offset
+        head.topicCount = count
+        head.pageCount = 1 + parseInt(count / 10)
+
+        const data = {
+          topics: result,
+          head
+        }
+
+        return res.status(200).send(data)
+      } catch (error) {
+        return res.status(500).end()
+      }
     }
   })
 }

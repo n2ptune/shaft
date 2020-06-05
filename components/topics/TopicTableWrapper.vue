@@ -10,6 +10,7 @@
             <th>Title</th>
             <th>Category</th>
             <th>Views</th>
+            <th>Likes</th>
             <th>Writer</th>
           </tr>
         </slot>
@@ -45,7 +46,8 @@ table tbody tr >>> td {
   }
 
   &:nth-child(2),
-  &:nth-child(3) {
+  &:nth-child(3),
+  &:nth-child(4) {
     @apply hidden;
   }
 
@@ -61,27 +63,33 @@ table tbody tr >>> td {
     /* table width */
     &:first-child {
       /* Title */
-      width: 50%;
+      width: 40%;
     }
 
     &:nth-child(2),
-    &:nth-child(3) {
+    &:nth-child(3),
+    &:nth-child(4) {
       display: table-cell;
     }
 
     &:nth-child(2) {
       /* Category */
-      width: 15%;
+      width: 25%;
     }
 
     &:nth-child(3) {
       /* Views */
-      width: 15%;
+      width: 5%;
+    }
+
+    &:nth-child(4) {
+      /* Likes */
+      width: 5%;
     }
 
     &:nth-child(4) {
       /* Writer */
-      width: 20%;
+      width: 25%;
     }
   }
 }

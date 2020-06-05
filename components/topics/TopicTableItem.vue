@@ -3,6 +3,7 @@
     <td>{{ item.title }}</td>
     <td>{{ item.categoryName }}</td>
     <td>{{ item.views }}</td>
+    <td>{{ item.likeCount }}</td>
     <td>{{ item.ownerID }}</td>
   </tr>
 </template>
