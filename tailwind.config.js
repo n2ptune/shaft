@@ -1,6 +1,7 @@
 module.exports = {
   purge: {
-    enabled: process.env.NODE_ENV === 'production'
+    enabled: process.env.NODE_ENV === 'production',
+    content: ['./src/**/*.html', './src/**/*.vue', './src/**/*.js']
   },
   plugins: [
     function({ addComponents }) {
