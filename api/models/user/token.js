@@ -6,7 +6,10 @@ export const signAccessTokenWithRT = (refreshToken) => {
     refreshToken = refreshToken.token
   }
 
-  if (verifyToken(refreshToken)) {
+  try {
+    // 리프레쉬 토큰 만료시 여기서 오류 발생
+    verifyToken(refreshToken)
+
     const decoded = decode(refreshToken)
     const userData = {
       email: decoded.email,
@@ -23,8 +26,12 @@ export const signAccessTokenWithRT = (refreshToken) => {
     })
 
     return accessToken
-  } else {
-    throw new Error('Invalid Refresh Token')
+  } catch (error) {
+    if (error.name === 'TokenExpiredError') {
+      throw new Error('RefreshTokenExpired')
+    } else {
+      throw new Error(error)
+    }
   }
 }
 

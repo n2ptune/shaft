@@ -2,7 +2,7 @@ import db from '../../db/connection'
 
 export const readTopicByID = async (id, cb) => {
   if (!id) {
-    throw new Error('Not Given ID')
+    cb(new Error('Not Given ID'), null)
   }
 
   try {

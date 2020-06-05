@@ -31,8 +31,6 @@ export default {
     try {
       const { data: topicData } = await $axios.get('/api/topics')
 
-      console.log(topicData)
-
       return {
         topics: topicData.topics
       }

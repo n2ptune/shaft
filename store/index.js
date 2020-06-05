@@ -19,17 +19,23 @@ export const actions = {
     const token = localStorage.getItem('at')
 
     if (token) {
-      const { data: userData } = await this.$axios.post(
-        '/api/auth/user',
-        null,
-        {
-          headers: {
-            Authorization: 'Bearer ' + token
+      try {
+        const { data: userData } = await this.$axios.post(
+          '/api/auth/user',
+          null,
+          {
+            headers: {
+              Authorization: 'Bearer ' + token
+            }
           }
-        }
-      )
+        )
 
-      commit('auth/setUser', { userData, token })
+        commit('auth/setUser', { userData, token })
+      } catch (error) {
+        if (error.response.status === 401) {
+          localStorage.removeItem('at')
+        }
+      }
     }
   }
 }

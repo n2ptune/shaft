@@ -35,7 +35,11 @@ export default async function(req, res) {
             .end()
         }
       } catch (innerError) {
-        return res.status(500).end()
+        if (innerError.message === 'RefreshTokenExpired') {
+          return res.status(401).end()
+        } else {
+          return res.status(500).end()
+        }
       }
     }
     return res.status(400).send({ message: error.message })
