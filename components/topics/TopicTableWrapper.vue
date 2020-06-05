@@ -27,16 +27,15 @@ export default {}
 </script>
 
 <style lang="postcss" scoped>
-table {
-  border-collapse: separate;
-  /* border-spacing: 0 2rem; */
-}
-table tbody {
-  border-spacing: 0 2rem;
-}
 table thead tr th {
   @apply text-left text-gray-600 font-normal text-sm;
+
+  &:nth-child(3),
+  &:nth-child(4) {
+    @apply text-center;
+  }
 }
+
 table thead tr th,
 table tbody tr >>> td {
   /* Table Width */
@@ -51,10 +50,18 @@ table tbody tr >>> td {
     @apply hidden;
   }
 
-  &:nth-child(4) {
+  &:last-child {
     /* Writer */
     width: 20%;
   }
+}
+
+table tbody tr {
+  --border-size: 2rem;
+
+  border-top: var(--border-size) solid;
+  border-bottom: var(--border-size) solid;
+  border-color: transparent;
 }
 
 @screen lg {
@@ -74,22 +81,22 @@ table tbody tr >>> td {
 
     &:nth-child(2) {
       /* Category */
-      width: 25%;
+      width: 20%;
     }
 
     &:nth-child(3) {
       /* Views */
-      width: 5%;
+      width: 10%;
     }
 
     &:nth-child(4) {
       /* Likes */
-      width: 5%;
+      width: 10%;
     }
 
-    &:nth-child(4) {
+    &:last-child {
       /* Writer */
-      width: 25%;
+      width: 20%;
     }
   }
 }

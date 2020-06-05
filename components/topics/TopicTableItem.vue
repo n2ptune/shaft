@@ -19,4 +19,15 @@ export default {
 }
 </script>
 
-<style lang="postcss" scoped></style>
+<style lang="postcss" scoped>
+tr td {
+  &:first-child {
+    @apply font-bold;
+  }
+
+  &:nth-child(3),
+  &:nth-child(4) {
+    @apply text-center;
+  }
+}
+</style>
