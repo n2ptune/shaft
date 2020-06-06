@@ -1,6 +1,10 @@
 <template>
   <tr>
-    <td>{{ item.title }}</td>
+    <td>
+      <nuxt-link :to="`/topics/${item.id}`">
+        {{ item.title }}
+      </nuxt-link>
+    </td>
     <td>{{ item.categoryName }}</td>
     <td>{{ item.views }}</td>
     <td>{{ item.likeCount }}</td>
