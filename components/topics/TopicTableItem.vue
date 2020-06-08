@@ -17,7 +17,7 @@
     </td>
     <td>{{ item.views }}</td>
     <td>{{ item.likeCount }}</td>
-    <td>
+    <td class="text-sm">
       {{ comDate }}
     </td>
     <td class="text-right">
@@ -65,7 +65,7 @@ export default {
 tr td {
   &:nth-child(3),
   &:nth-child(4) {
-    @apply text-center;
+    @apply text-center text-sm font-bold;
   }
 }
 </style>
