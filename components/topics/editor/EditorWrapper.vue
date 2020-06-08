@@ -44,8 +44,8 @@
 <script>
 import { mapGetters } from 'vuex'
 import Block from './EditorBlock'
-import CategoryList from './CategoryList'
 import QuillWrapper from './QuillWrapper'
+import CategoryList from '@/components/topics/category/CategoryList'
 import { validateTopic } from '@/api/models/topics/validate'
 
 export default {

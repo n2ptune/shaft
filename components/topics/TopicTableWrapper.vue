@@ -46,7 +46,7 @@ table tbody tr >>> td {
   /* Table Width */
   &:first-child {
     /* Title */
-    width: 80%;
+    width: 70%;
   }
 
   &:nth-child(2),
@@ -55,9 +55,9 @@ table tbody tr >>> td {
     @apply hidden;
   }
 
+  &:nth-child(5),
   &:last-child {
-    /* Writer */
-    width: 20%;
+    width: 15%;
   }
 }
 

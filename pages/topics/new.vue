@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import EditorWrapper from '@/components/topics/EditorWrapper'
+import EditorWrapper from '@/components/topics/editor/EditorWrapper'
 
 export default {
   components: {

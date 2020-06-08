@@ -27,9 +27,17 @@ export default {
     TopicTableItem
   },
 
-  async asyncData({ $axios }) {
+  async asyncData({ $axios, store, query }) {
     try {
-      const { data: topicData } = await $axios.get('/api/topics')
+      const offset = query.offset ? query.offset : 0
+
+      const { data: topicData } = await $axios.get('/api/topics', {
+        params: {
+          offset
+        }
+      })
+
+      await store.commit('topic/setTopicHeader', topicData.head)
 
       return {
         topics: topicData.topics

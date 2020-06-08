@@ -8,7 +8,13 @@
         </div>
       </nuxt-link>
     </td>
-    <td>{{ item.categoryName }}</td>
+    <td>
+      <CategoryBadge
+        v-if="item.categoryName"
+        :badge-color="item.categoryColor"
+        :badge-name="item.categoryName"
+      />
+    </td>
     <td>{{ item.views }}</td>
     <td>{{ item.likeCount }}</td>
     <td>
@@ -27,11 +33,13 @@
 
 <script>
 import relativeTime from 'dayjs/plugin/relativeTime'
+import CategoryBadge from './category/CategoryBadge'
 import UserAvatar from '@/components/user/Avatar'
 
 export default {
   components: {
-    UserAvatar
+    UserAvatar,
+    CategoryBadge
   },
 
   props: {
