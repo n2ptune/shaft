@@ -11,6 +11,7 @@
             <th>Category</th>
             <th>Views</th>
             <th>Likes</th>
+            <th>Date</th>
             <th>Writer</th>
           </tr>
         </slot>
@@ -33,6 +34,10 @@ table thead tr th {
   &:nth-child(3),
   &:nth-child(4) {
     @apply text-center;
+  }
+
+  &:last-child {
+    @apply text-right;
   }
 }
 
@@ -57,11 +62,19 @@ table tbody tr >>> td {
 }
 
 table tbody tr {
-  --border-size: 2rem;
+  --border-vertical-size: 2rem;
+  --border-horizontal-size: 0.7rem;
 
-  border-top: var(--border-size) solid;
-  border-bottom: var(--border-size) solid;
+  border-top: var(--border-vertical-size) solid;
+  border-bottom: var(--border-vertical-size) solid;
+  border-left: var(--border-horizontal-size) solid;
+  border-right: var(--border-horizontal-size) solid;
+
   border-color: transparent;
+}
+
+table tbody tr:nth-child(2n) {
+  @apply bg-gray-200;
 }
 
 @screen lg {
@@ -84,19 +97,15 @@ table tbody tr {
       width: 20%;
     }
 
-    &:nth-child(3) {
-      /* Views */
-      width: 10%;
-    }
-
-    &:nth-child(4) {
-      /* Likes */
+    &:nth-child(3),
+    &:nth-child(4),
+    &:nth-child(5) {
       width: 10%;
     }
 
     &:last-child {
       /* Writer */
-      width: 20%;
+      width: 10%;
     }
   }
 }

@@ -48,7 +48,8 @@ module.exports = {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     // Doc: https://github.com/nuxt-community/dotenv-module
-    '@nuxtjs/dotenv'
+    '@nuxtjs/dotenv',
+    '@nuxtjs/dayjs'
   ],
   /*
    ** Axios module configuration
@@ -70,5 +71,9 @@ module.exports = {
       handler: '~/api/index.js',
       path: '/api'
     }
-  ]
+  ],
+  dayjs: {
+    locales: ['ko'],
+    defaultLocale: 'ko'
+  }
 }

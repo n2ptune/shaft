@@ -1,34 +1,60 @@
 <template>
   <tr>
     <td>
+      <div class="text-sm text-gray-500">#{{ item.id }}</div>
       <nuxt-link :to="`/topics/${item.id}`">
-        {{ item.title }}
+        <div class="font-bold text-lg">
+          {{ item.title }}
+        </div>
       </nuxt-link>
     </td>
     <td>{{ item.categoryName }}</td>
     <td>{{ item.views }}</td>
     <td>{{ item.likeCount }}</td>
-    <td>{{ item.ownerID }}</td>
+    <td>
+      {{ comDate }}
+    </td>
+    <td class="text-right">
+      <nuxt-link
+        class="inline-block align-middle"
+        :to="`/users/${item.ownerID}`"
+      >
+        <UserAvatar :src="item.userAvatar" :alt="item.userNickname" />
+      </nuxt-link>
+    </td>
   </tr>
 </template>
 
 <script>
+import relativeTime from 'dayjs/plugin/relativeTime'
+import UserAvatar from '@/components/user/Avatar'
+
 export default {
+  components: {
+    UserAvatar
+  },
+
   props: {
     item: {
       type: Object,
       required: true
     }
+  },
+
+  computed: {
+    comDate() {
+      return this.$dayjs().to(this.$dayjs(this.item.createdAt))
+    }
+  },
+
+  created() {
+    this.$dayjs.extend(relativeTime)
   }
 }
 </script>
 
 <style lang="postcss" scoped>
 tr td {
-  &:first-child {
-    @apply font-bold;
-  }
-
   &:nth-child(3),
   &:nth-child(4) {
     @apply text-center;
