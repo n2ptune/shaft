@@ -11,6 +11,29 @@ export const topicByID = function(req, res) {
     if (error) {
       return res.status(400).end()
     } else {
+      result.sub = []
+      // 서브 카테고리가 여러 개일 경우
+      if (result.subCategoryID && result.subCategoryID.includes(',')) {
+        const splitedCategoryByID = result.subCategoryID.split(',')
+        const splitedCategoryByName = result.subCategories.split(',')
+
+        splitedCategoryByID.forEach((v, index, arr) => {
+          result.sub.push({
+            id: v,
+            name: splitedCategoryByName[index]
+          })
+        })
+      } else {
+        result.sub.push({
+          id: result.subCategoryID,
+          name: result.subCategories
+        })
+      }
+
+      // 불필요한 데이터 삭제
+      delete result.subCategories
+      delete result.subCategoryID
+
       return res.status(200).send(result)
     }
   })

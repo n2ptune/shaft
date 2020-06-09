@@ -30,7 +30,8 @@ module.exports = {
   plugins: [
     { src: '~/plugins/axios', mode: 'client' },
     { src: '~/plugins/editor', mode: 'client' },
-    { src: '~/plugins/date', mode: 'client' }
+    { src: '~/plugins/date', mode: 'client' },
+    { src: '~/plugins/safe-v-html', mode: 'client' }
   ],
   /*
    ** Nuxt.js dev-modules
