@@ -1,5 +1,5 @@
 <template>
-  <div class="mb-6">
+  <div class="mb-8">
     <div class="descriptor">
       <span>#{{ topicId }}</span>
       <span>{{ formatDate }}</span>
