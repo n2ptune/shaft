@@ -7,6 +7,9 @@
     <div class="text-xl font-bold">
       {{ title }}
     </div>
+    <div>
+      <fa :icon="['fab', 'github']" />
+    </div>
   </div>
 </template>
 

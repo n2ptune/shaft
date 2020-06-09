@@ -1,3 +1,5 @@
+const icons = require('./assets/icons/index')
+
 module.exports = {
   mode: 'universal',
   /*
@@ -39,7 +41,8 @@ module.exports = {
   buildModules: [
     // Doc: https://github.com/nuxt-community/eslint-module
     '@nuxtjs/eslint-module',
-    '@nuxtjs/tailwindcss'
+    '@nuxtjs/tailwindcss',
+    '@nuxtjs/fontawesome'
   ],
   /*
    ** Nuxt.js modules
@@ -76,5 +79,17 @@ module.exports = {
   dayjs: {
     locales: ['ko'],
     defaultLocale: 'ko'
+  },
+  purgeCSS: {
+    whitelist: ['svg--inline-fa'],
+    whitelistPatterns: [/shiki/, /fa-$/]
+  },
+  fontawesome: {
+    component: 'fa',
+    icons: {
+      solid: icons.solid,
+      regular: icons.regular,
+      brands: icons.brands
+    }
   }
 }
