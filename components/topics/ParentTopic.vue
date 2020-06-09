@@ -1,11 +1,25 @@
 <template>
-  <div class="topic-wrap parent">
-    <div v-dompurify-html="content" />
-  </div>
+  <Topic
+    :avatar="user.avatar"
+    :nickname="user.nickname"
+    :email="user.email"
+    :owner-id="user.id"
+    class="parent"
+  >
+    <template v-slot:content>
+      <div v-dompurify-html="content" />
+    </template>
+  </Topic>
 </template>
 
 <script>
+import Topic from './Topic'
+
 export default {
+  components: {
+    Topic
+  },
+
   props: {
     user: {
       type: Object,
@@ -18,3 +32,5 @@ export default {
   }
 }
 </script>
+
+<style lang="postcss" scoped></style>

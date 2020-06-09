@@ -10,13 +10,12 @@
         :user="{
           avatar: topic.ownerAvatar,
           nickname: topic.ownerNickname,
-          email: topic.ownerEmail
+          email: topic.ownerEmail,
+          id: topic.ownerID
         }"
         :content="topic.content"
       />
     </div>
-    <!-- 부모 토픽 메인 -->
-    <!-- 그 외 자식 토픽 -->
   </main>
 </template>
 
@@ -46,9 +45,20 @@ export default {
 
 <style lang="postcss" scoped>
 .topic-wrap {
-  @apply border border-gray-300 rounded-lg p-2;
+  @apply border border-gray-300 rounded py-1 px-4;
 }
+
+.topic-wrap.parent,
+.topic-wrap.child {
+  border-top-width: 5px;
+  border-top-style: solid;
+}
+
 .topic-wrap.parent {
-  border-top: 5px solid;
+  border-top-color: theme('colors.orange.400');
+}
+
+.topic-wrap.child {
+  border-top-color: theme('colors.teal.300');
 }
 </style>

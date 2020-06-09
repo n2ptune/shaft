@@ -42,6 +42,6 @@ export default {
   @apply mx-1;
 }
 .descriptor {
-  @apply text-sm text-gray-600;
+  @apply text-sm text-gray-500;
 }
 </style>
