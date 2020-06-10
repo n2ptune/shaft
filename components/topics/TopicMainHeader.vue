@@ -8,15 +8,15 @@
       {{ title }}
     </div>
     <div class="mt-2">
-      <div v-for="item in countList" :key="item.name" class="count-info-wrap">
-        <fa-layers class="fa-fw fa-lg">
-          <fa :icon="item.icon" color="black" />
-          <span
-            :style="{ fontSize: '1.8em', right: '-2px', bottom: '-5px' }"
-            class="fa-layers-counter fa-layers-bottom-right"
-            v-text="item.count"
-          />
-        </fa-layers>
+      <div class="count-info-wrap">
+        <div class="text-sm">
+          <span class="text-gray-600">
+            조회수
+          </span>
+          <span class="text-black text-base">
+            {{ views }}
+          </span>
+        </div>
       </div>
     </div>
   </div>
@@ -37,10 +37,6 @@ export default {
       type: String,
       required: true
     },
-    likeCount: {
-      type: Number,
-      required: true
-    },
     views: {
       type: Number,
       required: true
@@ -49,23 +45,7 @@ export default {
 
   computed: {
     formatDate() {
-      return (
-        this.$dayjs(this.createdAt).format('YYYY-MM-DD HH:MM:ss') + '에 작성됨'
-      )
-    },
-    countList() {
-      return [
-        {
-          name: '좋아요 수',
-          icon: ['far', 'thumbs-up'],
-          count: this.likeCount
-        },
-        {
-          name: '조회수',
-          icon: ['far', 'eye'],
-          count: this.views
-        }
-      ]
+      return this.$dayjs(this.createdAt).format('YYYY-MM-DD HH:MM:ss')
     }
   }
 }
@@ -87,16 +67,4 @@ export default {
     @apply mx-1;
   }
 }
-
-/* .count-info-wrap {
-  @apply inline-block align-middle;
-
-  &:not(:first-of-type) {
-    @apply mx-4;
-  }
-}
-
-.count {
-  @apply text-sm align-top text-black;
-} */
 </style>

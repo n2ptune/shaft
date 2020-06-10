@@ -23,5 +23,21 @@ module.exports = {
         }
       })
     }
-  ]
+  ],
+  theme: {
+    extend: {
+      fontFamily: {
+        sans: [
+          '-apple-system',
+          'BlinkMacSystemFont',
+          '"Noto Sans KR"',
+          '"Noto Sans"',
+          'sans-serif',
+          '"Apple Color Emoji"',
+          '"Segoe UI Emoji"',
+          '"Noto Color Emoji"'
+        ]
+      }
+    }
+  }
 }

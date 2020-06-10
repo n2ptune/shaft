@@ -5,7 +5,6 @@
         :title="topic.title"
         :topic-id="topic.id"
         :created-at="topic.createdAt"
-        :like-count="topic.likeCount"
         :views="topic.views"
       />
       <ParentTopic

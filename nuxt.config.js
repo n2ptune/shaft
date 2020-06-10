@@ -16,7 +16,15 @@ module.exports = {
         content: process.env.npm_package_description || ''
       }
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
+    // link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    link: [
+      {
+        rel: 'prefetch',
+        type: 'text/css',
+        href:
+          'https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700&family=Noto+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap'
+      }
+    ]
   },
   /*
    ** Customize the progress-bar color

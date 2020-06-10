@@ -1,7 +1,6 @@
 <template>
   <tr>
     <td>
-      <div class="text-sm text-gray-500">#{{ item.id }}</div>
       <nuxt-link :to="`/topics/${item.id}`">
         <div class="font-bold text-lg">
           {{ item.title }}
@@ -65,7 +64,7 @@ export default {
 tr td {
   &:nth-child(3),
   &:nth-child(4) {
-    @apply text-center text-sm font-bold;
+    @apply text-center text-sm;
   }
 }
 </style>
