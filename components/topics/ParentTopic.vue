@@ -4,6 +4,8 @@
     :nickname="user.nickname"
     :email="user.email"
     :owner-id="user.id"
+    :topic-id="topic.id"
+    :like-count="topic.likeCount"
     class="parent"
   >
     <template v-slot:content>
@@ -27,6 +29,10 @@ export default {
     },
     content: {
       type: String,
+      required: true
+    },
+    topic: {
+      type: Object,
       required: true
     }
   }

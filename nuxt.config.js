@@ -38,7 +38,7 @@ module.exports = {
    ** Plugins to load before mounting the App
    */
   plugins: [
-    { src: '~/plugins/axios', mode: 'client' },
+    { src: '~/plugins/axios' },
     { src: '~/plugins/editor', mode: 'client' },
     { src: '~/plugins/date', mode: 'client' },
     { src: '~/plugins/safe-v-html', mode: 'client' }

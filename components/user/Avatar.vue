@@ -1,5 +1,10 @@
 <template>
-  <img :class="[isRounded ? 'rounded-full' : '', size]" :src="src" :alt="alt" />
+  <img
+    v-if="src"
+    :class="[isRounded ? 'rounded-full' : '', size]"
+    :src="src"
+    :alt="alt"
+  />
 </template>
 
 <script>
@@ -7,7 +12,8 @@ export default {
   props: {
     src: {
       type: String,
-      required: true
+      required: false,
+      default: ''
     },
     alt: {
       type: String,

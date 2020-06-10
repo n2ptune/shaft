@@ -14,6 +14,10 @@
           email: topic.ownerEmail,
           id: topic.ownerID
         }"
+        :topic="{
+          id: topic.id,
+          likeCount: topic.likeCount
+        }"
         :content="topic.content"
       />
     </div>

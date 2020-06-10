@@ -23,6 +23,30 @@ export const getters = {
     } else {
       return null
     }
+  },
+
+  getUserAvatar(state) {
+    if (state.user) {
+      return state.user.avatar
+    } else {
+      return null
+    }
+  },
+
+  getUserNickname(state) {
+    if (state.user) {
+      return state.user.nickname
+    } else {
+      return null
+    }
+  },
+
+  getUserID(state) {
+    if (state.user) {
+      return state.user.id
+    } else {
+      return null
+    }
   }
 }
 
@@ -49,6 +73,6 @@ export const actions = {
   logout({ commit }) {
     localStorage.removeItem('at')
     commit('setUser', { userData: null, token: null })
-    this.$router.push('/')
+    this.$router.go()
   }
 }
