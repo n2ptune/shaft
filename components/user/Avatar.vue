@@ -1,9 +1,8 @@
 <template>
   <img
-    v-if="src"
     :class="[isRounded ? 'rounded-full' : '', size]"
-    :src="src"
-    :alt="alt"
+    :src="userAvatarSrc"
+    :alt="userNickname"
   />
 </template>
 
@@ -13,7 +12,7 @@ export default {
     src: {
       type: String,
       required: false,
-      default: ''
+      default: null
     },
     alt: {
       type: String,
@@ -29,6 +28,15 @@ export default {
       type: String,
       required: false,
       default: 'base'
+    }
+  },
+
+  computed: {
+    userAvatarSrc() {
+      return this.src || this.$store.getters['auth/getUserAvatar']
+    },
+    userNickname() {
+      return this.alt || this.$store.getters['auth/getUserNickname']
     }
   }
 }
