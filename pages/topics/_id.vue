@@ -2,23 +2,23 @@
   <main>
     <div>
       <TopicMainHeader
-        :title="topic.title"
-        :topic-id="topic.id"
-        :created-at="topic.createdAt"
-        :views="topic.views"
+        :title="rootTopic.title"
+        :topic-id="rootTopic.id"
+        :created-at="rootTopic.createdAt"
+        :views="rootTopic.views"
       />
       <ParentTopic
         :user="{
-          avatar: topic.ownerAvatar,
-          nickname: topic.ownerNickname,
-          email: topic.ownerEmail,
-          id: topic.ownerID
+          avatar: rootTopic.ownerAvatar,
+          nickname: rootTopic.ownerNickname,
+          email: rootTopic.ownerEmail,
+          id: rootTopic.ownerID
         }"
         :topic="{
-          id: topic.id,
-          likeCount: topic.likeCount
+          id: rootTopic.id,
+          likeCount: rootTopic.likeCount
         }"
-        :content="topic.content"
+        :content="rootTopic.content"
       />
     </div>
   </main>
@@ -36,10 +36,14 @@ export default {
 
   async asyncData({ $axios, params, redirect }) {
     try {
-      const { data: topic } = await $axios.get('/api/topics/' + params.id)
+      const { data } = await $axios.get('/api/topics/' + params.id)
+
+      const rootTopic = data.topics.root
+      const childrenTopic = data.topics.children
 
       return {
-        topic
+        rootTopic,
+        childrenTopic
       }
     } catch (error) {
       redirect('/')

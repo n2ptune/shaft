@@ -22,7 +22,6 @@
                 {{ likeCount }}
               </span>
             </div>
-            <!-- <div class="mx-2">Test</div> -->
           </div>
         </div>
       </div>

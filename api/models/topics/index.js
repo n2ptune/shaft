@@ -6,9 +6,19 @@ export const readTopicByID = async (id, cb) => {
   }
 
   try {
-    const [row] = await db.query(`CALL readTopicByID(${id})`)
+    const [rows] = await db.query(`CALL readTopicByID(${id})`)
 
-    cb(null, row[0][0])
+    const result = {
+      topics: {
+        root: rows[0][0],
+        children: []
+      }
+    }
+
+    result.topics.children = rows[0].filter((topic) => topic.parentTopicID)
+
+    // cb(null, rows[0][0])
+    cb(null, result)
   } catch (error) {
     cb(error, null)
   }
