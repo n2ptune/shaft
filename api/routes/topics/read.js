@@ -39,7 +39,38 @@ export const topicByID = function(req, res) {
 
       flatSubCategories(data.topics.root)
 
-      return res.status(200).send(data)
+      const allID = []
+
+      allID.push(data.topics.root.id)
+      data.topics.children.forEach((t) => {
+        allID.push(t.id)
+        t.comments = []
+      })
+
+      getCommentsByTopicID(allID, (error, comments) => {
+        if (error) {
+          return res.status(500).end()
+        } else if (!comments) {
+          return res.status(200).send(data)
+        } else {
+          data.topics.root.comments = []
+
+          comments.forEach((comment) => {
+            if (comment.targetTopicID === data.topics.root.id) {
+              data.topics.root.comments.push(comment)
+            } else {
+              const matchTopic = data.topics.children.filter((el, idx) => {
+                el._idx = idx
+                return el.id === comment.targetTopicID
+              })
+
+              data.topics.children[matchTopic._idx].push(comment)
+            }
+          })
+
+          return res.status(200).send(data)
+        }
+      })
     }
   })
 }

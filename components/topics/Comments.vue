@@ -21,6 +21,9 @@
         취소
       </button>
     </div>
+    <div class="comments-list">
+      {{ comments }}
+    </div>
   </div>
 </template>
 
@@ -31,6 +34,13 @@ import UserAvatar from '@/components/user/Avatar'
 export default {
   components: {
     UserAvatar
+  },
+
+  props: {
+    comments: {
+      type: Array,
+      required: true
+    }
   },
 
   computed: {

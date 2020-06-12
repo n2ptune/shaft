@@ -16,7 +16,8 @@
         }"
         :topic="{
           id: rootTopic.id,
-          likeCount: rootTopic.likeCount
+          likeCount: rootTopic.likeCount,
+          comments: rootTopic.comments
         }"
         :content="rootTopic.content"
       />

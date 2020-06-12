@@ -6,6 +6,7 @@
     :owner-id="user.id"
     :topic-id="topic.id"
     :like-count="topic.likeCount"
+    :comments="topic.comments"
     class="parent"
   >
     <template v-slot:content>

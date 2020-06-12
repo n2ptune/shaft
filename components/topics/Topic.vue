@@ -29,7 +29,7 @@
         <slot name="content" />
       </div>
       <ClientOnly>
-        <Comments />
+        <Comments :comments="comments" />
       </ClientOnly>
     </div>
   </div>
@@ -69,6 +69,10 @@ export default {
     },
     likeCount: {
       type: Number,
+      required: true
+    },
+    comments: {
+      type: Array,
       required: true
     }
   },
