@@ -3,6 +3,7 @@ import {
   readAllTopics,
   countOfTopics
 } from '../../models/topics/index'
+import { getCommentsByTopicID } from '../../models/comments/index'
 
 export const topicByID = function(req, res) {
   const { id } = req.params
