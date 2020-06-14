@@ -13,7 +13,8 @@ export const getCommentsByTopicID = async (topicID, cb) => {
   comments.ownerID commentOwnerID,
   comments.topicID targetTopicID,
   CONVERT_TZ(comments.createdAt, '-09:00', 'GMT') AS createdAt,
-  user.avatar userAvatar
+  user.avatar userAvatar,
+  user.nickname userNickname
   FROM TEST_COMMENTS comments
   LEFT JOIN TEST_USER user
   ON comments.ownerID = user.id

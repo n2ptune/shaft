@@ -29,7 +29,7 @@
         <slot name="content" />
       </div>
       <ClientOnly>
-        <Comments :comments="comments" />
+        <CommentsContainer :comments="comments" />
       </ClientOnly>
     </div>
   </div>
@@ -38,12 +38,12 @@
 <script>
 import { mapGetters } from 'vuex'
 import UserAvatar from '@/components/user/Avatar'
-import Comments from '@/components/topics/Comments'
+import CommentsContainer from '@/components/topics/comments/Container'
 
 export default {
   components: {
     UserAvatar,
-    Comments
+    CommentsContainer
   },
 
   props: {

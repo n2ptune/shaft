@@ -1,8 +1,9 @@
 <template>
-  <div class="comments-wrap">
+  <section class="comments-wrap">
     <div class="comments-input flex items-center relative">
       <UserAvatar class="self-start" />
       <textarea
+        v-model="inputComment"
         type="text"
         rows="3"
         :style="{ resize: 'none' }"
@@ -13,27 +14,34 @@
         class="w-full rounded-lg border border-gray-400 focus:outline-none text-sm py-1 px-2 ml-2"
       />
     </div>
-    <div class="comments-btn-wrap">
+    <section class="comments-btn-wrap">
       <button @click="writeComment">
         등록
       </button>
       <button @click="cancelComment">
         취소
       </button>
-    </div>
-    <div class="comments-list">
-      {{ comments }}
-    </div>
-  </div>
+    </section>
+    <section v-if="comments.length" class="flex flex-col">
+      <!-- {{ comments }} -->
+      <CommentListItem
+        v-for="comment in comments"
+        :key="comment.commentID"
+        :item="comment"
+      />
+    </section>
+  </section>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
 import UserAvatar from '@/components/user/Avatar'
+import CommentListItem from '@/components/topics/comments/ListItem'
 
 export default {
   components: {
-    UserAvatar
+    UserAvatar,
+    CommentListItem
   },
 
   props: {
@@ -43,6 +51,10 @@ export default {
     }
   },
 
+  data: () => ({
+    inputComment: ''
+  }),
+
   computed: {
     ...mapGetters({
       isLogin: 'auth/getIsLogin',
@@ -51,7 +63,9 @@ export default {
   },
 
   methods: {
-    writeComment() {},
+    writeComment() {
+      console.log(this.inputComment)
+    },
     cancelComment() {}
   }
 }

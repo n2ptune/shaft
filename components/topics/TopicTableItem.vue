@@ -2,7 +2,7 @@
   <tr>
     <td>
       <nuxt-link :to="`/topics/${item.id}`">
-        <div class="font-bold text-lg">
+        <div class="font-bold text-md">
           {{ item.title }}
         </div>
       </nuxt-link>

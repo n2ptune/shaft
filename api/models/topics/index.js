@@ -17,7 +17,6 @@ export const readTopicByID = async (id, cb) => {
 
     result.topics.children = rows[0].filter((topic) => topic.parentTopicID)
 
-    // cb(null, rows[0][0])
     cb(null, result)
   } catch (error) {
     cb(error, null)
