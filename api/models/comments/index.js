@@ -20,7 +20,8 @@ export const getCommentsByTopicID = async (topicID, cb) => {
   ON comments.ownerID = user.id
   `
 
-  const condition = multipleCondition(topicID, 'comments.topicID')
+  const nextSQL = 'ORDER BY comments.createdAt DESC'
+  const condition = multipleCondition(topicID, 'comments.topicID', nextSQL)
   const SQL = defaultSQL + condition
 
   try {
@@ -32,4 +33,33 @@ export const getCommentsByTopicID = async (topicID, cb) => {
   }
 }
 
-export const writeComment = () => {}
+export const writeComment = async (
+  userData,
+  { topicID, comment, date },
+  cb
+) => {
+  const { id: userID } = userData
+
+  const SQL = `
+  INSERT INTO TEST_COMMENTS
+  (content, ownerID, createdAt, topicID)
+  VALUES
+  (?, ?, ?, ?)
+  `
+
+  try {
+    // 댓글 집어넣기
+    await db.query(SQL, [comment, userID, date, topicID])
+
+    // 댓글 가져오기
+    getCommentsByTopicID([topicID], (error, result) => {
+      if (error) {
+        return cb(error, null)
+      } else {
+        return cb(null, result)
+      }
+    })
+  } catch (error) {
+    return cb(error, null)
+  }
+}

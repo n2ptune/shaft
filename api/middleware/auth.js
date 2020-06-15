@@ -8,23 +8,15 @@ import { findByEmail } from '../models/user/find'
 
 export default async function(req, res, next) {
   const token = parseAuth(req.headers.authorization)
-  // if (!token) {
-  //   return res.status(401).send({ message: '인증 필요' })
-  // } else if (!verifyToken(token)) {
-  //   // 액세스 토큰 만료
-  //   res.locals.token = 'test'
-  //   console.log('test passed')
-  //   next()
-  // } else {
-  //   next()
-  // }
 
   try {
     if (!token) throw new Error('Not Found Token')
 
     // 토큰 검증 시도
     // 만료되었다면 catch에 'TokenExpiredError' 라는 이름의 에러 발생
-    verifyToken(token)
+    const user = verifyToken(token)
+
+    res.locals.user = user
 
     next()
   } catch (error) {
@@ -35,8 +27,12 @@ export default async function(req, res, next) {
         const decoded = decodeToken(token)
         const user = await findByEmail(decoded.email)
         const accessToken = signAccessTokenWithRT(user.token)
+        const refreshUser = decodeToken(accessToken)
+
+        res.locals.user = refreshUser
 
         res.locals.token = accessToken
+        res.append('x-www-access-token', accessToken)
         next()
       } catch (error) {
         return res.status(500).end()

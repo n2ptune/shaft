@@ -21,7 +21,7 @@ export const signAccessTokenWithRT = (refreshToken) => {
     }
 
     const accessToken = sign(userData, process.env.PRIVATE_KEY, {
-      expiresIn: '30s',
+      expiresIn: '30m',
       issuer: '.shaft.kr'
     })
 
