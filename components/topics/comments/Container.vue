@@ -87,7 +87,7 @@ export default {
 
         await this.$store.dispatch('topic/writeComment', {
           comment: _inputComment,
-          topicID: this.topicID,
+          topicID: this.topicId,
           date: this.$convertDate(new Date())
         })
 

@@ -55,7 +55,7 @@ export const mutations = {
     state.children = topics
   },
 
-  updateCommentByID(state, topicID, refreshCommentsData) {
+  updateCommentByID(state, { topicID, refreshCommentsData }) {
     let updatedTopic = state.children.filter((topic) => topic.id === topicID)
 
     if (!updatedTopic.length) {
@@ -91,6 +91,6 @@ export const actions = {
       }
     )
 
-    commit('updateCommentByID', topicID, refreshCommentsData)
+    commit('updateCommentByID', { topicID, refreshCommentsData })
   }
 }
