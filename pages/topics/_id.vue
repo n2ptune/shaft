@@ -1,26 +1,8 @@
 <template>
   <main>
     <div>
-      <TopicMainHeader
-        :title="rootTopic.title"
-        :topic-id="rootTopic.id"
-        :created-at="rootTopic.createdAt"
-        :views="rootTopic.views"
-      />
-      <ParentTopic
-        :user="{
-          avatar: rootTopic.ownerAvatar,
-          nickname: rootTopic.ownerNickname,
-          email: rootTopic.ownerEmail,
-          id: rootTopic.ownerID
-        }"
-        :topic="{
-          id: rootTopic.id,
-          likeCount: rootTopic.likeCount,
-          comments: rootTopic.comments
-        }"
-        :content="rootTopic.content"
-      />
+      <TopicMainHeader />
+      <ParentTopic />
     </div>
   </main>
 </template>
@@ -35,20 +17,20 @@ export default {
     ParentTopic
   },
 
-  async asyncData({ $axios, params, redirect }) {
-    try {
-      const { data } = await $axios.get('/api/topics/' + params.id)
+  async asyncData({ params, redirect, store }) {
+    // try {
+    //   const { data } = await $axios.get('/api/topics/' + params.id)
+    //   const rootTopic = data.topics.root
+    //   const childrenTopic = data.topics.children
+    //   return {
+    //     rootTopic,
+    //     childrenTopic
+    //   }
+    // } catch (error) {
+    //   redirect('/')
+    // }
 
-      const rootTopic = data.topics.root
-      const childrenTopic = data.topics.children
-
-      return {
-        rootTopic,
-        childrenTopic
-      }
-    } catch (error) {
-      redirect('/')
-    }
+    await store.dispatch('topic/fetchTopics', params.id)
   }
 }
 </script>

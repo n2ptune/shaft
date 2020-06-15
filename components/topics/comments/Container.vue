@@ -85,19 +85,14 @@ export default {
         const _inputComment = this.inputComment
         this.inputComment = ''
 
-        // 서버에 댓글과 함께 요청
-        // 인터셉터에 의해 헤더가 자동으로 붙음
-        const { data: refreshCommentsData } = await this.$axios.post(
-          '/api/comments/new',
-          {
-            topicID: this.topicId,
-            comment: _inputComment,
-            date: this.$convertDate(new Date())
-          }
-        )
+        await this.$store.dispatch('topic/writeComment', {
+          comment: _inputComment,
+          topicID: this.topicID,
+          date: this.$convertDate(new Date())
+        })
 
         // 댓글 새로고침
-        this.$emit('refreshComment', refreshCommentsData)
+        // this.$emit('refreshComment', refreshCommentsData)
       } catch (error) {
         // 에러 발생시 댓글 입력창 하이라이트
         this.isErrorInputComment = true

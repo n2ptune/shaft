@@ -1,21 +1,22 @@
 <template>
   <Topic
-    :avatar="user.avatar"
-    :nickname="user.nickname"
-    :email="user.email"
-    :owner-id="user.id"
-    :topic-id="topic.id"
-    :like-count="topic.likeCount"
-    :comments="topic.comments"
+    :avatar="parentTopic.ownerAvatar"
+    :nickname="parentTopic.ownerNickname"
+    :email="parentTopic.ownerEmail"
+    :owner-id="parentTopic.ownerID"
+    :topic-id="parentTopic.id"
+    :like-count="parentTopic.likeCount"
+    :comments="parentTopic.comments"
     class="parent"
   >
     <template v-slot:content>
-      <div v-dompurify-html="content" />
+      <div v-dompurify-html="parentTopic.content" />
     </template>
   </Topic>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import Topic from './Topic'
 
 export default {
@@ -23,20 +24,26 @@ export default {
     Topic
   },
 
-  props: {
-    user: {
-      type: Object,
-      required: true
-    },
-    content: {
-      type: String,
-      required: true
-    },
-    topic: {
-      type: Object,
-      required: true
-    }
+  computed: {
+    ...mapGetters({
+      parentTopic: 'topic/getParentTopic'
+    })
   }
+
+  // props: {
+  //   user: {
+  //     type: Object,
+  //     required: true
+  //   },
+  //   content: {
+  //     type: String,
+  //     required: true
+  //   },
+  //   topic: {
+  //     type: Object,
+  //     required: true
+  //   }
+  // }
 }
 </script>
 

@@ -1,11 +1,11 @@
 <template>
   <div class="mb-8">
     <div class="descriptor">
-      <span>#{{ topicId }}</span>
+      <span>#{{ parentTopic.topicId }}</span>
       <span>{{ formatDate }}</span>
     </div>
     <div class="text-2xl font-bold">
-      {{ title }}
+      {{ parentTopic.title }}
     </div>
     <div class="mt-2">
       <div class="count-info-wrap">
@@ -14,7 +14,7 @@
             조회수
           </span>
           <span class="text-black text-base">
-            {{ views }}
+            {{ parentTopic.views }}
           </span>
         </div>
       </div>
@@ -23,29 +23,17 @@
 </template>
 
 <script>
-export default {
-  props: {
-    title: {
-      type: String,
-      required: true
-    },
-    topicId: {
-      type: Number,
-      required: true
-    },
-    createdAt: {
-      type: String,
-      required: true
-    },
-    views: {
-      type: Number,
-      required: true
-    }
-  },
+import { mapGetters } from 'vuex'
 
+export default {
   computed: {
+    ...mapGetters({
+      parentTopic: 'topic/getParentTopic'
+    }),
     formatDate() {
-      return this.$dayjs(this.createdAt).format('YYYY-MM-DD HH:MM:ss')
+      return this.$dayjs(this.parentTopic.createdAt).format(
+        'YYYY-MM-DD HH:mm:ss'
+      )
     }
   }
 }

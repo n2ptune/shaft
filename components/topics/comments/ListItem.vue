@@ -1,28 +1,31 @@
 <template>
-  <section class="flex my-1">
+  <section class="flex my-3">
     <!-- 아바타 -->
-    <article>
+    <article class="flex-shrink-0 self-start">
       <nuxt-link :to="`/users/${item.commentOwnerID}`">
         <UserAvatar :src="item.userAvatar" :alt="item.userNickname" />
       </nuxt-link>
     </article>
     <!-- 내용 -->
-    <article class="mx-2">
-      {{ item.commentContent }}
-    </article>
-    <article class="ml-3 text-gray-500 text-sm font-light self-center">
-      {{ convertedDate }}
-      <span class="mx-1">
-        ―
-      </span>
-      <span class="font-normal text-gray-700">
-        {{ item.userNickname }}
-      </span>
-    </article>
+    <section class="ml-2">
+      <header class="font-bold">
+        <nuxt-link :to="`/users/${item.commentOwnerID}`">
+          {{ item.userNickname }}
+        </nuxt-link>
+        <span class="text-gray-600 font-light ml-1">{{ convertedDate }}</span>
+        <span v-if="item.commentOwnerID === userID" class="ml-1">
+          TODO) UPDATE, DELETE 등
+        </span>
+      </header>
+      <article class="mt-1 text-sm">
+        <p>{{ item.commentContent }}</p>
+      </article>
+    </section>
   </section>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import UserAvatar from '@/components/user/Avatar'
 
 export default {
@@ -38,8 +41,11 @@ export default {
   },
 
   computed: {
+    ...mapGetters({
+      userID: 'auth/getUserID'
+    }),
     convertedDate() {
-      return this.$dayjs(this.item.createdAt).format('YYYY년 M월 D일 HH시 m분')
+      return this.$dayjs(this.item.createdAt).format('YYYY-MM-DD HH:mm')
     }
   }
 }
