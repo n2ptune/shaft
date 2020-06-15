@@ -37,14 +37,12 @@ export default {
         }
       })
 
-      await store.commit('topic/setTopicHeader', topicData.head)
+      // await store.commit('topic/setTopicHeader', topicData.head)
 
       return {
         topics: topicData.topics
       }
-    } catch (error) {
-      console.log(error)
-    }
+    } catch (error) {}
   }
 }
 </script>

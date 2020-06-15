@@ -11,7 +11,6 @@ export default function(req, res) {
     if (error) {
       return res.status(500).end()
     } else {
-      console.log(result)
       return res.status(200).end()
     }
   })

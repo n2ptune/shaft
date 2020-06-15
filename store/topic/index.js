@@ -74,7 +74,7 @@ export const actions = {
       commit('setParentTopic', data.topics.root)
       commit('setChildrenTopics', data.topics.children)
     } catch (error) {
-      this.$router.go(-1)
+      // this.$router.go(-1)
     }
   },
 

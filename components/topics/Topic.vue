@@ -29,11 +29,7 @@
         <slot name="content" />
       </div>
       <ClientOnly>
-        <CommentsContainer
-          :comments="comments"
-          :topic-id="topicId"
-          @refreshComment="refreshComment"
-        />
+        <CommentsContainer :comments="comments" :topic-id="topicId" />
       </ClientOnly>
     </div>
   </div>
@@ -85,14 +81,6 @@ export default {
     ...mapGetters({
       isLogin: 'auth/getIsLogin'
     })
-  },
-
-  methods: {
-    refreshComment(commentsData) {
-      // 댓글 컴포넌트로부터 새로고침한 댓글들을
-      // 해당 컴포넌트에서 댓글 데이터 업데이트
-      this.comments = commentsData
-    }
   }
 }
 </script>

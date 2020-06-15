@@ -59,12 +59,14 @@ export const topicByID = function(req, res) {
             if (comment.targetTopicID === data.topics.root.id) {
               data.topics.root.comments.push(comment)
             } else {
-              const matchTopic = data.topics.children.filter((el, idx) => {
-                el._idx = idx
-                return el.id === comment.targetTopicID
-              })
-
-              data.topics.children[matchTopic._idx].push(comment)
+              // FIXME: 이 부분 에러, 부모 토픽과 자식 토픽들에서 자식 토픽들에
+              // 댓글들을 연결해줘야
+              // 하는데, 좀 더 다른 로직이 필요할 듯
+              // const matchTopic = data.topics.children.filter((el, idx) => {
+              //   el._idx = idx
+              //   return el.id === comment.targetTopicID
+              // })
+              // data.topics.children[matchTopic._idx].push(comment)
             }
           })
 

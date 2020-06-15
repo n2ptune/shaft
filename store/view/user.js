@@ -29,8 +29,6 @@ export const actions = {
     try {
       const { data: userData } = await this.$axios.get('/api/users/' + id)
       commit('setViewUser', userData)
-    } catch (error) {
-      console.error(error)
-    }
+    } catch (error) {}
   }
 }
