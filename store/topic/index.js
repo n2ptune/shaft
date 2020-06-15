@@ -4,8 +4,6 @@
 //   topicCount: null
 // })
 
-import { writeComment } from '~/api/models/comments'
-
 // export const getters = {
 //   getCurrentOffset(state) {
 //     return state.currentOffset
