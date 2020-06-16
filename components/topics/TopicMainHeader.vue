@@ -1,25 +1,30 @@
 <template>
-  <div class="mb-8">
-    <div class="descriptor">
-      <span>#{{ parentTopic.topicId }}</span>
+  <section class="mb-8">
+    <article class="descriptor">
+      <span>#{{ parentTopic.id }}</span>
       <span>{{ formatDate }}</span>
-    </div>
-    <div class="text-2xl font-bold">
+    </article>
+    <article class="text-2xl font-bold">
       {{ parentTopic.title }}
-    </div>
-    <div class="mt-2">
-      <div class="count-info-wrap">
-        <div class="text-sm">
+    </article>
+    <section class="mt-2">
+      <section class="count-info-wrap">
+        <article class="text-sm">
           <span class="text-gray-600">
             조회수
           </span>
           <span class="text-black text-base">
             {{ parentTopic.views }}
           </span>
-        </div>
-      </div>
-    </div>
-  </div>
+        </article>
+      </section>
+    </section>
+    <section v-if="topicTags" class="mt-4">
+      <article>
+        태그 테스트
+      </article>
+    </section>
+  </section>
 </template>
 
 <script>
@@ -28,7 +33,8 @@ import { mapGetters } from 'vuex'
 export default {
   computed: {
     ...mapGetters({
-      parentTopic: 'topic/getParentTopic'
+      parentTopic: 'topic/getParentTopic',
+      topicTags: 'topic/getTopicsTag'
     }),
     formatDate() {
       return this.$dayjs(this.parentTopic.createdAt).format(

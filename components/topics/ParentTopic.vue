@@ -29,21 +29,6 @@ export default {
       parentTopic: 'topic/getParentTopic'
     })
   }
-
-  // props: {
-  //   user: {
-  //     type: Object,
-  //     required: true
-  //   },
-  //   content: {
-  //     type: String,
-  //     required: true
-  //   },
-  //   topic: {
-  //     type: Object,
-  //     required: true
-  //   }
-  // }
 }
 </script>
 

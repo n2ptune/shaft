@@ -25,7 +25,7 @@ export const topicByID = function(req, res) {
               name: splitedCategoryByName[index]
             })
           })
-        } else {
+        } else if (result.subCategoryID) {
           result.sub.push({
             id: result.subCategoryID,
             name: result.subCategories

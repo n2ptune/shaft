@@ -1,56 +1,59 @@
 <template>
   <main>
-    <div>
+    <section class="topic-container">
       <TopicMainHeader />
       <ParentTopic />
-    </div>
+      <ChildrenTopic v-if="childrenLength" />
+    </section>
   </main>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import TopicMainHeader from '@/components/topics/TopicMainHeader'
 import ParentTopic from '@/components/topics/ParentTopic'
+import ChildrenTopic from '@/components/topics/ChildrenTopic'
 
 export default {
   components: {
     TopicMainHeader,
-    ParentTopic
+    ParentTopic,
+    ChildrenTopic
   },
 
   async asyncData({ params, redirect, store }) {
-    // try {
-    //   const { data } = await $axios.get('/api/topics/' + params.id)
-    //   const rootTopic = data.topics.root
-    //   const childrenTopic = data.topics.children
-    //   return {
-    //     rootTopic,
-    //     childrenTopic
-    //   }
-    // } catch (error) {
-    //   redirect('/')
-    // }
-
     await store.dispatch('topic/fetchTopics', params.id)
+  },
+
+  computed: {
+    ...mapGetters({
+      childrenLength: 'topic/getChildrenTopicsLength'
+    })
   }
 }
 </script>
 
 <style lang="postcss" scoped>
-.topic-wrap {
+.topic-wrap,
+section >>> .topic-wrap {
   @apply border border-gray-300 rounded py-1 px-4;
-}
 
-.topic-wrap.parent,
-.topic-wrap.child {
-  border-top-width: 5px;
-  border-top-style: solid;
-}
+  &.parent,
+  &.child {
+    border-top-width: 5px;
+    border-top-style: solid;
+  }
 
-.topic-wrap.parent {
-  border-top-color: theme('colors.orange.400');
-}
+  &.parent {
+    border-top-color: theme('colors.orange.400');
+  }
 
-.topic-wrap.child {
-  border-top-color: theme('colors.teal.300');
+  &.child {
+    border-top-color: theme('colors.blue.300');
+  }
+
+  &:not(:first-child) {
+    @apply my-12;
+  }
 }
 </style>

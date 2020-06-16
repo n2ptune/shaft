@@ -1,31 +1,3 @@
-// export const state = () => ({
-//   currentOffset: null,
-//   pageCount: null,
-//   topicCount: null
-// })
-
-// export const getters = {
-//   getCurrentOffset(state) {
-//     return state.currentOffset
-//   },
-
-//   getPageCount(state) {
-//     return state.pageCount
-//   },
-
-//   getTopicCount(state) {
-//     return state.topicCount
-//   }
-// }
-
-// export const mutations = {
-//   setTopicHeader(state, { currentOffset, pageCount, topicCount }) {
-//     state.currentOffset = currentOffset
-//     state.pageCount = pageCount
-//     state.topicCount = topicCount
-//   }
-// }
-
 export const state = () => ({
   parent: null,
   children: null
@@ -42,6 +14,34 @@ export const getters = {
 
   getAllTopics(state) {
     return state.children.slice().push(state.parent)
+  },
+
+  getChildrenTopicsLength(state) {
+    if (state.children) {
+      return state.children.length
+    } else {
+      return 0
+    }
+  },
+
+  getTopicsTag(state) {
+    if (state.parent.sub.length || state.parent.originCategoryID) {
+      const parseID = (category) => {
+        category.id = parseInt(category.id)
+        return category
+      }
+
+      return state.parent.sub
+        .slice()
+        .map(parseID)
+        .concat({
+          id: state.parent.originCategoryID,
+          name: state.parent.originCategoryName,
+          isOrigin: true
+        })
+    } else {
+      return null
+    }
   }
 }
 
@@ -74,7 +74,7 @@ export const actions = {
       commit('setParentTopic', data.topics.root)
       commit('setChildrenTopics', data.topics.children)
     } catch (error) {
-      // this.$router.go(-1)
+      this.$router.go(-1)
     }
   },
 
