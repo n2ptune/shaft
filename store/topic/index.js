@@ -31,14 +31,34 @@ export const getters = {
         return category
       }
 
-      return state.parent.sub
-        .slice()
-        .map(parseID)
-        .concat({
-          id: state.parent.originCategoryID,
-          name: state.parent.originCategoryName,
-          isOrigin: true
-        })
+      const origin = state.parent.originCategoryID
+        ? {
+            id: state.parent.originCategoryID,
+            name: state.parent.originCategoryName,
+            isOrigin: true
+          }
+        : null
+
+      if (origin && state.parent.sub.length) {
+        return []
+          .slice()
+          .concat(origin)
+          .concat(state.parent.sub)
+          .map(parseID)
+      } else if (!origin && state.parent.sub.length) {
+        return state.parent.sub.map(parseID)
+      }
+
+      // TODO:
+
+      // return state.parent.sub
+      //   .slice()
+      //   .map(parseID)
+      //   .concat({
+      //     id: state.parent.originCategoryID,
+      //     name: state.parent.originCategoryName,
+      //     isOrigin: true
+      //   })
     } else {
       return null
     }
