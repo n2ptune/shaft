@@ -26,7 +26,7 @@
       </button>
     </section>
     <section v-if="comments.length" class="flex flex-col">
-      <div class="text-gray-600 mb-4">{{ comments.length }}개의 댓글</div>
+      <div class="text-gray-600 mb-4">{{ originLength }}개의 댓글</div>
       <CommentListItem
         v-for="comment in comments"
         :key="comment.commentID"
@@ -53,6 +53,10 @@ export default {
       required: true
     },
     topicId: {
+      type: Number,
+      required: true
+    },
+    originLength: {
       type: Number,
       required: true
     }
@@ -131,7 +135,7 @@ textarea {
 }
 
 .comments-wrap {
-  @apply mt-6 mb-10;
+  @apply my-10;
 
   & .comments-btn-wrap {
     @apply flex justify-end mt-2;

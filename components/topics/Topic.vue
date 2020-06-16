@@ -29,7 +29,19 @@
         <slot name="content" />
       </div>
       <ClientOnly>
-        <CommentsContainer :comments="comments" :topic-id="topicId" />
+        <CommentsContainer
+          :comments="pagingComments"
+          :topic-id="topicId"
+          :origin-length="comments.length"
+        />
+        <footer
+          v-if="!isCommentOffset && isCommentOverFive"
+          class="inline-block"
+        >
+          <p class="underline cursor-pointer" @click="loadMoreComment">
+            댓글 {{ lengthOfComments }}개 더보기
+          </p>
+        </footer>
       </ClientOnly>
     </div>
   </div>
@@ -77,10 +89,48 @@ export default {
     }
   },
 
+  data: () => ({
+    isCommentOffset: false
+  }),
+
   computed: {
     ...mapGetters({
       isLogin: 'auth/getIsLogin'
-    })
+    }),
+    isCommentOverFive() {
+      return this.comments.length > 5
+    },
+    lengthOfComments() {
+      if (this.isCommentOverFive) {
+        return this.comments.length - 5
+      } else {
+        return this.comments.length
+      }
+    },
+    pagingComments() {
+      if (this.comments.length < 5) {
+        // 댓글의 총 길이가 5개 미만이라면 전체 보여주기
+        return this.comments
+      } else if (!this.isCommentOffset) {
+        // 댓글의 총 길이가 5개 이상이고 오프셋 데이터가 false라면
+        // 5개만 보여주기
+        return this.comments.slice(0, 5)
+      } else {
+        // 댓글의 총 길이가 5개 이상이고 오프셋 데이터가 true면
+        // 전체 보여주기
+        return this.comments
+      }
+    }
+  },
+
+  methods: {
+    loadMoreComment() {
+      if (this.isCommentOffset) {
+        return
+      }
+
+      this.isCommentOffset = true
+    }
   }
 }
 </script>
