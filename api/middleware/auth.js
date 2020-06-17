@@ -16,6 +16,7 @@ export default async function(req, res, next) {
     // 만료되었다면 catch에 'TokenExpiredError' 라는 이름의 에러 발생
     const user = verifyToken(token)
 
+    // 응답 객체에 임시로 유저 데이터 저장
     res.locals.user = user
 
     next()
@@ -29,8 +30,8 @@ export default async function(req, res, next) {
         const accessToken = signAccessTokenWithRT(user.token)
         const refreshUser = decodeToken(accessToken)
 
+        // 응답 객체에 임시로 유저 데이터 저장
         res.locals.user = refreshUser
-
         res.locals.token = accessToken
         res.append('x-www-access-token', accessToken)
         next()

@@ -74,6 +74,17 @@ export const mutations = {
     updatedTopic.comments = refreshCommentsData
   },
 
+  updateLikeCount(state, { topicID, likeCount }) {
+    if (state.parent.id === topicID) {
+      // 타겟이 부모 토픽이면
+      state.parent.likeCount = likeCount
+    } else {
+      // 타겟이 자식 토픽이면
+      const target = state.children.filter((topic) => topic.id === topicID)[0]
+      target.likeCount = likeCount
+    }
+  },
+
   clearTopics(state) {
     state.parent = null
     state.children = null

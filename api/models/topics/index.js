@@ -73,3 +73,42 @@ export const countOfTopics = async () => {
     throw new Error(error)
   }
 }
+
+export const likeTopic = async (topicID, user, cb) => {
+  const checkSQL = `SELECT * FROM TEST_TOPICS_LIKE t_like
+  WHERE t_like.topicID = ? AND t_like.userID = ?`
+
+  try {
+    const [rows] = await db.query(checkSQL, [topicID, user.id])
+    let isCanceled = false
+
+    if (!rows.length) {
+      // 좋아요 한 기록이 없으면 넣기
+      const insertSQL = `INSERT INTO TEST_TOPICS_LIKE
+      (topicID, userID)
+      VALUES (?, ?)`
+
+      await db.query(insertSQL, [topicID, user.id])
+    } else {
+      // 좋아요 한 기록이 있으면 취소
+      const deleteSQL = `DELETE FROM TEST_TOPICS_LIKE
+      WHERE topicID = ? AND userID = ?;`
+
+      await db.query(deleteSQL, [topicID, user.id])
+
+      isCanceled = true
+    }
+
+    const nextSQL = `SELECT COUNT(*) likeCount FROM TEST_TOPICS_LIKE t_like
+    WHERE t_like.topicID = ?;`
+
+    const [nextResult] = await db.query(nextSQL, topicID)
+    const likeCount = nextResult[0].likeCount
+
+    // 결과 취합해서 콜백 호출
+    cb(null, { topicID, isCanceled, likeCount })
+  } catch (error) {
+    // 에러 발생시 에러 객체와 함께 콜백 호출
+    cb(error, null)
+  }
+}

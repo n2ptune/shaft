@@ -17,6 +17,7 @@
               <fa
                 :icon="['far', 'thumbs-up']"
                 class="cursor-pointer text-gray-600 hover:text-black"
+                @click="likeTopic"
               />
               <span>
                 {{ likeCount }}
@@ -130,6 +131,19 @@ export default {
       }
 
       this.isCommentOffset = true
+    },
+    async likeTopic() {
+      // likeInfo
+      // topicID, isCanceled, likeCount
+      try {
+        const { data: likeInfo } = await this.$axios.put('/api/topics/like', {
+          topicID: this.topicId
+        })
+
+        this.$store.commit('topic/updateLikeCount', likeInfo)
+      } catch (error) {
+        console.log(error)
+      }
     }
   }
 }

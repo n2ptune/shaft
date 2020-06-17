@@ -13,9 +13,14 @@
           {{ item.userNickname }}
         </nuxt-link>
         <span class="text-gray-600 font-light ml-1">{{ convertedDate }}</span>
-        <span v-if="item.commentOwnerID === userID" class="ml-1">
-          TODO) UPDATE, DELETE 등
-        </span>
+        <ul v-if="item.commentOwnerID === userID" class="manage-comments">
+          <li>
+            수정
+          </li>
+          <li>
+            삭제
+          </li>
+        </ul>
       </header>
       <article class="mt-1 text-sm">
         <p>{{ item.commentContent }}</p>
@@ -50,3 +55,22 @@ export default {
   }
 }
 </script>
+
+<style lang="postcss" scoped>
+.manage-comments {
+  @apply ml-1 inline-block text-sm font-light;
+
+  & li {
+    @apply inline cursor-pointer;
+
+    &:not(:first-of-type)::before {
+      content: '|';
+      @apply mx-1 inline-block text-xs align-top;
+    }
+
+    &:hover {
+      @apply font-normal;
+    }
+  }
+}
+</style>
