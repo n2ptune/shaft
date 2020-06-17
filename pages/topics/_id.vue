@@ -29,6 +29,10 @@ export default {
     ...mapGetters({
       childrenLength: 'topic/getChildrenTopicsLength'
     })
+  },
+
+  async beforeDestroy() {
+    await this.$store.dispatch('topic/clearTopics')
   }
 }
 </script>

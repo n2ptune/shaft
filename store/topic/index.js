@@ -13,7 +13,10 @@ export const getters = {
   },
 
   getAllTopics(state) {
-    return state.children.slice().push(state.parent)
+    const topics = state.children.slice()
+    topics.push(state.parent)
+
+    return topics
   },
 
   getChildrenTopicsLength(state) {
@@ -25,12 +28,11 @@ export const getters = {
   },
 
   getTopicsTag(state) {
-    if (state.parent.sub.length || state.parent.originCategoryID) {
-      const parseID = (category) => {
-        category.id = parseInt(category.id)
-        return category
-      }
+    if (!state.parent && !state.children) {
+      return null
+    }
 
+    if (state.parent.sub.length || state.parent.originCategoryID) {
       const origin = state.parent.originCategoryID
         ? {
             id: state.parent.originCategoryID,
@@ -40,25 +42,12 @@ export const getters = {
         : null
 
       if (origin && state.parent.sub.length) {
-        return []
-          .slice()
-          .concat(origin)
-          .concat(state.parent.sub)
-          .map(parseID)
+        // 메인 카테고리가 있고, 서브 카테고리 또한 존재할 때
+        return state.parent.sub.slice().concat(origin)
       } else if (!origin && state.parent.sub.length) {
-        return state.parent.sub.map(parseID)
+        // 메인 카테고리가 없고, 서브 카테고리만 존재할 때
+        return state.parent.sub.slice()
       }
-
-      // TODO:
-
-      // return state.parent.sub
-      //   .slice()
-      //   .map(parseID)
-      //   .concat({
-      //     id: state.parent.originCategoryID,
-      //     name: state.parent.originCategoryName,
-      //     isOrigin: true
-      //   })
     } else {
       return null
     }
@@ -83,6 +72,11 @@ export const mutations = {
     }
 
     updatedTopic.comments = refreshCommentsData
+  },
+
+  clearTopics(state) {
+    state.parent = null
+    state.children = null
   }
 }
 
@@ -112,5 +106,9 @@ export const actions = {
     )
 
     commit('updateCommentByID', { topicID, refreshCommentsData })
+  },
+
+  clearTopics({ commit }) {
+    commit('clearTopics')
   }
 }

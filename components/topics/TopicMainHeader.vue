@@ -20,8 +20,12 @@
       </section>
     </section>
     <section v-if="topicTags" class="mt-4">
-      <article>
-        태그 테스트
+      <article class="flex flex-wrap category-view-list-wrap">
+        <CategoryViewList
+          v-for="tag in sortedTopicTags"
+          :key="tag.name"
+          :tag="tag"
+        />
       </article>
     </section>
   </section>
@@ -29,8 +33,13 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import CategoryViewList from '@/components/topics/category/CategoryViewList'
 
 export default {
+  components: {
+    CategoryViewList
+  },
+
   computed: {
     ...mapGetters({
       parentTopic: 'topic/getParentTopic',
@@ -40,6 +49,21 @@ export default {
       return this.$dayjs(this.parentTopic.createdAt).format(
         'YYYY-MM-DD HH:mm:ss'
       )
+    },
+    sortedTopicTags() {
+      const clone = this.topicTags.slice()
+
+      clone.sort((a, b) => {
+        if (a.isOrigin) {
+          return -1
+        } else if (b.isOrigin) {
+          return 1
+        } else {
+          return parseInt(a.id) - parseInt(b.id)
+        }
+      })
+
+      return clone
     }
   }
 }
