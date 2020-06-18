@@ -94,9 +94,6 @@ export default {
           topicID: this.topicId,
           date: this.$convertDate(new Date())
         })
-
-        // 댓글 새로고침
-        // this.$emit('refreshComment', refreshCommentsData)
       } catch (error) {
         // 에러 발생시 댓글 입력창 하이라이트
         this.isErrorInputComment = true

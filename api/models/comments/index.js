@@ -13,6 +13,7 @@ export const getCommentsByTopicID = async (topicID, cb) => {
   comments.ownerID commentOwnerID,
   comments.topicID targetTopicID,
   CONVERT_TZ(comments.createdAt, '-09:00', 'GMT') AS createdAt,
+  CONVERT_TZ(comments.updatedAt, '-09:00', 'GMT') AS updatedAt,
   user.avatar userAvatar,
   user.nickname userNickname
   FROM TEST_COMMENTS comments
@@ -61,5 +62,44 @@ export const writeComment = async (
     })
   } catch (error) {
     return cb(error, null)
+  }
+}
+
+export const updateComment = async (user, { id, comment, date }, cb) => {
+  const checkSQL = `SELECT id, ownerID FROM TEST_COMMENTS
+  WHERE id = ? AND ownerID = ?`
+
+  try {
+    const [rows] = await db.query(checkSQL, [id, user.id])
+
+    if (!rows.length) {
+      throw new Error('일치하는 댓글이 없음')
+    }
+
+    const nextSQL = `UPDATE TEST_COMMENTS
+    SET updatedAt = ?,
+        content = ?
+    WHERE id = ? AND ownerID = ?`
+
+    await db.query(nextSQL, [date, comment, id, user.id])
+
+    const select = `SELECT comments.id, comments.content,
+    comments.ownerID, comments.topicID, topics.parentTopicID as parent,
+    CONVERT_TZ(comments.createdAt, '-09:00', 'GMT') as createdAt,
+    CONVERT_TZ(comments.updatedAt, '-09:00', 'GMT') as updatedAt
+    FROM TEST_COMMENTS comments
+    LEFT JOIN TEST_TOPICS topics
+    ON topics.id = comments.topicID
+    WHERE comments.id = ? AND comments.ownerID = ?`
+
+    const [result] = await db.query(select, [id, user.id])
+
+    if (!result.length) throw new Error('데이터베이스 에러')
+
+    result[0].isRoot = !result[0].parent
+
+    cb(null, result[0])
+  } catch (error) {
+    cb(error, null)
   }
 }

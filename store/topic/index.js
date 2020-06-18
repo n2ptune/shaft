@@ -64,14 +64,36 @@ export const mutations = {
     state.children = topics
   },
 
+  modifyComment(state, { commentID, updatedCommentData, updatedAt, isRoot }) {
+    if (isRoot) {
+      const target = state.parent.comments.filter(
+        (comment) => comment.commentID === commentID
+      )[0]
+
+      target.commentContent = updatedCommentData
+      target.updatedAt = updatedAt
+    } else {
+      state.parent.children.forEach((child) => {
+        const target = child.comments.filter(
+          (comment) => comment.commentID === commentID
+        )
+
+        if (target.length) {
+          target[0].commentContent = updatedCommentData
+          target[0].updatedAt = updatedAt
+        }
+      })
+    }
+  },
+
   updateCommentByID(state, { topicID, refreshCommentsData }) {
-    let updatedTopic = state.children.filter((topic) => topic.id === topicID)
+    const updatedTopic = state.children.filter((topic) => topic.id === topicID)
 
     if (!updatedTopic.length) {
-      updatedTopic = state.parent
+      updatedTopic[0] = state.parent
     }
 
-    updatedTopic.comments = refreshCommentsData
+    updatedTopic[0].comments = refreshCommentsData
   },
 
   updateLikeCount(state, { topicID, likeCount }) {
@@ -117,6 +139,27 @@ export const actions = {
     )
 
     commit('updateCommentByID', { topicID, refreshCommentsData })
+  },
+
+  async updateComment({ commit }, { commentID, updatedComment, date }) {
+    if (!updatedComment || !commentID)
+      throw new Error('댓글 아이디 혹은 내용이 필요합니다.')
+
+    const { data: modifiedCommentData } = await this.$axios.put(
+      '/api/comments/update',
+      {
+        commentID,
+        updatedComment,
+        date
+      }
+    )
+
+    commit('modifyComment', {
+      commentID: modifiedCommentData.id,
+      updatedCommentData: modifiedCommentData.content,
+      updatedAt: modifiedCommentData.updatedAt,
+      isRoot: modifiedCommentData.isRoot
+    })
   },
 
   clearTopics({ commit }) {

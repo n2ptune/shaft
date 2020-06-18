@@ -1,12 +1,10 @@
 <template>
   <section class="flex my-3">
-    <!-- 아바타 -->
     <article class="flex-shrink-0 self-start">
       <nuxt-link :to="`/users/${item.commentOwnerID}`">
         <UserAvatar :src="item.userAvatar" :alt="item.userNickname" />
       </nuxt-link>
     </article>
-    <!-- 내용 -->
     <section class="ml-2">
       <header class="font-bold">
         <nuxt-link :to="`/users/${item.commentOwnerID}`">
@@ -14,10 +12,10 @@
         </nuxt-link>
         <span class="text-gray-600 font-light ml-1">{{ convertedDate }}</span>
         <ul v-if="item.commentOwnerID === userID" class="manage-comments">
-          <li>
+          <li @click="updateComment">
             수정
           </li>
-          <li>
+          <li @click="deleteComment">
             삭제
           </li>
         </ul>
@@ -51,6 +49,49 @@ export default {
     }),
     convertedDate() {
       return this.$dayjs(this.item.createdAt).format('YYYY-MM-DD HH:mm')
+    }
+  },
+
+  methods: {
+    updateComment() {
+      this.$confirm.on({
+        isEditor: true,
+        title: '댓글 수정',
+        body: this.item.commentContent,
+        onSubmit: async (data) => {
+          if (data === this.item.commentContent) return
+
+          try {
+            await this.$store.dispatch('topic/updateComment', {
+              commentID: this.item.commentID,
+              updatedComment: data,
+              date: this.$convertDate(new Date())
+            })
+
+            this.$confirm.close()
+          } catch (error) {
+            console.log(error)
+          }
+        },
+        onCancel: () => {
+          this.$confirm.close()
+        }
+      })
+    },
+    deleteComment() {
+      this.$confirm.on({
+        title: '댓글 삭제',
+        body: '댓글을 삭제하시겠습니까?',
+        isEditor: false,
+
+        onSubmit: () => {
+          console.log('ok')
+        },
+
+        onCancel: () => {
+          this.$confirm.close()
+        }
+      })
     }
   }
 }
