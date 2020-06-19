@@ -108,10 +108,29 @@ export const deleteComment = async (user, { commentID }, cb) => {
   const checkSQL = `SELECT ownerID FROM TEST_COMMENTS WHERE id = ?`
 
   try {
+    // 인자로 온 댓글 아이디가 데이터베이스에 있는지 확인
+    // ownerID 컬럼을 가져옴
     const [checkResults] = await db.query(checkSQL, commentID)
 
     if (!checkResults.length) {
-      throw new Error('')
+      throw new Error('InvalidCommentID')
     }
-  } catch (innerError) {}
+
+    // 댓글 작성자와 댓글 삭제 요청자의 아이디가 일치하지 않을 경우
+    // 에러 처리
+    const sameUser = parseInt(checkResults[0].ownerID) === user.id
+
+    if (!sameUser) {
+      throw new Error('NoSameUser')
+    }
+
+    const deleteSQL = `DELETE FROM TEST_COMMENTS
+    WHERE id = ? AND ownerID = ?`
+
+    await db.query(deleteSQL, [commentID, user.id])
+
+    cb(null, true)
+  } catch (innerError) {
+    cb(innerError, null)
+  }
 }

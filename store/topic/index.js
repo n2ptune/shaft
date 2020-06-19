@@ -86,6 +86,24 @@ export const mutations = {
     }
   },
 
+  deleteComment(state, { commentID, topicID }) {
+    const searchTarget = (element) => element.commentID === commentID
+
+    const searchParent = state.parent.comments.findIndex(searchTarget)
+
+    if (searchParent !== undefined) {
+      state.parent.comments.splice(searchParent, 1)
+    } else {
+      for (const child of state.children) {
+        const searchIndex = child.comments.findIndex(searchTarget)
+
+        if (!searchIndex) continue
+
+        child.comments.splice(searchIndex, 1)
+      }
+    }
+  },
+
   updateCommentByID(state, { topicID, refreshCommentsData }) {
     const updatedTopic = state.children.filter((topic) => topic.id === topicID)
 
@@ -168,6 +186,8 @@ export const actions = {
     }
 
     await this.$axios.delete(`/api/comments/delete/${commentID}`)
+
+    commit('deleteComment', { commentID, topicID })
   },
 
   clearTopics({ commit }) {

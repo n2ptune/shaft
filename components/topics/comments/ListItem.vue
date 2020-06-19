@@ -95,6 +95,8 @@ export default {
             commentID: this.item.commentID,
             topicID: this.item.targetTopicID
           })
+
+          this.$confirm.close()
         },
 
         onCancel: () => {
