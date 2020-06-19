@@ -162,6 +162,14 @@ export const actions = {
     })
   },
 
+  async deleteComment({ commit }, { commentID }) {
+    if (!commentID) {
+      return
+    }
+
+    // TODO:
+  },
+
   clearTopics({ commit }) {
     commit('clearTopics')
   }

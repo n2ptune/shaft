@@ -84,8 +84,16 @@ export default {
         body: '댓글을 삭제하시겠습니까?',
         isEditor: false,
 
-        onSubmit: () => {
-          console.log('ok')
+        onSubmit: async () => {
+          if (!this.$store.getters['auth/getIsLogin']) {
+            // 로그인 필요
+            return
+          }
+
+          await this.$store.dispatch('topic/deleteComment', {
+            commentID: this.item.commentID,
+            topicID: this.item.targetTopicID
+          })
         },
 
         onCancel: () => {
