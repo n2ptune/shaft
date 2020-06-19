@@ -90,6 +90,7 @@ export default {
             return
           }
 
+          // 토픽과 댓글 아이디로 Vuex 액션 호출
           await this.$store.dispatch('topic/deleteComment', {
             commentID: this.item.commentID,
             topicID: this.item.targetTopicID

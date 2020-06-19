@@ -162,12 +162,12 @@ export const actions = {
     })
   },
 
-  async deleteComment({ commit }, { commentID }) {
+  async deleteComment({ commit }, { commentID, topicID }) {
     if (!commentID) {
       return
     }
 
-    // TODO:
+    await this.$axios.delete(`/api/comments/delete/${commentID}`)
   },
 
   clearTopics({ commit }) {

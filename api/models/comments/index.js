@@ -103,3 +103,15 @@ export const updateComment = async (user, { id, comment, date }, cb) => {
     cb(error, null)
   }
 }
+
+export const deleteComment = async (user, { commentID }, cb) => {
+  const checkSQL = `SELECT ownerID FROM TEST_COMMENTS WHERE id = ?`
+
+  try {
+    const [checkResults] = await db.query(checkSQL, commentID)
+
+    if (!checkResults.length) {
+      throw new Error('')
+    }
+  } catch (innerError) {}
+}
