@@ -1,4 +1,4 @@
-const icons = require('./assets/icons/index')
+const icons = require('./src/assets/icons/index')
 
 module.exports = {
   mode: 'universal',
@@ -81,7 +81,7 @@ module.exports = {
   },
   serverMiddleware: [
     {
-      handler: '~/api/index.js',
+      handler: '@/api/index.js',
       path: '/api'
     }
   ],
@@ -100,5 +100,9 @@ module.exports = {
       regular: icons.regular,
       brands: icons.brands
     }
+  },
+  srcDir: 'src/',
+  dotenv: {
+    path: './'
   }
 }
