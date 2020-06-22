@@ -56,10 +56,16 @@ export const writeTopic = async (topic, user) => {
       parent
     ])
 
-    console.log(result)
+    if (parent) {
+      const nextSQL = `CALL readTopicByID(${result.insertId})`
 
-    return {
-      id: result.insertId
+      const [replyRows] = await db.query(nextSQL)
+
+      return replyRows[0][0]
+    } else {
+      return {
+        id: result.insertId
+      }
     }
   } catch (error) {
     throw new Error('Write Topic Error')

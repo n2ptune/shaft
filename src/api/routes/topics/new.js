@@ -22,7 +22,7 @@ export default async function(req, res) {
   const { title, content, categories, date, parent } = req.body
 
   // 검증
-  if (!validateTopic({ title, date, content })) {
+  if (!validateTopic({ title, date, content, isReply: !!parent })) {
     return res.status(400).end()
   } else {
     // 검증됨
@@ -43,16 +43,14 @@ export default async function(req, res) {
     }
 
     try {
-      const { id } = await writeTopic(
+      const topic = await writeTopic(
         { title, date, content, category, parent },
         user
       )
 
-      return res.status(201).send({
+      return res.status(200).send({
         status: 'success',
-        topic: {
-          id
-        }
+        topic
       })
     } catch (error) {
       return res.status(500).send({ message: error.message })

@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper-editor mx-auto">
+  <div class="wrapper-editor">
     <Block v-if="!isReply" title="토픽 제목">
       <input
         v-model="topic.title"
@@ -143,8 +143,6 @@ export default {
         isReply: this.isReply
       })
 
-      console.log(isValidated)
-
       if (!isValidated) {
         // 토픽의 내용과 제목이 검증되지 않았을 경우
         // 이쪽에서 처리
@@ -193,7 +191,11 @@ export default {
           topic
         )
 
-        this.$router.push('/topics/' + topicData.topic.id)
+        if (topicData.topic.parentTopicID) {
+          this.$router.go()
+        } else {
+          this.$router.push('/topics/' + topicData.topic.id)
+        }
       } catch (error) {
       } finally {
         // 버튼 상태 변경
@@ -214,8 +216,7 @@ export default {
 }
 
 .wrapper-editor {
-  width: 56rem;
-  max-width: 56rem;
+  @apply w-full mx-auto;
 }
 
 .head .separate {

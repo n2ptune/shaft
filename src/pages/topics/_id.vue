@@ -5,7 +5,9 @@
       <ParentTopic />
       <ChildrenTopic v-if="childrenLength" />
       <ClientOnly>
-        <EditorWrapper v-if="isLogin" is-reply />
+        <section class="reply-container">
+          <EditorWrapper v-if="isLogin" is-reply />
+        </section>
       </ClientOnly>
     </section>
   </main>
@@ -65,5 +67,9 @@ section >>> .topic-wrap {
   &:not(:first-child) {
     @apply my-12;
   }
+}
+
+.reply-container {
+  @apply my-12;
 }
 </style>

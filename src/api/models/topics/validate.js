@@ -32,7 +32,5 @@ export const validateTopic = ({ title, date, content, isReply = false }) => {
     validateDate(date)
   ]
 
-  console.log(conditions, title, content, date)
-
   return !conditions.includes(false)
 }
