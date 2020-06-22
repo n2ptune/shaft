@@ -1,22 +1,13 @@
-# nuxt-jwt-practice
+# Shaft
 
-> My swell Nuxt.js project
+> 개발자들이 주제에 대해 자유롭게 질문하고 답변하는 커뮤니티
 
-## Build Setup
+## 프로젝트 환경
 
-```bash
-# install dependencies
-$ yarn install
+프로젝트에는 아래와 같은 프레임워크 & 라이브러리를 사용하였습니다.
 
-# serve with hot reload at localhost:3000
-$ yarn dev
-
-# build for production and launch server
-$ yarn build
-$ yarn start
-
-# generate static project
-$ yarn generate
-```
-
-For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+- Nuxt >= v2.12
+- Tailwindcss
+- MySQL
+- VueQuillEditor
+- JSONWebToken
