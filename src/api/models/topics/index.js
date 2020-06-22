@@ -36,12 +36,14 @@ export const readAllTopics = async (offset, cb) => {
 
 export const writeTopic = async (topic, user) => {
   const SQL = `INSERT INTO ${process.env.DB_TOPIC_TABLE}
-  (title, createdAt, content, ownerID, originCategoryID, subCategoryID)
+  (title, createdAt, content, ownerID,
+    originCategoryID, subCategoryID,
+    parentTopicID)
   VALUES
-  (?, ?, ?, ?, ?, ?)`
+  (?, ?, ?, ?, ?, ?, ?)`
 
   try {
-    const { title, date, content, category } = topic
+    const { title, date, content, category, parent } = topic
     const { id } = user
 
     const [result] = await db.query(SQL, [
@@ -50,8 +52,11 @@ export const writeTopic = async (topic, user) => {
       content,
       id,
       category.origin,
-      category.sub
+      category.sub,
+      parent
     ])
+
+    console.log(result)
 
     return {
       id: result.insertId

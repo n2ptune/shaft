@@ -15,22 +15,24 @@ function validateDate(date) {
  * @param {String} val
  * @param {Boolean} isContent
  */
-function validateLength(length, val, isContent = false) {
+function validateLength(length, val, isContent = false, isReply = false) {
   if (isContent) {
     const textWithoutTag = val.replace(/(<([^>]+)>)/gi, '')
 
     return textWithoutTag.length > length
   } else {
-    return val.length > length
+    return isReply ? true : val.length > length
   }
 }
 
-export const validateTopic = ({ title, date, content }) => {
+export const validateTopic = ({ title, date, content, isReply = false }) => {
   const conditions = [
-    validateLength(MIN_TITLE_LENGTH, title),
-    validateLength(MIN_CONTENT_LENGTH, content, true),
+    validateLength(MIN_TITLE_LENGTH, title, false, isReply),
+    validateLength(MIN_CONTENT_LENGTH, content, true, isReply),
     validateDate(date)
   ]
+
+  console.log(conditions, title, content, date)
 
   return !conditions.includes(false)
 }

@@ -19,7 +19,7 @@ export default async function(req, res) {
     return res.status(500).end()
   }
 
-  const { title, content, categories, date } = req.body
+  const { title, content, categories, date, parent } = req.body
 
   // 검증
   if (!validateTopic({ title, date, content })) {
@@ -43,7 +43,10 @@ export default async function(req, res) {
     }
 
     try {
-      const { id } = await writeTopic({ title, date, content, category }, user)
+      const { id } = await writeTopic(
+        { title, date, content, category, parent },
+        user
+      )
 
       return res.status(201).send({
         status: 'success',

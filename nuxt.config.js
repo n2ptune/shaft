@@ -77,6 +77,7 @@ module.exports = {
      ** You can extend webpack config here
      */
     postcss: {},
+    extractCSS: true,
     extend(config, ctx) {}
   },
   serverMiddleware: [

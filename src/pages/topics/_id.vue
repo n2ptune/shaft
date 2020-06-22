@@ -4,6 +4,9 @@
       <TopicMainHeader />
       <ParentTopic />
       <ChildrenTopic v-if="childrenLength" />
+      <ClientOnly>
+        <EditorWrapper v-if="isLogin" is-reply />
+      </ClientOnly>
     </section>
   </main>
 </template>
@@ -13,12 +16,14 @@ import { mapGetters } from 'vuex'
 import TopicMainHeader from '@/components/topics/TopicMainHeader'
 import ParentTopic from '@/components/topics/ParentTopic'
 import ChildrenTopic from '@/components/topics/ChildrenTopic'
+import EditorWrapper from '@/components/topics/editor/EditorWrapper'
 
 export default {
   components: {
     TopicMainHeader,
     ParentTopic,
-    ChildrenTopic
+    ChildrenTopic,
+    EditorWrapper
   },
 
   async asyncData({ params, redirect, store }) {
@@ -27,7 +32,8 @@ export default {
 
   computed: {
     ...mapGetters({
-      childrenLength: 'topic/getChildrenTopicsLength'
+      childrenLength: 'topic/getChildrenTopicsLength',
+      isLogin: 'auth/getIsLogin'
     })
   },
 

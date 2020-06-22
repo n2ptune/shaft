@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper-editor mx-auto">
-    <Block title="토픽 제목">
+    <Block v-if="!isReply" title="토픽 제목">
       <input
         v-model="topic.title"
         type="text"
@@ -8,7 +8,7 @@
         class="input-reset"
       />
     </Block>
-    <div class="flex flex-col lg:flex-row head mb-12">
+    <div v-if="!isReply" class="flex flex-col lg:flex-row head mb-12">
       <Block title="카테고리(단일 지정)" class="separate">
         <CategoryList :category="category.origin" />
       </Block>
@@ -16,7 +16,7 @@
         <CategoryList :category="category.sub" :multiselect="true" />
       </Block>
     </div>
-    <Block title="토픽 내용" class="editor-wrapper">
+    <Block :title="topicContentTitle" class="editor-wrapper">
       <QuillWrapper
         :options="editorOption"
         ref-bind="myQuillEditor"
@@ -55,6 +55,14 @@ export default {
     QuillWrapper
   },
 
+  props: {
+    isReply: {
+      type: Boolean,
+      required: false,
+      default: false
+    }
+  },
+
   data: () => ({
     topic: {
       title: '',
@@ -85,10 +93,14 @@ export default {
 
   computed: {
     ...mapGetters({
-      token: 'auth/getUserToken'
+      token: 'auth/getUserToken',
+      parentTopic: 'topic/getParentTopic'
     }),
     waitingText() {
       return this.writing ? '토픽 작성중...' : '토픽 작성하기'
+    },
+    topicContentTitle() {
+      return this.isReply ? '토픽에 답글 달기' : '토픽 내용'
     }
   },
 
@@ -127,8 +139,11 @@ export default {
       const isValidated = validateTopic({
         title: this.topic.title,
         content: this.topic.content,
-        date
+        date,
+        isReply: this.isReply
       })
+
+      console.log(isValidated)
 
       if (!isValidated) {
         // 토픽의 내용과 제목이 검증되지 않았을 경우
@@ -139,38 +154,43 @@ export default {
       // 버튼 사용 불가 상태로 변경
       this.writing = true
 
-      // 선택된 카테고리만 추출
-      const extractCategory = (o, s) => {
-        const origin = o.filter((item) => item.selected)
-        const sub = s.filter((item) => item.selected)
-
-        return {
-          origin,
-          sub
-        }
-      }
-
-      const categories = extractCategory(
-        this.category.origin,
-        this.category.sub
-      )
-
       const topic = {
         title: this.topic.title,
         content: this.topic.content,
-        categories,
         date
+      }
+
+      if (!this.isReply) {
+        // 선택된 카테고리만 추출
+        const extractCategory = (o, s) => {
+          const origin = o.filter((item) => item.selected)
+          const sub = s.filter((item) => item.selected)
+
+          return {
+            origin,
+            sub
+          }
+        }
+
+        const categories = extractCategory(
+          this.category.origin,
+          this.category.sub
+        )
+
+        topic.categories = categories
+        topic.parent = null
+      } else {
+        topic.categories = {
+          origin: [],
+          sub: []
+        }
+        topic.parent = this.parentTopic.id
       }
 
       try {
         const { data: topicData } = await this.$axios.post(
           '/api/topics/new',
-          topic,
-          {
-            headers: {
-              Authorization: `Bearer ${this.token}`
-            }
-          }
+          topic
         )
 
         this.$router.push('/topics/' + topicData.topic.id)
