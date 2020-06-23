@@ -84,6 +84,11 @@ export default {
       type: Number,
       required: true
     },
+    parent: {
+      type: Number,
+      required: false,
+      default: null
+    },
     comments: {
       type: Array,
       required: true

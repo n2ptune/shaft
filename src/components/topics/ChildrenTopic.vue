@@ -9,6 +9,7 @@
       :owner-id="topic.ownerID"
       :topic-id="topic.id"
       :like-count="topic.likeCount"
+      :parent="topic.parentTopicID"
       :comments="topic.comments"
       class="child"
     >
