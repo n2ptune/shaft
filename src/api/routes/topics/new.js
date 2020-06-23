@@ -25,7 +25,6 @@ export default async function(req, res) {
   if (!validateTopic({ title, date, content, isReply: !!parent })) {
     return res.status(400).end()
   } else {
-    // 검증됨
     const category = {
       origin: [],
       sub: []
