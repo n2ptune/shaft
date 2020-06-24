@@ -1,23 +1,19 @@
 <template>
-  <section class="mb-8">
-    <article class="descriptor">
-      <span>#{{ parentTopic.id }}</span>
-      <span>{{ formatDate }}</span>
-    </article>
-    <article class="text-2xl font-bold">
+  <section class="mb-8 border-b border-gray-300 pb-4">
+    <article class="text-3xl font-normal">
       {{ parentTopic.title }}
     </article>
     <section class="mt-2">
-      <section class="count-info-wrap">
-        <article class="text-sm">
-          <span class="text-gray-600">
-            조회수
-          </span>
-          <span class="text-black text-base">
-            {{ parentTopic.views }}
-          </span>
-        </article>
-      </section>
+      <ul class="info-wrap">
+        <li v-for="info in countInfo" :key="info.name">
+          <p>
+            {{ info.name }}
+          </p>
+          <p>
+            {{ info.val }}
+          </p>
+        </li>
+      </ul>
     </section>
     <section v-if="topicTags" class="mt-4">
       <article class="flex flex-wrap category-view-list-wrap">
@@ -45,11 +41,6 @@ export default {
       parentTopic: 'topic/getParentTopic',
       topicTags: 'topic/getTopicsTag'
     }),
-    formatDate() {
-      return this.$dayjs(this.parentTopic.createdAt).format(
-        'YYYY-MM-DD HH:mm:ss'
-      )
-    },
     sortedTopicTags() {
       const clone = this.topicTags.slice()
 
@@ -64,6 +55,26 @@ export default {
       })
 
       return clone
+    },
+    countInfo() {
+      const counts = [
+        {
+          name: '조회수',
+          val: this.parentTopic.views
+        },
+        {
+          name: '작성일',
+          val: this.$dayjs(this.parentTopic.createdAt).format(
+            'YYYY-MM-DD HH:mm:ss'
+          )
+        },
+        {
+          name: '작성자',
+          val: this.parentTopic.ownerNickname
+        }
+      ]
+
+      return counts
     }
   }
 }
@@ -78,11 +89,25 @@ export default {
   @apply text-sm text-gray-500;
 }
 
-.count-info-wrap {
-  @apply inline-block;
+.info-wrap {
+  & li {
+    @apply inline-block;
 
-  &:not(:first-of-type) {
-    @apply mx-1;
+    & p {
+      @apply inline-block;
+
+      &:first-of-type {
+        @apply text-gray-700;
+      }
+
+      &:last-of-type {
+        @apply text-black;
+      }
+    }
+
+    &:not(:first-of-type) {
+      @apply ml-3;
+    }
   }
 }
 </style>

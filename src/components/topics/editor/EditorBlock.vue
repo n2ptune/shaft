@@ -28,12 +28,12 @@ export default {
 }
 
 .block {
-  @apply border border-gray-300 rounded-lg p-2 h-full;
+  @apply border border-gray-400 rounded-lg p-2 h-full;
 }
 
 .block-title {
   padding: 0 1rem 0.5rem 1rem;
-  @apply font-bold;
+  @apply font-bold mb-3;
 }
 
 @screen lg {

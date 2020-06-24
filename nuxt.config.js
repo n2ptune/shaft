@@ -77,7 +77,7 @@ module.exports = {
      ** You can extend webpack config here
      */
     postcss: {},
-    extractCSS: true,
+    extractCSS: process.env.NODE_ENV === 'production',
     extend(config, ctx) {}
   },
   serverMiddleware: [

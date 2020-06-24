@@ -1,14 +1,28 @@
 <template>
   <main>
-    <section class="topic-container">
-      <TopicMainHeader />
-      <ParentTopic />
-      <ChildrenTopic v-if="childrenLength" />
-      <ClientOnly>
-        <section class="reply-container">
-          <EditorWrapper v-if="isLogin" is-reply />
+    <section class="main-container">
+      <aside class="side-container">
+        <div class="side-inner">
+          hello
+        </div>
+      </aside>
+      <section class="topic-container">
+        <TopicMainHeader />
+        <section class="topic-inner-container">
+          <section class="topic-inner-left">
+            <ParentTopic />
+            <ChildrenTopic v-if="childrenLength" />
+            <ClientOnly>
+              <section class="reply-container">
+                <EditorWrapper v-if="isLogin" is-reply />
+              </section>
+            </ClientOnly>
+          </section>
+          <section class="topic-inner-right">
+            Related Topics
+          </section>
         </section>
-      </ClientOnly>
+      </section>
     </section>
   </main>
 </template>
@@ -46,30 +60,67 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
-.topic-wrap,
-section >>> .topic-wrap {
-  @apply border border-gray-300 rounded py-1 px-4;
+.main-container {
+  @apply flex justify-between;
 
-  &.parent,
-  &.child {
-    border-top-width: 5px;
-    border-top-style: solid;
+  & .side-container {
+    @apply hidden;
+
+    & .side-inner {
+      position: sticky;
+    }
   }
 
-  &.parent {
-    border-top-color: theme('colors.orange.400');
-  }
+  & .topic-container {
+    width: 100%;
 
-  &.child {
-    border-top-color: theme('colors.blue.300');
-  }
-
-  &:not(:first-child) {
-    @apply my-12;
+    & .topic-inner-container {
+      & .topic-inner-left {
+        width: 100%;
+      }
+      & .topic-inner-right {
+        @apply hidden;
+      }
+    }
   }
 }
 
 .reply-container {
   @apply my-12;
+}
+
+@screen md {
+  .main-container {
+    & .side-container {
+      @apply block border-r border-gray-300 mr-8;
+      width: 120px;
+
+      & .side-inner {
+        @apply text-sm;
+        top: 50px;
+        position: sticky;
+      }
+    }
+  }
+}
+
+@screen lg {
+  .main-container {
+    & .topic-container {
+      width: calc(100% - 120px);
+
+      & .topic-inner-container {
+        @apply flex justify-between;
+
+        & .topic-inner-left {
+          width: calc(100% - 200px);
+        }
+        & .topic-inner-right {
+          @apply block ml-6;
+          width: 200px;
+        }
+      }
+    }
+  }
 }
 </style>
