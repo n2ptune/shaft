@@ -27,11 +27,14 @@
     </section>
     <section v-if="comments.length" class="flex flex-col">
       <div class="text-gray-600 mb-4">{{ originLength }}개의 댓글</div>
-      <CommentListItem
-        v-for="comment in comments"
-        :key="comment.commentID"
-        :item="comment"
-      />
+      <article class="comments-inner-container">
+        <CommentListItem
+          v-for="comment in comments"
+          :key="comment.commentID"
+          :item="comment"
+          class="comment-item"
+        />
+      </article>
     </section>
   </section>
 </template>
@@ -160,6 +163,12 @@ textarea {
         }
       }
     }
+  }
+}
+
+.comments-inner-container {
+  & .comment-item:not(:last-of-type) {
+    @apply border-b border-gray-300 pb-4 mb-4;
   }
 }
 </style>

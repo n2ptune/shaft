@@ -16,7 +16,11 @@
         <CategoryList :category="category.sub" :multiselect="true" />
       </Block>
     </div>
-    <Block :title="topicContentTitle" class="editor-wrapper">
+    <Block
+      :title="topicContentTitle"
+      :no-border="noBorder"
+      class="editor-wrapper"
+    >
       <QuillWrapper
         :options="editorOption"
         ref-bind="myQuillEditor"
@@ -57,6 +61,11 @@ export default {
 
   props: {
     isReply: {
+      type: Boolean,
+      required: false,
+      default: false
+    },
+    noBorder: {
       type: Boolean,
       required: false,
       default: false

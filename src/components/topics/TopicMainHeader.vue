@@ -91,17 +91,17 @@ export default {
 
 .info-wrap {
   & li {
-    @apply inline-block;
+    @apply inline-block text-sm;
 
     & p {
       @apply inline-block;
 
       &:first-of-type {
-        @apply text-gray-700;
+        @apply text-gray-600;
       }
 
       &:last-of-type {
-        @apply text-black;
+        @apply text-gray-800;
       }
     }
 

@@ -3,7 +3,7 @@
     <div v-if="title" class="block-title">
       {{ title }}
     </div>
-    <div class="block">
+    <div class="block" :class="noBorder ? '' : 'border border-gray-400'">
       <slot />
     </div>
     <slot name="footer" />
@@ -17,6 +17,11 @@ export default {
       type: String,
       required: false,
       default: ''
+    },
+    noBorder: {
+      type: Boolean,
+      required: false,
+      default: false
     }
   }
 }
@@ -28,7 +33,7 @@ export default {
 }
 
 .block {
-  @apply border border-gray-400 rounded-lg p-2 h-full;
+  @apply rounded-lg p-2 h-full;
 }
 
 .block-title {

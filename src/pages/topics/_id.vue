@@ -3,7 +3,7 @@
     <section class="main-container">
       <aside class="side-container">
         <div class="side-inner">
-          hello
+          <LeftSidebar />
         </div>
       </aside>
       <section class="topic-container">
@@ -14,7 +14,7 @@
             <ChildrenTopic v-if="childrenLength" />
             <ClientOnly>
               <section class="reply-container">
-                <EditorWrapper v-if="isLogin" is-reply />
+                <EditorWrapper v-if="isLogin" is-reply no-border />
               </section>
             </ClientOnly>
           </section>
@@ -33,13 +33,15 @@ import TopicMainHeader from '@/components/topics/TopicMainHeader'
 import ParentTopic from '@/components/topics/ParentTopic'
 import ChildrenTopic from '@/components/topics/ChildrenTopic'
 import EditorWrapper from '@/components/topics/editor/EditorWrapper'
+import LeftSidebar from '@/components/layouts/topic/LeftSidebar'
 
 export default {
   components: {
     TopicMainHeader,
     ParentTopic,
     ChildrenTopic,
-    EditorWrapper
+    EditorWrapper,
+    LeftSidebar
   },
 
   async asyncData({ params, redirect, store }) {
@@ -82,6 +84,10 @@ export default {
         @apply hidden;
       }
     }
+  }
+
+  & >>> .topic-wrap.child:not(:last-of-type) {
+    @apply border-b-2 border-gray-300 mb-8;
   }
 }
 

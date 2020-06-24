@@ -1,5 +1,8 @@
 <template>
   <section class="children-wrap">
+    <div class="my-6 font-normal text-xl">
+      {{ childrenLength }} Child Topics
+    </div>
     <Topic
       v-for="topic in topics"
       :key="topic.id"
@@ -31,7 +34,8 @@ export default {
 
   computed: {
     ...mapGetters({
-      topics: 'topic/getChildrenTopics'
+      topics: 'topic/getChildrenTopics',
+      childrenLength: 'topic/getChildrenTopicsLength'
     })
   }
 }
