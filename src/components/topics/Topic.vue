@@ -2,29 +2,39 @@
   <div class="topic-wrap">
     <div class="my-2">
       <div class="user-info">
-        <div>
-          <nuxt-link :to="`/users/${ownerId}`">
-            <UserAvatar :src="avatar" :alt="nickname" size="xl" />
-          </nuxt-link>
-        </div>
-        <div>
-          <div class="font-bold">
-            {{ nickname }}
-            <span class="font-normal text-gray-600">({{ email }})</span>
-          </div>
-          <div class="flex items-center">
-            <div>
-              <fa
-                :icon="['far', 'thumbs-up']"
-                class="cursor-pointer text-gray-600 hover:text-black"
-                @click="likeTopic"
-              />
-              <span>
-                {{ likeCount }}
-              </span>
+        <section>
+          <article class="inline-block mr-2">
+            <nuxt-link :to="`/users/${ownerId}`">
+              <UserAvatar :src="avatar" :alt="nickname" size="xl" />
+            </nuxt-link>
+          </article>
+          <article class="inline-block">
+            <div class="font-bold">
+              {{ nickname }}
+              <span class="font-normal text-gray-600">({{ email }})</span>
             </div>
-          </div>
-        </div>
+            <div class="flex items-center">
+              <div>
+                <fa
+                  :icon="['far', 'thumbs-up']"
+                  class="cursor-pointer text-gray-600 hover:text-black"
+                  @click="likeTopic"
+                />
+                <span>
+                  {{ likeCount }}
+                </span>
+              </div>
+            </div>
+          </article>
+        </section>
+        <section v-if="userID === ownerId" class="pr-2 edit-container">
+          <button class="mr-2" @click="deleteTopic">
+            <fa :icon="['fas', 'trash-alt']" class="text-gray-600" />
+          </button>
+          <button @click="editTopic">
+            <fa :icon="['fas', 'edit']" class="text-gray-600" />
+          </button>
+        </section>
       </div>
       <div class="topic-content-wrap">
         <slot name="content" />
@@ -101,7 +111,8 @@ export default {
 
   computed: {
     ...mapGetters({
-      isLogin: 'auth/getIsLogin'
+      isLogin: 'auth/getIsLogin',
+      userID: 'auth/getUserID'
     }),
     isCommentOverFive() {
       return this.comments.length > 5
@@ -138,28 +149,63 @@ export default {
       this.isCommentOffset = true
     },
     async likeTopic() {
-      // likeInfo
-      // topicID, isCanceled, likeCount
       try {
         const { data: likeInfo } = await this.$axios.put('/api/topics/like', {
           topicID: this.topicId
         })
 
         this.$store.commit('topic/updateLikeCount', likeInfo)
-      } catch (error) {
-        console.log(error)
-      }
-    }
+      } catch (error) {}
+    },
+    deleteTopic() {
+      this.$confirm.on({
+        isEditor: false,
+        title: '토픽 삭제',
+        body: '토픽을 삭제하시겠습니까?',
+        onSubmit: async () => {
+          try {
+            await this.$axios.delete(`/api/topics/${this.topicId}`)
+
+            this.$confirm.close()
+
+            if (this.parent) {
+              // 자식 토픽일 경우
+              await this.$store.commit('topic/deleteTopic', {
+                topicID: this.topicId
+              })
+            } else {
+              // 부모 토픽일 경우 메인 페이지로 이동
+              this.$router.push('/')
+            }
+          } catch (error) {
+            // 실패 처리
+            console.error(error)
+          }
+        },
+        onCancel: () => this.$confirm.close()
+      })
+    },
+    editTopic() {}
   }
 }
 </script>
 
 <style lang="postcss" scoped>
 .user-info {
-  @apply flex items-center mb-4;
+  @apply flex items-start justify-between mb-4;
 }
 
 .user-info > :last-child {
   @apply ml-4;
+}
+
+.edit-container {
+  & button >>> svg {
+    @apply text-gray-600 transition-colors duration-200;
+
+    &:hover {
+      @apply text-black;
+    }
+  }
 }
 </style>

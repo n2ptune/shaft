@@ -64,6 +64,16 @@ export const mutations = {
     state.children = topics
   },
 
+  deleteTopic(state, { topicID }) {
+    const searchIndex = state.children.findIndex(
+      (topic) => topic.id === topicID
+    )
+
+    if (searchIndex !== -1) {
+      state.children.splice(searchIndex, 1)
+    }
+  },
+
   modifyComment(state, { commentID, updatedCommentData, updatedAt, isRoot }) {
     if (isRoot) {
       const target = state.parent.comments.filter(
@@ -133,14 +143,10 @@ export const mutations = {
 
 export const actions = {
   async fetchTopics({ commit }, id) {
-    try {
-      const { data } = await this.$axios.get('/api/topics/' + id)
+    const { data } = await this.$axios.get('/api/topics/' + id)
 
-      commit('setParentTopic', data.topics.root)
-      commit('setChildrenTopics', data.topics.children)
-    } catch (error) {
-      this.$router.go(-1)
-    }
+    commit('setParentTopic', data.topics.root)
+    commit('setChildrenTopics', data.topics.children)
   },
 
   async writeComment({ commit }, { topicID, comment, date }) {

@@ -1,4 +1,32 @@
 import db from '../../db/connection'
+import { DatabaseError, NotFoundError } from '../../utils/errors/error'
+
+export const deleteTopic = async (id, user, cb) => {
+  // 토픽 아이디 값과 유저 아이디 값 검증
+  const checkSQL = `SELECT COUNT(*) AS selectCount FROM TEST_TOPICS
+  WHERE id = ? AND ownerID = ? AND isDel IS FALSE`
+
+  try {
+    const [checkResult] = await db.query(checkSQL, [id, user.id])
+
+    if (checkResult[0].selectCount) {
+      const deleteSQL = `UPDATE TEST_TOPICS topics
+      SET isDel = True
+      WHERE id = ? AND ownerID = ? AND isDel IS FALSE`
+
+      await db.query(deleteSQL, [id, user.id])
+
+      cb(null, true)
+    } else {
+      cb(
+        new DatabaseError('게시물이 이미 삭제되었거나 게시물 작성자가 아님'),
+        null
+      )
+    }
+  } catch (error) {
+    cb(error, null)
+  }
+}
 
 export const readTopicByID = async (id, cb) => {
   if (!id) {
@@ -7,6 +35,10 @@ export const readTopicByID = async (id, cb) => {
 
   try {
     const [rows] = await db.query(`CALL readTopicByID(${id})`)
+
+    if (!rows[0][0]) {
+      throw new NotFoundError('존재하지 않거나 삭제된 토픽')
+    }
 
     const result = {
       topics: {

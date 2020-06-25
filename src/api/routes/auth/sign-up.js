@@ -1,6 +1,6 @@
 import { validateNicknameAndEmail } from '../../models/user/validate'
 import { createUser } from '../../models/user/create'
-import ValidateError from '../../utils/errors/validate'
+import { ValidateError } from '../../utils/errors/error'
 
 export default function(req, res) {
   const { nickname, email, password } = req.body.data

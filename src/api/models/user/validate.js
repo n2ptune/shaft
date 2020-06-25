@@ -1,6 +1,6 @@
 import db from '../../db/connection'
 import { parseCount } from '../../utils/parse-count'
-import ValidateError from '../../utils/errors/validate'
+import { ValidateError } from '../../utils/errors/error'
 import { validateEmail, validateNickname } from './validate-universal'
 
 /**

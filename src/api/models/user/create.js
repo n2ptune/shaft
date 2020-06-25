@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt'
 import db from '../../db/connection'
-import ValidateError from '../../utils/errors/validate'
+import { ValidateError } from '../../utils/errors/error'
 import { validatePassword } from './validate-universal'
 
 /**

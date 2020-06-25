@@ -8,7 +8,7 @@
         <main v-if="isEditor">
           <div>
             <textarea
-              v-model="commentValue"
+              v-model="editorValue"
               :style="{ resize: 'none' }"
               cols="50"
               rows="5"
@@ -57,43 +57,31 @@ export default {
     onSubmit: {
       type: Function,
       default() {
-        return function() {}
+        return () => {}
       }
     },
     onCancel: {
       type: Function,
       default() {
-        return () => {
-          this.$confirm.close()
-        }
+        return () => {}
       }
     }
   },
 
   data: () => ({
-    commentValue: ''
+    editorValue: ''
   }),
 
   created() {
     if (this.isEditor) {
-      this.commentValue = this.body.toString()
+      this.editorValue = this.body.toString()
     }
   },
-
-  // mounted() {
-  //   document.body.style.overflow = 'hidden'
-  // },
-
-  // beforeDestroy() {
-  //   document.body.style.overflow = 'auto'
-
-  //   this.commentValue = ''
-  // },
 
   methods: {
     wrapOnSubmit() {
       if (this.isEditor) {
-        this.onSubmit(this.commentValue)
+        this.onSubmit(this.editorValue)
       } else {
         this.onSubmit()
       }

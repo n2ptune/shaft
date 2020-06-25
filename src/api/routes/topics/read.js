@@ -4,12 +4,16 @@ import {
   countOfTopics
 } from '../../models/topics/index'
 import { getCommentsByTopicID } from '../../models/comments/index'
+import { NotFoundError } from '../../utils/errors/error'
 
 export const topicByID = function(req, res) {
   const { id } = req.params
 
   readTopicByID(parseInt(id), (error, data) => {
     if (error) {
+      if (error instanceof NotFoundError) {
+        return res.status(404).send({ message: error.message })
+      }
       return res.status(400).end()
     } else {
       const flatSubCategories = (result) => {

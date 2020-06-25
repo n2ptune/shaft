@@ -44,8 +44,15 @@ export default {
     LeftSidebar
   },
 
-  async asyncData({ params, redirect, store }) {
-    await store.dispatch('topic/fetchTopics', params.id)
+  async asyncData({ params, store, error }) {
+    try {
+      await store.dispatch('topic/fetchTopics', params.id)
+    } catch (fetchError) {
+      error({
+        statusCode: fetchError.response.status,
+        message: fetchError.response.data.message
+      })
+    }
   },
 
   computed: {
