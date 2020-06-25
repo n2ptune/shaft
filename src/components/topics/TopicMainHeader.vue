@@ -1,6 +1,6 @@
 <template>
   <section class="mb-8 border-b border-gray-300 pb-4">
-    <article class="text-3xl font-normal">
+    <article class="text-2xl font-normal break-words">
       {{ parentTopic.title }}
     </article>
     <section class="mt-2">

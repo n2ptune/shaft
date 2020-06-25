@@ -41,12 +41,12 @@ article {
   @apply block;
 
   & .item {
-    @apply py-1 px-4 rounded-full mb-1 mr-2 text-sm
-    text-white bg-orange-300
+    @apply py-1 px-4 rounded-lg mb-1 mr-1 text-sm font-light
+    text-orange-700 bg-orange-200
     transition-colors duration-200;
 
     &:hover {
-      @apply bg-orange-500;
+      @apply bg-orange-300;
     }
   }
 }
