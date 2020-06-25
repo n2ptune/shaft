@@ -1,5 +1,5 @@
 <template>
-  <main>
+  <main class="mb-12">
     <div class="table-outer">
       <TopicTableWrapper>
         <template v-slot:descriptor>
