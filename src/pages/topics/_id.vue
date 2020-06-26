@@ -1,27 +1,15 @@
 <template>
   <main>
     <section class="main-container">
-      <aside class="side-container">
-        <div class="side-inner">
-          <LeftSidebar />
-        </div>
-      </aside>
       <section class="topic-container">
         <TopicMainHeader />
-        <section class="topic-inner-container">
-          <section class="topic-inner-left">
-            <ParentTopic />
-            <ChildrenTopic v-if="childrenLength" />
-            <ClientOnly>
-              <section class="reply-container">
-                <EditorWrapper v-if="isLogin" is-reply no-border />
-              </section>
-            </ClientOnly>
+        <ParentTopic />
+        <ChildrenTopic v-if="childrenLength" />
+        <ClientOnly>
+          <section class="reply-container">
+            <EditorWrapper v-if="isLogin" is-reply no-border />
           </section>
-          <section class="topic-inner-right">
-            Related Topics
-          </section>
-        </section>
+        </ClientOnly>
       </section>
     </section>
   </main>
@@ -33,15 +21,13 @@ import TopicMainHeader from '@/components/topics/TopicMainHeader'
 import ParentTopic from '@/components/topics/ParentTopic'
 import ChildrenTopic from '@/components/topics/ChildrenTopic'
 import EditorWrapper from '@/components/topics/editor/EditorWrapper'
-import LeftSidebar from '@/components/layouts/topic/LeftSidebar'
 
 export default {
   components: {
     TopicMainHeader,
     ParentTopic,
     ChildrenTopic,
-    EditorWrapper,
-    LeftSidebar
+    EditorWrapper
   },
 
   async asyncData({ params, store, error }) {
@@ -70,27 +56,8 @@ export default {
 
 <style lang="postcss" scoped>
 .main-container {
-  @apply flex justify-between;
-
-  & .side-container {
-    @apply hidden;
-
-    & .side-inner {
-      position: sticky;
-    }
-  }
-
   & .topic-container {
-    width: 100%;
-
-    & .topic-inner-container {
-      & .topic-inner-left {
-        width: 100%;
-      }
-      & .topic-inner-right {
-        @apply hidden;
-      }
-    }
+    @apply w-full;
   }
 
   & >>> .topic-wrap.child:not(:last-of-type) {
@@ -100,21 +67,6 @@ export default {
 
 .reply-container {
   @apply my-12;
-}
-
-@screen md {
-  .main-container {
-    & .side-container {
-      @apply block border-r border-gray-300 mr-8;
-      width: 120px;
-
-      & .side-inner {
-        @apply text-sm;
-        top: 50px;
-        position: sticky;
-      }
-    }
-  }
 }
 
 @screen lg {

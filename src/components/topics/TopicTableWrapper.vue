@@ -47,6 +47,8 @@ table tbody tr >>> td {
   &:first-child {
     /* Title */
     width: 70%;
+
+    @apply pr-4;
   }
 
   &:nth-child(2),
@@ -83,7 +85,9 @@ table tbody tr:nth-child(2n) {
     /* table width */
     &:first-child {
       /* Title */
-      width: 40%;
+      width: 50%;
+
+      @apply pr-8;
     }
 
     &:nth-child(2),
@@ -94,7 +98,7 @@ table tbody tr:nth-child(2n) {
 
     &:nth-child(2) {
       /* Category */
-      width: 20%;
+      width: 10%;
     }
 
     &:nth-child(3),

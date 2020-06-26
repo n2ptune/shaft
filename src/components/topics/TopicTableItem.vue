@@ -62,6 +62,8 @@ export default {
 
 <style lang="postcss" scoped>
 tr td {
+  word-break: break-all;
+
   &:nth-child(3),
   &:nth-child(4) {
     @apply text-center text-sm;
