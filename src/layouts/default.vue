@@ -7,7 +7,7 @@
           <LeftSidebar />
         </div>
       </aside>
-      <section>
+      <section class="w-full">
         <!-- <nuxt class="mt-6 mx-auto px-4 lg:px-8" /> -->
         <nuxt class="mt-8 px-4 lg:px-8" />
       </section>

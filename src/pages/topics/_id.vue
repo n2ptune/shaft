@@ -56,10 +56,6 @@ export default {
 
 <style lang="postcss" scoped>
 .main-container {
-  & .topic-container {
-    @apply w-full;
-  }
-
   & >>> .topic-wrap.child:not(:last-of-type) {
     @apply border-b-2 border-gray-300 mb-8;
   }
