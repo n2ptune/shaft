@@ -64,9 +64,33 @@ export default {
 tr td {
   word-break: break-all;
 
+  &:first-child {
+    @apply text-base;
+  }
+
+  &:nth-child(2) {
+    @apply text-sm;
+  }
+
   &:nth-child(3),
   &:nth-child(4) {
     @apply text-center text-sm;
+  }
+
+  &:nth-child(5) {
+    @apply text-xs;
+  }
+}
+
+@screen lg {
+  tr td {
+    &:first-child {
+      @apply text-lg;
+    }
+
+    &:nth-child(5) {
+      @apply text-sm;
+    }
   }
 }
 </style>

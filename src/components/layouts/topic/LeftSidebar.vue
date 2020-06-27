@@ -40,8 +40,9 @@ ul {
       @apply block px-1 py-2;
 
       &.router-exact-active {
-        @apply bg-gray-200 font-bold;
+        @apply font-bold;
 
+        background-color: rgba(0, 0, 0, 0.05);
         border-right-width: 3px;
         border-right-color: theme('colors.orange.500');
       }

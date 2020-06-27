@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="text-xl font-bold mb-6">
+    <div class="text-xl font-bold mb-6 pb-6 border-b border-gray-400">
       <slot name="descriptor" />
     </div>
     <table class="w-full">
@@ -63,25 +63,27 @@ table tbody tr >>> td {
   }
 }
 
-table tbody tr {
-  --border-vertical-size: 2rem;
-  --border-horizontal-size: 0.7rem;
-
-  border-top: var(--border-vertical-size) solid;
-  border-bottom: var(--border-vertical-size) solid;
-  border-left: var(--border-horizontal-size) solid;
-  border-right: var(--border-horizontal-size) solid;
-
-  border-color: transparent;
+table {
+  border-collapse: collapse;
 }
 
-table tbody tr:nth-child(2n) {
-  @apply bg-gray-200;
+table thead tr th {
+  padding: 0.88rem;
+}
+
+table tbody tr {
+  @apply border-t border-gray-300;
+
+  & >>> td {
+    padding: 0.5rem;
+  }
 }
 
 @screen lg {
   table thead tr th,
   table tbody tr >>> td {
+    padding: 1rem;
+
     /* table width */
     &:first-child {
       /* Title */
