@@ -38,3 +38,5 @@ export const findByID = async (id, callback) => {
     return callback(error, null)
   }
 }
+
+export const findAllUser = async (callback) => {}
