@@ -85,7 +85,7 @@ tr td {
 @screen lg {
   tr td {
     &:first-child {
-      @apply text-lg;
+      @apply text-base;
     }
 
     &:nth-child(5) {

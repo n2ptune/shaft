@@ -1,5 +1,4 @@
 import db from '../../db/connection'
-import 'dotenv/config'
 
 export const findByEmail = async (email) => {
   if (!email) return

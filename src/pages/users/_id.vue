@@ -8,8 +8,6 @@
 
 <script>
 export default {
-  layout: 'user',
-
   async created() {
     const { id } = this.$route.params
     await this.$store.dispatch('view/user/fetchViewUser', id)
