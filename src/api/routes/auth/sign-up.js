@@ -3,7 +3,7 @@ import { createUser } from '../../models/user/create'
 import { ValidateError } from '../../utils/errors/error'
 
 export default function(req, res) {
-  const { nickname, email, password } = req.body.data
+  const { nickname, email, password, date } = req.body.data
 
   validateNicknameAndEmail(nickname, email, (error, possible) => {
     if (error) {
@@ -22,7 +22,7 @@ export default function(req, res) {
         message: '닉네임 혹은 이메일이 이미 존재합니다.'
       })
     } else {
-      createUser(nickname, email, password, (error, success) => {
+      createUser(nickname, email, password, date, (error, success) => {
         if (error || !success) {
           res.status(500).send({
             message: '회원가입 불가능'

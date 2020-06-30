@@ -76,7 +76,7 @@ export default {
   watch: {
     isLogin(c, p) {
       if (c) {
-        this.$router.go(-1)
+        this.$router.go('/')
       }
     }
   },

@@ -10,10 +10,10 @@ import { validatePassword } from './validate-universal'
  * @param {String} password
  * @param {Function} cb
  */
-export const createUser = async (nickname, email, password, cb) => {
+export const createUser = async (nickname, email, password, date, cb) => {
   // validate password
   if (validatePassword(password)) {
-    const sql = `INSERT INTO ${process.env.DB_USER_TABLE} (nickname, email, password, avatar) VALUES (?, ?, ?, ?)`
+    const sql = `INSERT INTO ${process.env.DB_USER_TABLE} (nickname, email, password, avatar, createdAt) VALUES (?, ?, ?, ?, ?)`
     const saltRounds = 8
 
     try {
@@ -21,7 +21,7 @@ export const createUser = async (nickname, email, password, cb) => {
       const hash = bcrypt.hashSync(password, salt)
       const avatar = `https://api.adorable.io/avatars/100/${nickname}@${nickname}`
 
-      await db.query(sql, [nickname, email, hash, avatar])
+      await db.query(sql, [nickname, email, hash, avatar, date])
       cb(null, true)
     } catch (error) {
       cb(new Error(error.message), false)
