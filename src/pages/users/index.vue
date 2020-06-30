@@ -1,19 +1,29 @@
 <template>
   <main>
-    All Users
+    <!-- TODO: User View Component!! -->
+    <!-- TODO: User View Page Component!! -->
   </main>
 </template>
 
 <script>
 export default {
-  async asyncData({ $axios, query }) {
+  async asyncData({ $axios, query, error }) {
     const page = !query.p ? 1 : query.p
 
     try {
-      // eslint-disable-next-line
       const { data } = await $axios.get('/api/users?p=' + page)
-    } catch (error) {
-      console.log(error)
+
+      return {
+        users: data.users.data,
+        fetchCount: data.users.count,
+        page: {
+          usersCount: data.userCount,
+          currentPage: data.currentPage,
+          pages: data.pages
+        }
+      }
+    } catch (fetchError) {
+      error(fetchError)
     }
   }
 }

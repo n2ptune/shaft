@@ -44,10 +44,13 @@ export const findAllUser = async (page, cb) => {
     user.nickname userNickname,
     user.email userEmail,
     user.avatar userAvatar,
-    COUNT(topics.id) topicsCount
+    COUNT(DISTINCT topics.id) topicsCount,
+    COUNT(DISTINCT comments.id) commentsCount
   FROM TEST_USER user
   LEFT JOIN TEST_TOPICS topics
     ON (topics.ownerID = user.id AND topics.isDel IS FALSE)
+  LEFT JOIN TEST_COMMENTS comments
+    ON (comments.ownerID = user.id)
   GROUP BY user.id
   ORDER BY user.createdAt DESC
   LIMIT ${(parseInt(page) - 1) * 10}, 10;`
