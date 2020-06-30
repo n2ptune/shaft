@@ -1,8 +1,12 @@
 import { Router } from 'express'
-import findUser from './find-user'
+import {
+  findAllUserByPageController,
+  findUserByIDController
+} from './find-user'
 
 const router = Router()
 
-router.get('/:id', findUser)
+router.get('/', findAllUserByPageController)
+router.get('/:id', findUserByIDController)
 
 export default router
