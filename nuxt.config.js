@@ -42,7 +42,8 @@ module.exports = {
     { src: '~/plugins/editor', mode: 'client' },
     { src: '~/plugins/date', mode: 'client' },
     { src: '~/plugins/safe-v-html', mode: 'client' },
-    { src: '~/plugins/confirm.client.js' }
+    { src: '~/plugins/confirm.client.js' },
+    { src: '~/plugins/tooltip.js' }
   ],
   /*
    ** Nuxt.js dev-modules

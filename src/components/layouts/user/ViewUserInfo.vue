@@ -16,7 +16,7 @@
             {{ user.userEmail }}
           </li>
           <li class="badge">
-            <div>
+            <div v-tooltip>
               {{ user.topicsCount }}
             </div>
             <div>
