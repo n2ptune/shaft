@@ -40,20 +40,25 @@ export const findByID = async (id, callback) => {
 }
 
 export const findAllUser = async (page, cb) => {
+  const limitPerPage = 12
+
   const SQL = `SELECT user.id userID,
     user.nickname userNickname,
     user.email userEmail,
     user.avatar userAvatar,
     COUNT(DISTINCT topics.id) topicsCount,
-    COUNT(DISTINCT comments.id) commentsCount
+    COUNT(DISTINCT comments.id) commentsCount,
+    COUNT(DISTINCT likes.id) likesCount
   FROM TEST_USER user
   LEFT JOIN TEST_TOPICS topics
     ON (topics.ownerID = user.id AND topics.isDel IS FALSE)
   LEFT JOIN TEST_COMMENTS comments
     ON (comments.ownerID = user.id)
+  LEFT JOIN TEST_TOPICS_LIKE likes
+	  ON (likes.topicID = topics.id AND topics.ownerID = user.id)
   GROUP BY user.id
-  ORDER BY user.createdAt DESC
-  LIMIT ${(parseInt(page) - 1) * 10}, 10;`
+  ORDER BY user.id ASC
+  LIMIT ${(parseInt(page) - 1) * 10}, ${limitPerPage};`
 
   const countSQL = `SELECT COUNT(*) userCount FROM TEST_USER;`
 
@@ -68,7 +73,7 @@ export const findAllUser = async (page, cb) => {
       },
       userCount: countRows[0].userCount,
       currentPage: parseInt(page),
-      pages: Math.ceil(countRows[0].userCount / 10)
+      pages: Math.ceil(countRows[0].userCount / limitPerPage)
     }
 
     // 페이지 범위를 초과한 요청

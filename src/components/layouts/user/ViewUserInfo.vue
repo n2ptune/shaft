@@ -1,0 +1,83 @@
+<template>
+  <section>
+    <div class="flex">
+      <Avatar
+        size="xl-4"
+        :alt="user.userNickname"
+        :src="user.userAvatar"
+        :is-rounded="false"
+      />
+      <div class="ml-2 py-1 text-sm self-start">
+        <ul>
+          <li class="text-base font-bold">
+            {{ user.userNickname }}
+          </li>
+          <li class="text-gray-500 mb-1">
+            {{ user.userEmail }}
+          </li>
+          <li class="badge">
+            <div>
+              {{ user.topicsCount }}
+            </div>
+            <div>
+              {{ user.commentsCount }}
+            </div>
+            <div>
+              {{ user.likesCount }}
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</template>
+
+<script>
+import Avatar from '@/components/user/Avatar'
+
+export default {
+  components: {
+    Avatar
+  },
+
+  props: {
+    user: {
+      type: Object,
+      required: true
+    }
+  }
+}
+</script>
+
+<style lang="postcss" scoped>
+.badge {
+  --default-badge-size: 7px;
+  @apply flex;
+
+  & > div {
+    @apply pl-1;
+    margin-right: 0.3rem;
+
+    &::before {
+      @apply align-middle rounded-full relative mr-1;
+      bottom: 1.5px;
+      content: '';
+      display: inline-block;
+      width: var(--default-badge-size);
+      height: var(--default-badge-size);
+    }
+
+    &:first-child::before {
+      background-color: theme('colors.badge-topic');
+    }
+
+    &:nth-child(2)::before {
+      background-color: theme('colors.badge-comment');
+    }
+
+    &:last-child::before {
+      background-color: theme('colors.badge-like');
+    }
+  }
+}
+</style>

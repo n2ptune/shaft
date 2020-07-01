@@ -37,6 +37,11 @@ module.exports = {
           '"Segoe UI Emoji"',
           '"Noto Color Emoji"'
         ]
+      },
+      colors: {
+        'badge-topic': '#bcd952',
+        'badge-comment': '#d685ff',
+        'badge-like': '#ff694f'
       }
     }
   }

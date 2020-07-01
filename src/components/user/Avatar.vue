@@ -53,14 +53,27 @@ img {
 
   &.sm {
     width: 1.5rem;
+    height: 1.5rem;
   }
 
   &.lg {
     width: 2.5rem;
+    height: 2.5rem;
   }
 
   &.xl {
     width: 2.75rem;
+    height: 2.75rem;
+  }
+
+  &.xl-2 {
+    width: 4rem;
+    height: 4rem;
+  }
+
+  &.xl-4 {
+    width: 5rem;
+    height: 5rem;
   }
 }
 </style>
