@@ -7,9 +7,9 @@ export const getCategories = async (callback) => {
   }
 
   try {
-    const SQL = `SELECT cat.id, cat.name, cat.type FROM ${process.env.DB_TOPIC_TABLE}_CATEGORY as cat
+    const SQL = `SELECT cat.id, cat.name, cat.type FROM TEST_TOPICS_CATEGORY as cat
     UNION
-    SELECT subcat.id, subcat.name, subcat.type FROM ${process.env.DB_TOPIC_TABLE}_SUB_CATEGORY as subcat`
+    SELECT subcat.id, subcat.name, subcat.type FROM TEST_TOPICS_SUB_CATEGORY as subcat`
     const [rows] = await db.query(SQL)
 
     const extractCategory = rows.filter((row) => row.type === typeEnum.category)

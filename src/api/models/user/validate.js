@@ -19,7 +19,7 @@ export const validateNicknameAndEmail = async (nickname, email, cb) => {
     return cb(new ValidateError('유효한 이메일이 아님'))
   }
 
-  const sql = `SELECT COUNT(*) FROM ${process.env.DB_USER_TABLE} WHERE nickname = ? OR email = ?`
+  const sql = `SELECT COUNT(*) FROM TEST_USER WHERE nickname = ? OR email = ?`
 
   try {
     const [rows] = await db.query(sql, [nickname, email])

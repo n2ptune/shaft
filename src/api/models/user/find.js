@@ -7,7 +7,7 @@ export const findByEmail = async (email) => {
     const [
       rows
     ] = await db.query(
-      `SELECT * FROM ${process.env.DB_USER_TABLE} WHERE email = ?`,
+      `SELECT * FROM TEST_USER WHERE email = ?`,
       [email]
     )
     if (!rows.length) {
@@ -23,7 +23,7 @@ export const findByID = async (id, callback) => {
   if (!id) return
 
   const SQL = `SELECT id, email, nickname, avatar
-  FROM ${process.env.DB_USER_TABLE}
+  FROM TEST_USER
   WHERE id = ?`
 
   try {

@@ -13,7 +13,7 @@ import { validatePassword } from './validate-universal'
 export const createUser = async (nickname, email, password, date, cb) => {
   // validate password
   if (validatePassword(password)) {
-    const sql = `INSERT INTO ${process.env.DB_USER_TABLE} (nickname, email, password, avatar, createdAt) VALUES (?, ?, ?, ?, ?)`
+    const sql = `INSERT INTO TEST_USER (nickname, email, password, avatar, createdAt) VALUES (?, ?, ?, ?, ?)`
     const saltRounds = 8
 
     try {

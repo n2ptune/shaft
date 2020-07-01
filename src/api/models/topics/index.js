@@ -67,7 +67,7 @@ export const readAllTopics = async (offset, cb) => {
 }
 
 export const writeTopic = async (topic, user) => {
-  const SQL = `INSERT INTO ${process.env.DB_TOPIC_TABLE}
+  const SQL = `INSERT INTO TEST_TOPICS
   (title, createdAt, content, ownerID,
     originCategoryID, subCategoryID,
     parentTopicID)
