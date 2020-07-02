@@ -24,7 +24,8 @@
     "nuxt": "^2.0.0",
     "nuxt-client-init-module": "^0.1.8",
     "vue-dompurify-html": "^2.2.1",
-    "vue-quill-editor": "^3.0.6"
+    "vue-quill-editor": "^3.0.6",
+    "vue-tippy": "^4.4.0"
   },
   "devDependencies": {
     "@fortawesome/free-brands-svg-icons": "^5.13.0",

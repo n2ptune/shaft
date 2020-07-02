@@ -16,13 +16,13 @@
             {{ user.userEmail }}
           </li>
           <li class="badge">
-            <div v-tooltip>
+            <div v-tippy content="작성한 토픽 수">
               {{ user.topicsCount }}
             </div>
-            <div>
+            <div v-tippy content="작성한 댓글 수">
               {{ user.commentsCount }}
             </div>
-            <div>
+            <div v-tippy content="받은 좋아요 수">
               {{ user.likesCount }}
             </div>
           </li>
