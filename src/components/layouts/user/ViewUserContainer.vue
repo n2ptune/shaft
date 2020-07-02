@@ -27,14 +27,16 @@ export default {
 
 <style lang="postcss" scoped>
 ul li {
-  flex-basis: 50%;
+  flex-basis: 45%;
 
-  @apply mb-12;
+  @apply mb-12 mr-4;
 }
 
 @screen lg {
   ul li {
     flex-basis: 30%;
+
+    @apply mr-0;
   }
 }
 </style>

@@ -3,6 +3,7 @@
     <div class="flex">
       <Avatar
         size="xl-4"
+        responsive
         :alt="user.userNickname"
         :src="user.userAvatar"
         :is-rounded="false"

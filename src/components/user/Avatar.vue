@@ -1,6 +1,10 @@
 <template>
   <img
-    :class="[isRounded ? 'rounded-full' : '', size]"
+    :class="[
+      isRounded ? 'rounded-full' : '',
+      size,
+      responsive ? 'responsive' : ''
+    ]"
     :src="userAvatarSrc"
     :alt="userNickname"
   />
@@ -28,6 +32,11 @@ export default {
       type: String,
       required: false,
       default: 'base'
+    },
+    responsive: {
+      type: Boolean,
+      required: false,
+      default: false
     }
   },
 
@@ -74,6 +83,22 @@ img {
   &.xl-4 {
     width: 5rem;
     height: 5rem;
+
+    &.responsive {
+      width: 3rem !important;
+      height: 3rem !important;
+    }
+  }
+}
+
+@screen lg {
+  img {
+    &.xl-4 {
+      &.responsive {
+        width: 5rem !important;
+        height: 5rem !important;
+      }
+    }
   }
 }
 </style>
