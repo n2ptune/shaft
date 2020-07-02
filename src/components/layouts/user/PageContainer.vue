@@ -15,6 +15,11 @@
 </template>
 
 <script>
+// 페이지는 총 5개를 보여줌
+// 최소 페이지와 차이가 5이상 나면 최소 페이지 ... [p, p, c, p, p] ... 최대 페이지
+// 그 외 [p, c, p, p, p] ... 최대 페이지
+// 최대 페이지와 차이가 5이하 나면 최소 페이지 ... [p, p, p, p, c]
+
 export default {
   props: {
     currentPage: {
@@ -38,6 +43,12 @@ export default {
       }
 
       return pages
+    },
+    overDistanceFromLeast() {
+      return this.currentPage > 4
+    },
+    overDistanceFromMax() {
+      return this.pages - 4 > this.currentPage
     }
   }
 }

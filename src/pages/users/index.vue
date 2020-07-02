@@ -28,8 +28,6 @@ export default {
     const page = !query.p ? 1 : query.p
 
     try {
-      // const { data } = await $axios.get('/api/users?p=' + page)
-
       const data = await fetchUsers($axios, page)
 
       return {
