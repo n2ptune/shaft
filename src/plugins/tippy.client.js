@@ -7,7 +7,7 @@ Vue.use(VueTippy, {
   popperOptions: {
     modifiers: {
       preventOverflow: {
-        enabled: false
+        enabled: true
       }
     }
   }

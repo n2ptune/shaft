@@ -29,7 +29,7 @@ export default {
         },
         {
           name: 'Users',
-          path: '/users',
+          path: '/users?p=1',
           icon: ['fas', 'user']
         }
       ]
