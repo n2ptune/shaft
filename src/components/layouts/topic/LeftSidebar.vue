@@ -6,7 +6,6 @@
     <li v-for="route in routes" :key="route.name">
       <nuxt-link
         :to="{ path: route.path, query: { [route.queryName]: 1 } }"
-        :exact="route.path === '/'"
         active-class="router-active"
         exact-active-class="router-exact-active"
       >
