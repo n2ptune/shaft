@@ -4,12 +4,9 @@ export const findByEmail = async (email) => {
   if (!email) return
 
   try {
-    const [
-      rows
-    ] = await db.query(
-      `SELECT * FROM TEST_USER WHERE email = ?`,
-      [email]
-    )
+    const [rows] = await db.query(`SELECT * FROM TEST_USER WHERE email = ?`, [
+      email
+    ])
     if (!rows.length) {
       throw new Error('Not Found Email')
     }
@@ -58,7 +55,7 @@ export const findAllUser = async (page, cb) => {
 	  ON (likes.topicID = topics.id AND topics.ownerID = user.id)
   GROUP BY user.id
   ORDER BY user.id ASC
-  LIMIT ${(parseInt(page) - 1) * 10}, ${limitPerPage};`
+  LIMIT ${(parseInt(page) - 1) * limitPerPage}, ${limitPerPage};`
 
   const countSQL = `SELECT COUNT(*) userCount FROM TEST_USER;`
 

@@ -1,15 +1,27 @@
 <template>
   <section class="mt-6">
     <ul>
+      <li
+        v-if="overDistanceFromLeast"
+        class="least-page"
+        @click="moveRouteLeast"
+        v-text="'<<'"
+      />
       <nuxt-link
         v-for="page in allPages"
-        :key="page.route"
-        :to="{ path: 'users', query: { p: page.value } }"
+        :key="page"
+        :to="{ path: 'users', query: { p: page } }"
         exact-active-class="page-router-exact-active"
         tag="li"
       >
-        {{ page.value }}
+        {{ page }}
       </nuxt-link>
+      <li
+        v-if="overDistanceFromMax"
+        class="max-page"
+        @click="moveRouteMax"
+        v-text="'>>'"
+      />
     </ul>
   </section>
 </template>
@@ -19,6 +31,7 @@
 // 최소 페이지와 차이가 5이상 나면 최소 페이지 ... [p, p, c, p, p] ... 최대 페이지
 // 그 외 [p, c, p, p, p] ... 최대 페이지
 // 최대 페이지와 차이가 5이하 나면 최소 페이지 ... [p, p, p, p, c]
+const offset = 3
 
 export default {
   props: {
@@ -34,21 +47,52 @@ export default {
 
   computed: {
     allPages() {
-      const pages = []
+      let start = this.currentPage - offset
 
-      for (let i = 1; i <= this.pages; i++) {
-        pages.push({
-          value: i
-        })
+      if (start <= 1) {
+        start = 1
       }
 
-      return pages
+      const arr = Array(5)
+        .fill(start)
+        .map((data, i) => data + i * 1)
+
+      // 검증
+      const overflowArr = arr.filter((data) => data > this.pages)
+
+      if (overflowArr.length) {
+        for (let i = 0; i < overflowArr.length; i++) {
+          const overflowIndex = arr.findIndex((data) => data > this.pages)
+          arr.splice(overflowIndex, 1)
+        }
+      }
+
+      return arr
     },
     overDistanceFromLeast() {
-      return this.currentPage > 4
+      return this.currentPage > offset
     },
     overDistanceFromMax() {
-      return this.pages - 4 > this.currentPage
+      return this.pages - offset > this.currentPage
+    }
+  },
+
+  methods: {
+    moveRouteLeast() {
+      this.$router.push({
+        path: 'users',
+        query: {
+          p: 1
+        }
+      })
+    },
+    moveRouteMax() {
+      this.$router.push({
+        path: 'users',
+        query: {
+          p: this.pages
+        }
+      })
     }
   }
 }

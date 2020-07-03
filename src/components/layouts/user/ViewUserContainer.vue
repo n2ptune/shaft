@@ -1,6 +1,6 @@
 <template>
   <section>
-    <ul class="flex flex-wrap justify-center">
+    <ul>
       <li v-for="user in users" :key="user.userID">
         <ViewUserInfo :user="user" />
       </li>
@@ -26,6 +26,10 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
+ul {
+  @apply flex flex-wrap justify-center;
+}
+
 ul li {
   flex-basis: 45%;
 
@@ -33,6 +37,10 @@ ul li {
 }
 
 @screen lg {
+  ul {
+    @apply justify-start;
+  }
+
   ul li {
     flex-basis: 30%;
 
