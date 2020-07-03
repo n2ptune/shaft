@@ -1,8 +1,4 @@
-import {
-  readTopicByID,
-  readAllTopics,
-  countOfTopics
-} from '../../models/topics/index'
+import { readTopicByID, readAllTopics } from '../../models/topics/index'
 import { getCommentsByTopicID } from '../../models/comments/index'
 import { NotFoundError } from '../../utils/errors/error'
 
@@ -79,23 +75,18 @@ export const topicByID = function(req, res) {
 }
 
 export const allTopics = function(req, res) {
-  let { offset } = req.query
+  let { o } = req.query
 
-  if (!offset) {
-    offset = 0
+  if (!o) {
+    o = 0
   }
 
-  readAllTopics(parseInt(offset), async (error, result) => {
+  readAllTopics(parseInt(o), (error, result, pageInfo) => {
     if (error) {
       return res.status(400).end()
     } else {
       try {
-        const count = await countOfTopics()
-        const head = {}
-
-        head.currentOffset = offset
-        head.topicCount = count
-        head.pageCount = 1 + parseInt(count / 10)
+        const head = pageInfo
 
         const data = {
           topics: result,

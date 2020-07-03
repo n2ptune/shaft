@@ -56,11 +56,25 @@ export const readTopicByID = async (id, cb) => {
 }
 
 export const readAllTopics = async (offset, cb) => {
-  const SQL = `CALL readTopicByOffset(${offset})`
+  const countOfTopicPerPage = 10
+  const currentOffset = parseInt(offset - 1) * countOfTopicPerPage
+  const SQL = `CALL readTopicByOffset(${currentOffset})`
 
   try {
     const [rows] = await db.query(SQL)
-    cb(null, rows[0])
+
+    const countOfTopic = await getCountOfTopics()
+
+    const pageInfo = {
+      currentPage: Math.ceil(countOfTopic / currentOffset),
+      countOfPage: Math.ceil(countOfTopic / countOfTopicPerPage),
+      countOfTopic
+    }
+
+    // 현재 페이지가 0으로 나눠졌을 경우 (유한수가 아닐 경우)
+    if (!isFinite(pageInfo.currentPage)) pageInfo.currentPage = 1
+
+    cb(null, rows[0], pageInfo)
   } catch (error) {
     cb(error, null)
   }
@@ -104,7 +118,7 @@ export const writeTopic = async (topic, user) => {
   }
 }
 
-export const countOfTopics = async () => {
+export const getCountOfTopics = async () => {
   try {
     const SQL = `CALL getCountOfTopics();`
     const [result] = await db.query(SQL)

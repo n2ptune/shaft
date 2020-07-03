@@ -5,7 +5,7 @@
     </li>
     <li v-for="route in routes" :key="route.name">
       <nuxt-link
-        :to="route.path"
+        :to="{ path: route.path, query: { [route.queryName]: 1 } }"
         :exact="route.path === '/'"
         active-class="router-active"
         exact-active-class="router-exact-active"
@@ -25,11 +25,13 @@ export default {
         {
           name: 'Home',
           path: '/',
+          queryName: 'o',
           icon: ['fas', 'home']
         },
         {
           name: 'Users',
-          path: '/users?p=1',
+          path: '/users',
+          queryName: 'p',
           icon: ['fas', 'user']
         }
       ]

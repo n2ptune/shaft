@@ -2,14 +2,18 @@
   <main class="mb-12">
     <ViewHeader />
     <ViewUserContainer :users="users" />
-    <PageContainer :current-page="page.currentPage" :pages="page.pages" />
+    <PageContainer
+      :current-page="page.currentPage"
+      :pages="page.pages"
+      :move-route="{ path: 'users', queryName: 'p' }"
+    />
   </main>
 </template>
 
 <script>
 import ViewHeader from '@/components/layouts/user/ViewHeader'
 import ViewUserContainer from '@/components/layouts/user/ViewUserContainer'
-import PageContainer from '@/components/layouts/user/PageContainer'
+import PageContainer from '@/components/utils/PageContainer'
 
 async function fetchUsers(axios, page) {
   const { data } = await axios.get('/api/users?p=' + page)
