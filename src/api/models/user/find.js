@@ -19,9 +19,22 @@ export const findByEmail = async (email) => {
 export const findByID = async (id, callback) => {
   if (!id) return
 
-  const SQL = `SELECT id, email, nickname, avatar
-  FROM TEST_USER
-  WHERE id = ?`
+  const SQL = `SELECT user.id userID,
+	  user.avatar userAvatar,
+    user.nickname userNickname,
+    user.email userEmail,
+	  COUNT(DISTINCT topics.id) AS topicsCount,
+    COUNT(DISTINCT comments.id) AS commentsCount,
+    COUNT(DISTINCT likes.id) AS likesCount
+  FROM TEST_USER user
+  LEFT JOIN TEST_TOPICS topics
+    ON (topics.ownerID = user.id AND topics.isDel IS FALSE)
+  LEFT JOIN TEST_COMMENTS comments
+    ON (comments.ownerID = user.id)
+  LEFT JOIN TEST_TOPICS_LIKE likes
+    ON (likes.topicID = topics.id AND topics.ownerID = user.id)
+  WHERE user.id = ?
+  GROUP BY user.id`
 
   try {
     const [rows] = await db.query(SQL, [id])

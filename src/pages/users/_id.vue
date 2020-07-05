@@ -8,9 +8,14 @@
 
 <script>
 export default {
-  async created() {
-    const { id } = this.$route.params
-    await this.$store.dispatch('view/user/fetchViewUser', id)
+  async asyncData({ $axios, params, error }) {
+    try {
+      const { data } = await $axios.get(`/api/users/${params.id}`)
+
+      console.log(data)
+    } catch (fetchError) {
+      error(fetchError)
+    }
   }
 }
 </script>
