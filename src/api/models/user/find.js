@@ -45,9 +45,37 @@ export const findByID = async (id, callback) => {
       return callback(new Error('Not Found User'), null)
     }
 
-    return callback(null, rows[0])
+    const tagSQL = `SELECT topics.id,
+      topics.originCategoryID originCategoryID,
+      topics.subCategoryID subCategoryID,
+      o_category.name originCategoryName,
+      GROUP_CONCAT(DISTINCT s_category.name ORDER BY s_category.id) subCategoryName
+    FROM TEST_TOPICS topics
+    LEFT JOIN TEST_TOPICS_CATEGORY o_category
+      ON topics.originCategoryID = o_category.id
+    LEFT JOIN TEST_TOPICS_SUB_CATEGORY s_category
+      ON FIND_IN_SET(s_category.id, topics.subCategoryID) > 0
+    WHERE (topics.ownerID = ? AND topics.parentTopicID IS NULL AND topics.isDel IS FALSE)
+      AND (topics.originCategoryID IS NOT NULL OR topics.subCategoryID IS NOT NULL)
+    GROUP BY topics.id;`
+
+    const [tagRows] = await db.query(tagSQL, [id])
+
+    // 데이터 종합
+    const result = {
+      profile: null,
+      tags: [],
+      topics: null
+    }
+
+    result.profile = rows[0]
+
+    // TODO: 태그 값 내보내기
+    // console.log(tagRows)
+
+    callback(null, result)
   } catch (error) {
-    return callback(error, null)
+    callback(error, null)
   }
 }
 
