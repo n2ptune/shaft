@@ -42,6 +42,9 @@ module.exports = {
         'badge-topic': '#bcd952',
         'badge-comment': '#d685ff',
         'badge-like': '#ff694f'
+      },
+      flex: {
+        '100': '1 1 100%'
       }
     }
   }

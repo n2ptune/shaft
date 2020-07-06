@@ -20,9 +20,11 @@ export const findByID = async (id, callback) => {
   if (!id) return
 
   const SQL = `SELECT user.id userID,
-	  user.avatar userAvatar,
-    user.nickname userNickname,
-    user.email userEmail,
+	  user.avatar avatar,
+    user.nickname nickname,
+    user.email email,
+    user.introduce introduce,
+    CONVERT_TZ(user.createdAt, '-09:00', 'GMT') createdAt,
 	  COUNT(DISTINCT topics.id) AS topicsCount,
     COUNT(DISTINCT comments.id) AS commentsCount,
     COUNT(DISTINCT likes.id) AS likesCount
