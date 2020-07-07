@@ -14,7 +14,7 @@
         like: user.profile.likesCount
       }"
     />
-    <ProfileBody />
+    <ProfileBody :topics="user.topics" :tags="user.tags" />
   </main>
 </template>
 

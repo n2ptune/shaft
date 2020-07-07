@@ -45,6 +45,9 @@ module.exports = {
       },
       flex: {
         '100': '1 1 100%'
+      },
+      variants: {
+        backgroundColor: ['responsive', 'hover', 'foucs', 'group-hover']
       }
     }
   }
