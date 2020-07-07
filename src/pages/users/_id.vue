@@ -1,17 +1,17 @@
 <template>
   <main class="container mx-auto mb-12">
     <ProfileHeader
-      :avatar="user.avatar"
-      :nickname="user.nickname"
-      :email="user.email"
-      :intro="user.introduce"
-      :created-at="user.createdAt"
+      :avatar="user.profile.avatar"
+      :nickname="user.profile.nickname"
+      :email="user.profile.email"
+      :intro="user.profile.introduce"
+      :created-at="user.profile.createdAt"
     />
     <ProfileMiddle
       :count="{
-        topic: user.topicsCount,
-        comment: user.commentsCount,
-        like: user.likesCount
+        topic: user.profile.topicsCount,
+        comment: user.profile.commentsCount,
+        like: user.profile.likesCount
       }"
     />
     <ProfileBody />

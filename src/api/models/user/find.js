@@ -71,7 +71,40 @@ export const findByID = async (id, callback) => {
     result.profile = rows[0]
 
     // TODO: 태그 값 내보내기
-    // console.log(tagRows)
+    tagRows.forEach((tag) => {
+      if (tag.originCategoryID) {
+        const target = result.tags.find(
+          (item) => item.title === tag.originCategoryName
+        )
+
+        if (target !== undefined) {
+          target.count = target.count + 1
+        } else {
+          result.tags.push({
+            title: tag.originCategoryName,
+            count: 1,
+            id: tag.originCategoryID
+          })
+        }
+      }
+
+      const splitedID = tag.subCategoryID.split(',')
+      const splitedName = tag.subCategoryName.split(',')
+
+      splitedID.forEach((item, index) => {
+        const target = result.tags.find((el) => el.title === splitedName[index])
+
+        if (target !== undefined) {
+          target.count = target.count + 1
+        } else {
+          result.tags.push({
+            title: splitedName[index],
+            count: 1,
+            id: parseInt(item)
+          })
+        }
+      })
+    })
 
     callback(null, result)
   } catch (error) {

@@ -21,7 +21,7 @@ export default {
 
 <style lang="postcss" scoped>
 article {
-  @apply my-6;
+  @apply mt-6 mb-12;
 }
 div.title {
   @apply font-bold text-lg py-4 border-b border-gray-400;
