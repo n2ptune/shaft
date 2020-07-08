@@ -101,8 +101,15 @@ export default {
       return this.$dayjs().to(this.$dayjs(date))
     },
     moveTopic(topic) {
-      // TODO: Move route with router scroll ...
-      console.log(topic)
+      const routeBase = '/topics'
+      const id = topic.parentTopicID
+        ? `/${topic.parentTopicID}#${topic.id}`
+        : `/${topic.id}`
+      const mixRoute = routeBase + id
+
+      this.$router.push({
+        path: mixRoute
+      })
     }
   }
 }

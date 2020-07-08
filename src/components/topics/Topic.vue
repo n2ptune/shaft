@@ -1,5 +1,5 @@
 <template>
-  <div class="topic-wrap">
+  <div :id="topicId" class="topic-wrap">
     <div class="my-2">
       <div class="user-info">
         <section>

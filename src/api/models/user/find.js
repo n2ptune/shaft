@@ -134,7 +134,6 @@ export const findByID = async (id, callback) => {
 
     callback(null, result)
   } catch (error) {
-    console.log(error)
     callback(error, null)
   }
 }
