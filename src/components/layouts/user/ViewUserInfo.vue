@@ -1,36 +1,38 @@
 <template>
-  <section>
-    <div class="flex">
-      <Avatar
-        size="xl-4"
-        responsive
-        :alt="user.userNickname"
-        :src="user.userAvatar"
-        :is-rounded="false"
-      />
-      <div class="ml-2 py-1 text-sm self-start">
-        <ul>
-          <li class="text-base font-bold">
-            {{ user.userNickname }}
-          </li>
-          <li class="text-gray-500 mb-1">
-            {{ user.userEmail }}
-          </li>
-          <li class="badge">
-            <div v-tippy content="작성한 토픽 수">
-              {{ user.topicsCount }}
-            </div>
-            <div v-tippy content="작성한 댓글 수">
-              {{ user.commentsCount }}
-            </div>
-            <div v-tippy content="받은 좋아요 수">
-              {{ user.likesCount }}
-            </div>
-          </li>
-        </ul>
+  <nuxt-link :to="`/users/${user.userID}`">
+    <section>
+      <div class="flex">
+        <Avatar
+          size="xl-4"
+          responsive
+          :alt="user.userNickname"
+          :src="user.userAvatar"
+          :is-rounded="false"
+        />
+        <div class="ml-2 py-1 text-sm self-start">
+          <ul>
+            <li class="text-base font-bold">
+              {{ user.userNickname }}
+            </li>
+            <li class="text-gray-500 mb-1">
+              {{ user.userEmail }}
+            </li>
+            <li class="badge">
+              <div v-tippy content="작성한 토픽 수">
+                {{ user.topicsCount }}
+              </div>
+              <div v-tippy content="작성한 댓글 수">
+                {{ user.commentsCount }}
+              </div>
+              <div v-tippy content="받은 좋아요 수">
+                {{ user.likesCount }}
+              </div>
+            </li>
+          </ul>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
+  </nuxt-link>
 </template>
 
 <script>

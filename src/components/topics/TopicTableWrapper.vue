@@ -23,10 +23,6 @@
   </div>
 </template>
 
-<script>
-export default {}
-</script>
-
 <style lang="postcss" scoped>
 table thead tr th {
   @apply text-left text-gray-600 font-normal text-sm;

@@ -55,6 +55,8 @@ export const readTopicByID = async (id, cb) => {
   }
 }
 
+export const readTopicByCategoryID = async (categoryID, cb) => {}
+
 export const readAllTopics = async (offset, cb) => {
   const countOfTopicPerPage = 10
   const currentOffset = parseInt(offset - 1) * countOfTopicPerPage
