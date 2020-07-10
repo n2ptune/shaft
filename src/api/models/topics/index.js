@@ -1,6 +1,37 @@
 import db from '../../db/connection'
 import { DatabaseError, NotFoundError } from '../../utils/errors/error'
 
+async function getCountOfTopics() {
+  try {
+    const SQL = `CALL getCountOfTopics();`
+    const [result] = await db.query(SQL)
+
+    if (!result.length) throw new Error('Database Error')
+
+    return result[0][0].count
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
+async function getCountOfTopicsByCategoryID(categoryID, isOrigin) {
+  const procedure = `CALL getCountOfTopicsByCategoryID(${parseInt(
+    categoryID
+  )}, ${isOrigin ? 'TRUE' : 'FALSE'})`
+
+  try {
+    const [rows] = await db.query(procedure)
+
+    if (rows[0][0].count === undefined) throw new NotFoundError()
+
+    return rows[0][0].count
+  } catch (error) {
+    if (error instanceof NotFoundError) {
+      return new NotFoundError(`${categoryID} 카테고리 아이디를 찾을 수 없음`)
+    }
+  }
+}
+
 export const deleteTopic = async (id, user, cb) => {
   // 토픽 아이디 값과 유저 아이디 값 검증
   const checkSQL = `SELECT COUNT(*) AS selectCount FROM TEST_TOPICS
@@ -64,7 +95,6 @@ export const readAllTopics = async (offset, cb) => {
 
   try {
     const [rows] = await db.query(SQL)
-
     const countOfTopic = await getCountOfTopics()
 
     const pageInfo = {
@@ -117,19 +147,6 @@ export const writeTopic = async (topic, user) => {
     }
   } catch (error) {
     throw new Error('Write Topic Error')
-  }
-}
-
-export const getCountOfTopics = async () => {
-  try {
-    const SQL = `CALL getCountOfTopics();`
-    const [result] = await db.query(SQL)
-
-    if (!result.length) throw new Error('Database Error')
-
-    return result[0][0].count
-  } catch (error) {
-    throw new Error(error)
   }
 }
 

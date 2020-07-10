@@ -1,6 +1,20 @@
-import { readTopicByID, readAllTopics } from '../../models/topics/index'
+import {
+  readTopicByCategoryID,
+  readTopicByID,
+  readAllTopics
+} from '../../models/topics/index'
 import { getCommentsByTopicID } from '../../models/comments/index'
 import { NotFoundError } from '../../utils/errors/error'
+
+export const topicByCategoryID = function(req, res) {
+  const { id: categoryID } = req.params
+
+  if (!categoryID) {
+    return res.status(400).end()
+  }
+
+  readTopicByCategoryID(categoryID, (error, results, pageInfo) => {})
+}
 
 export const topicByID = function(req, res) {
   const { id } = req.params
