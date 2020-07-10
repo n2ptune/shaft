@@ -1,11 +1,36 @@
 <template>
-  <main class="mb-12"></main>
+  <main class="mb-12">
+    <CategoryPage :topics="topics" :pages="pages" />
+  </main>
 </template>
 
 <script>
+import CategoryPage from '@/components/topics/category/CategoryPage.vue'
+import { fetchCategoryTopics } from '@/components/utils/functions/fetch'
+
 export default {
-  asyncData({ params }) {
-    console.log(params)
+  components: {
+    CategoryPage
+  },
+
+  async asyncData({ $axios, params, query, error, route }) {
+    try {
+      const data = await fetchCategoryTopics(
+        $axios,
+        parseInt(params.id),
+        query.p,
+        route.path
+      )
+
+      return {
+        topics: data.topics,
+        pages: data.head
+      }
+    } catch (fetchError) {
+      error(fetchError)
+    }
   }
+
+  // TODO: Category Page Pagination
 }
 </script>

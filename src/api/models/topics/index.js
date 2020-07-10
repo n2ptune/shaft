@@ -17,14 +17,14 @@ async function getCountOfTopics() {
 async function getCountOfTopicsByCategoryID(categoryID, isOrigin) {
   const procedure = `CALL getCountOfTopicsByCategoryID(${parseInt(
     categoryID
-  )}, ${isOrigin ? 'TRUE' : 'FALSE'})`
+  )}, ${isOrigin ? 1 : 0})`
 
   try {
     const [rows] = await db.query(procedure)
 
     if (rows[0][0].count === undefined) throw new NotFoundError()
 
-    return rows[0][0].count
+    return { count: rows[0][0].count, categoryName: rows[0][0].categoryName }
   } catch (error) {
     if (error instanceof NotFoundError) {
       return new NotFoundError(`${categoryID} 카테고리 아이디를 찾을 수 없음`)
@@ -86,7 +86,39 @@ export const readTopicByID = async (id, cb) => {
   }
 }
 
-export const readTopicByCategoryID = async (categoryID, cb) => {}
+export const readTopicByCategoryID = async (
+  categoryID,
+  offset,
+  isOrigin,
+  cb
+) => {
+  const countOfTopicPerPage = 10
+  const currentOffset = parseInt(offset - 1) * countOfTopicPerPage
+  const SQL = `CALL readTopicByCategoryIDWithOffset(${currentOffset},
+    ${categoryID}, ${isOrigin})`
+
+  try {
+    const [rows] = await db.query(SQL)
+    const countOfTopic = await getCountOfTopicsByCategoryID(
+      categoryID,
+      isOrigin
+    )
+
+    const pageInfo = {
+      categoryName: countOfTopic.categoryName,
+      currentPage: Math.ceil(countOfTopic.count / currentOffset),
+      countOfPage: Math.ceil(countOfTopic.count / countOfTopicPerPage),
+      countOfTopic: countOfTopic.count
+    }
+
+    // 현재 페이지가 0으로 나눠졌을 경우 (유한수가 아닐 경우)
+    if (!isFinite(pageInfo.currentPage)) pageInfo.currentPage = 1
+
+    cb(null, rows[0], pageInfo)
+  } catch (error) {
+    cb(error, null, null)
+  }
+}
 
 export const readAllTopics = async (offset, cb) => {
   const countOfTopicPerPage = 10

@@ -8,12 +8,33 @@ import { NotFoundError } from '../../utils/errors/error'
 
 export const topicByCategoryID = function(req, res) {
   const { id: categoryID } = req.params
+  const offset = req.query.p || 1
 
   if (!categoryID) {
     return res.status(400).end()
   }
 
-  readTopicByCategoryID(categoryID, (error, results, pageInfo) => {})
+  const isOrigin = !!req.headers['x-origin-category']
+
+  readTopicByCategoryID(
+    categoryID,
+    offset,
+    isOrigin,
+    (error, results, pageInfo) => {
+      if (error) {
+        return res.status(500).end()
+      } else {
+        res.append('Content-Type', 'application/json')
+
+        const data = {
+          topics: results,
+          head: pageInfo
+        }
+
+        return res.status(200).send(data)
+      }
+    }
+  )
 }
 
 export const topicByID = function(req, res) {
