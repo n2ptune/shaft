@@ -13,13 +13,13 @@ export default {
     CategoryPage
   },
 
-  async asyncData({ $axios, params, query, error, route }) {
+  async asyncData({ $axios, params, query, error }) {
     try {
       const data = await fetchCategoryTopics(
         $axios,
         parseInt(params.id),
         query.p,
-        route.path
+        false
       )
 
       return {
@@ -30,7 +30,5 @@ export default {
       error(fetchError)
     }
   }
-
-  // TODO: Category Page Pagination
 }
 </script>

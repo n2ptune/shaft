@@ -17,7 +17,7 @@ async function getCountOfTopics() {
 async function getCountOfTopicsByCategoryID(categoryID, isOrigin) {
   const procedure = `CALL getCountOfTopicsByCategoryID(${parseInt(
     categoryID
-  )}, ${isOrigin ? 1 : 0})`
+  )}, ${isOrigin})`
 
   try {
     const [rows] = await db.query(procedure)

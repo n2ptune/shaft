@@ -29,8 +29,8 @@ export default {
     isOriginRoute() {
       // FIXME: 토픽을 카테고리 별로 분류할 URL 지정 필요
       return this.tag.isOrigin
-        ? `/topics/category/${this.parseID}`
-        : `/topics/sub-category/${this.parseID}`
+        ? `/topics/category/${this.parseID}?p=1`
+        : `/topics/sub-category/${this.parseID}?p=1`
     }
   }
 }

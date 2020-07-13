@@ -14,12 +14,10 @@ export const topicByCategoryID = function(req, res) {
     return res.status(400).end()
   }
 
-  const isOrigin = !!req.headers['x-origin-category']
-
   readTopicByCategoryID(
     categoryID,
     offset,
-    isOrigin,
+    req.headers['x-origin-category'],
     (error, results, pageInfo) => {
       if (error) {
         return res.status(500).end()

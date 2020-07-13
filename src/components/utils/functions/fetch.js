@@ -3,21 +3,12 @@
  * @param {AxiosInstance} axios
  * @param {Number} categoryID
  * @param {Number} offset
- * @param {String} path
+ * @param {Boolean} isOrigin
  */
-async function fetchCategoryTopics(axios, categoryID, offset, path) {
+async function fetchCategoryTopics(axios, categoryID, offset, isOrigin) {
   if (!offset) offset = 1
 
   const url = `/api/topics/category/${categoryID}?p=${offset}`
-  let isOrigin = null
-
-  if (/\/(category)\//.test(path)) {
-    isOrigin = true
-  } else if (/\/(sub-category)\//.test(path)) {
-    isOrigin = false
-  } else {
-    return new Error('정상 경로가 아님')
-  }
 
   try {
     const { data } = await axios.get(url, {
