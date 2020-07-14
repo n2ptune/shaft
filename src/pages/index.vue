@@ -50,9 +50,11 @@ export default {
 
       const data = await fetchTopics($axios, offset)
 
-      return {
-        topics: data.topics,
-        pages: data.head
+      if (process.server) {
+        return {
+          topics: data.topics,
+          pages: data.head
+        }
       }
     } catch (error) {}
   },
@@ -60,7 +62,6 @@ export default {
   watch: {
     async '$route.query'(to, from) {
       const data = await fetchTopics(this.$axios, to.o)
-
       this.topics = data.topics
       this.pages = data.head
     }

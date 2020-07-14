@@ -179,13 +179,20 @@ export default {
             }
           } catch (error) {
             // 실패 처리
-            console.error(error)
+            // console.error(error)
           }
         },
         onCancel: () => this.$confirm.close()
       })
     },
-    editTopic() {}
+    editTopic() {
+      this.$router.push({
+        path: '/topics/new',
+        query: {
+          id: this.topicId
+        }
+      })
+    }
   }
 }
 </script>

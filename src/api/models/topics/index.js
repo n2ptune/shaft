@@ -220,3 +220,7 @@ export const likeTopic = async (topicID, user, cb) => {
     cb(error, null)
   }
 }
+
+export const topicDataToUpdateByID = (id, cb) => {}
+
+export const updateTopicByID = (id, cb) => {}

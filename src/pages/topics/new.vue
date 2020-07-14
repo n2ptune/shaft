@@ -7,11 +7,21 @@
 </template>
 
 <script>
-import EditorWrapper from '@/components/topics/editor/EditorWrapper'
+import EditorWrapper from '@/components/topics/editor/EditorWrapper.vue'
 
 export default {
   components: {
     EditorWrapper
+  },
+
+  async asyncData({ $axios, query }) {
+    if (query.id) {
+      const { data } = await $axios.get('/api/topics/update/' + query.id)
+
+      return {
+        topic: data
+      }
+    }
   }
 }
 </script>
