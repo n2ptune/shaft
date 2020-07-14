@@ -105,7 +105,8 @@ export const findByID = async (id, callback) => {
           result.tags.push({
             title: tag.originCategoryName,
             count: 1,
-            id: tag.originCategoryID
+            id: tag.originCategoryID,
+            isOrigin: true
           })
         }
       }

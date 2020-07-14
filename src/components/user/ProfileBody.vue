@@ -8,23 +8,25 @@
         >
       </div>
       <ul class="py-6">
-        <li
+        <nuxt-link
           v-for="tag in sortedTags"
           :key="tag.title"
-          class="inline-block mr-2 mb-2"
+          :to="categoryRoute(tag)"
         >
-          <button
-            class="px-4 py-1 font-light text-sm bg-orange-400 rounded-full text-white hover:bg-orange-500"
-          >
-            <span
-              :style="{ paddingRight: '0.4rem' }"
-              class="mr-2 pl-2 rounded-lg bg-orange-200 text-black text-xs text-center align-baseline"
+          <li class="inline-block mr-2 mb-2">
+            <button
+              class="px-4 py-1 font-light text-sm bg-orange-400 rounded-full text-white hover:bg-orange-500"
             >
-              {{ tag.count }}
-            </span>
-            {{ tag.title }}
-          </button>
-        </li>
+              <span
+                :style="{ paddingRight: '0.4rem' }"
+                class="mr-2 pl-2 rounded-lg bg-orange-200 text-black text-xs text-center align-baseline"
+              >
+                {{ tag.count }}
+              </span>
+              {{ tag.title }}
+            </button>
+          </li>
+        </nuxt-link>
       </ul>
     </article>
     <article>
@@ -110,6 +112,11 @@ export default {
       this.$router.push({
         path: mixRoute
       })
+    },
+    categoryRoute(tag) {
+      return tag.isOrigin
+        ? `/topics/category/${tag.id}`
+        : `/topics/sub-category/${tag.id}`
     }
   }
 }
