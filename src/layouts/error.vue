@@ -10,6 +10,10 @@ export default {
       default: () => {}
     }
   },
-  layout: 'error-layout'
+  layout: 'error-layout',
+
+  created() {
+    console.log(this.error)
+  }
 }
 </script>

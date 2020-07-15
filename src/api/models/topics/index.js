@@ -221,6 +221,30 @@ export const likeTopic = async (topicID, user, cb) => {
   }
 }
 
-export const topicDataToUpdateByID = (id, cb) => {}
+export const topicDataToUpdateByID = async (id, user, cb) => {
+  const SQL = `SELECT *
+  FROM TEST_TOPICS topic
+  WHERE topic.id = ?
+  LIMIT 1;`
+
+  try {
+    const [rows] = await db.query(SQL, [id])
+
+    if (!rows.length) {
+      throw new Error('NotFoundTopic')
+    }
+
+    const data = rows[0]
+
+    if (data.ownerID !== user.id) {
+      // 작성자가 아닐 경우
+      throw new Error('NotOwnerError')
+    }
+
+    cb(null, data)
+  } catch (error) {
+    cb(error, null)
+  }
+}
 
 export const updateTopicByID = (id, cb) => {}

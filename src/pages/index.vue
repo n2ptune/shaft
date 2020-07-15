@@ -50,11 +50,9 @@ export default {
 
       const data = await fetchTopics($axios, offset)
 
-      if (process.server) {
-        return {
-          topics: data.topics,
-          pages: data.head
-        }
+      return {
+        topics: data.topics,
+        pages: data.head
       }
     } catch (error) {}
   },
@@ -68,12 +66,14 @@ export default {
   },
 
   created() {
-    this.$router.push({
-      path: '/',
-      query: {
-        o: this.$route.query.o || 1
-      }
-    })
+    if (!this.$route.query.o) {
+      this.$router.replace({
+        path: '/',
+        query: {
+          o: 1
+        }
+      })
+    }
   }
 }
 </script>
