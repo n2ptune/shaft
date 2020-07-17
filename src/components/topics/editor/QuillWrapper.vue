@@ -1,6 +1,7 @@
 <template>
   <quill-editor
     :ref="refBind"
+    :content="content"
     :options="options"
     @ready="onEditorReady($event)"
     @change="onEditorChange($event)"
@@ -19,6 +20,11 @@ export default {
       type: String,
       required: false,
       default: 'quillEditor'
+    },
+    content: {
+      type: String,
+      required: false,
+      default: ''
     }
   },
 
@@ -43,4 +49,10 @@ export default {
 @import 'quill/dist/quill.core.css';
 @import 'quill/dist/quill.snow.css';
 @import '@/assets/css/quill/custom.css';
+
+.ql-container {
+  font-size: 16px;
+}
+
+/* TODO: Quill Editor Style */
 </style>

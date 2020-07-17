@@ -22,6 +22,7 @@
       class="editor-wrapper"
     >
       <QuillWrapper
+        :content="topic.content"
         :options="editorOption"
         ref-bind="myQuillEditor"
         class="w-full"
@@ -47,9 +48,9 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import Block from './EditorBlock'
-import QuillWrapper from './QuillWrapper'
-import CategoryList from '@/components/topics/category/CategoryList'
+import Block from './EditorBlock.vue'
+import QuillWrapper from './QuillWrapper.vue'
+import CategoryList from '@/components/topics/category/CategoryList.vue'
 import { validateTopic } from '@/api/models/topics/validate'
 
 export default {
@@ -69,6 +70,24 @@ export default {
       type: Boolean,
       required: false,
       default: false
+    },
+    /** @type {import('vue').PropOptions<{
+     * content: String,
+     * createdAt: String,
+     * id: Number,
+     * isDel: Number,
+     * originCategoryID: Number,
+     * ownerID: Number,
+     * parentTopicID: Number | null,
+     * subCategoryID: String,
+     * title: String | null,
+     * updatedAt: String | null,
+     * views: Number
+     * }>} */
+    isEdit: {
+      type: Object,
+      required: false,
+      default: () => {}
     }
   },
 
@@ -106,10 +125,18 @@ export default {
       parentTopic: 'topic/getParentTopic'
     }),
     waitingText() {
-      return this.writing ? '토픽 작성중...' : '토픽 작성하기'
+      if (this.isEdit) {
+        return this.writing ? '토픽 수정중...' : '토픽 수정하기'
+      } else {
+        return this.writing ? '토픽 작성중...' : '토픽 작성하기'
+      }
     },
     topicContentTitle() {
-      return this.isReply ? '토픽에 답글 달기' : '토픽 내용'
+      if (this.isEdit) {
+        return '토픽 수정하기'
+      } else {
+        return this.isReply ? '토픽에 답글 달기' : '토픽 내용'
+      }
     }
   },
 
@@ -125,6 +152,44 @@ export default {
       this.category.origin = data.category
       this.category.sub = data.sub
     } catch (error) {}
+
+    // 모드가 수정 모드일 경우
+    if (this.isEdit) {
+      // 카테고리 선택
+      // 메인 카테고리
+      if (this.isEdit.originCategoryID) {
+        const target = this.category.origin.find(
+          (category) => category.id === this.isEdit.originCategoryID
+        )
+
+        if (target !== undefined) {
+          target.selected = true
+        }
+      }
+      // 서브 카테고리
+      if (this.isEdit.subCategoryID) {
+        // 구분자에 의해 배열로 나눠지고 카테고리 배열과 비교를 위해
+        // 아이디 값을 정수로 변환
+        const spreadCat = this.isEdit.subCategoryID
+          .split(',')
+          .map((el) => parseInt(el))
+        // 나눠진 배열에 카테고리 아이디 값이 포함되어 있는 객체 필터링
+        const target = this.category.sub.filter((category) =>
+          spreadCat.includes(category.id)
+        )
+
+        // 해당 카테고리 객체 선택
+        target.map((category) => (category.selected = true))
+      }
+
+      // 해당 토픽이 부모 토픽일 경우
+      if (!this.isEdit.parentTopicID) {
+        // 제목 바인딩
+        this.topic.title = this.isEdit.title
+        // 내용 바인딩
+        this.topic.content = this.isEdit.content
+      }
+    }
   },
 
   beforeDestroy() {

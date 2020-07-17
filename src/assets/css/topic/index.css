@@ -1,0 +1,32 @@
+/* Wrapper: .topic-content-wrap */
+
+.main-container >>> .topic-content-wrap {
+  & .ql-size-small {
+    @apply text-sm;
+  }
+  & .ql-size-large {
+    @apply text-lg;
+  }
+  & .ql-size-huge {
+    @apply text-2xl;
+  }
+  & .ql-align-right {
+    @apply text-right;
+  }
+  & .ql-align-center {
+    @apply text-center;
+  }
+  & blockquote {
+    @apply text-gray-600 bg-gray-200 my-2 py-2 px-4;
+  }
+  & ul,
+  & ol {
+    padding-left: 2rem;
+  }
+  & ul {
+    list-style: disc;
+  }
+  & ol {
+    list-style: decimal;
+  }
+}

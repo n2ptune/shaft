@@ -55,6 +55,8 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
+@import '@/assets/css/topic/index.css';
+
 .main-container {
   & >>> .topic-wrap.child:not(:last-of-type) {
     @apply border-b-2 border-gray-300 mb-8;
