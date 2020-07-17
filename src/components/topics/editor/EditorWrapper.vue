@@ -260,10 +260,22 @@ export default {
       }
 
       try {
-        const { data: topicData } = await this.$axios.post(
-          '/api/topics/new',
-          topic
-        )
+        let topicData
+
+        if (this.isEdit) {
+          topic.id = this.isEdit.id
+
+          const { data } = await this.$axios.put(
+            `/api/topics/update/${this.isEdit.id}`,
+            topic
+          )
+
+          topicData = data
+        } else {
+          const { data } = await this.$axios.post('/api/topics/new', topic)
+
+          topicData = data
+        }
 
         if (topicData.topic.parentTopicID) {
           this.$router.go()

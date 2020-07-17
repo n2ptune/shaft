@@ -2,6 +2,7 @@ import { writeTopic } from '../../models/topics/index'
 import { validateTopic } from '../../models/topics/validate'
 import parseToken from '../../utils/parse-authorization'
 import { decodeToken } from '../../models/user/token'
+import { extract } from '../../utils/extract-category'
 
 export default async function(req, res) {
   let token
@@ -25,21 +26,7 @@ export default async function(req, res) {
   if (!validateTopic({ title, date, content, isReply: !!parent })) {
     return res.status(400).end()
   } else {
-    const category = {
-      origin: [],
-      sub: []
-    }
-
-    categories.origin.map((origin) => category.origin.push(origin.id))
-    categories.sub.map((sub) => category.sub.push(sub.id))
-
-    for (const key in category) {
-      if (category[key].length) {
-        category[key] = category[key].join(',')
-      } else {
-        category[key] = null
-      }
-    }
+    const category = extract(categories)
 
     try {
       const topic = await writeTopic(

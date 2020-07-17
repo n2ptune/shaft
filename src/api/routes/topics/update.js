@@ -1,7 +1,6 @@
-import {
-  topicDataToUpdateByID,
-  updateTopicByID
-} from '../../models/topics/index'
+import { topicDataToUpdateByID, updateTopicByID } from '../../models/topics'
+import { validateTopic } from '../../models/topics/validate'
+import { extract } from '../../utils/extract-category'
 
 export const topicDataToUpdate = (req, res) => {
   const { id } = req.params
@@ -26,4 +25,34 @@ export const topicDataToUpdate = (req, res) => {
   })
 }
 
-export const updateTopic = (req, res) => {}
+export const updateTopic = (req, res) => {
+  // console.log(req.body)
+
+  // return res.status(200).send({
+  //   topic: {
+  //     id: 39,
+  //     parentTopicID: null
+  //   }
+  // })
+
+  const { id, title, content, date, categories, parent } = req.body
+
+  // 검증 실패
+  if (!validateTopic({ title, date, content, isReply: !!parent })) {
+    return res.status(400).end()
+  } else {
+    const category = extract(categories)
+
+    const topic = {
+      id,
+      title,
+      content,
+      date,
+      category,
+      parent
+    }
+
+    // TODO: Should be complete this line
+    updateTopicByID(topic, res.locals.user, (error, result) => {})
+  }
+}

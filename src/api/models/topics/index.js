@@ -247,4 +247,26 @@ export const topicDataToUpdateByID = async (id, user, cb) => {
   }
 }
 
-export const updateTopicByID = (id, cb) => {}
+/**
+ * @param {{
+ * id: Number
+ * title: String,
+ * content: String,
+ * date: String,
+ * category: {origin: String | null, sub: String | null},
+ * parent: Number | null
+ * }} topic
+ * @param {Object} user
+ * @param {Function} cb
+ */
+export const updateTopicByID = async (topic, user, cb) => {
+  const SQL = `UPDATE TEST_TOPICS
+  SET title = '123123123123123'
+  WHERE id = 39;`
+
+  const [result] = await db.query(SQL)
+
+  if (!result.affectedRows) {
+    // 내용이 변경되지 않을 경우 (조건 값이 맞지 않을 경우)
+  }
+}
