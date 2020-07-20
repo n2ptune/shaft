@@ -271,6 +271,8 @@ export default {
           )
 
           topicData = data
+
+          return this.$router.push('/topics/' + this.isEdit.id)
         } else {
           const { data } = await this.$axios.post('/api/topics/new', topic)
 

@@ -261,12 +261,33 @@ export const topicDataToUpdateByID = async (id, user, cb) => {
  */
 export const updateTopicByID = async (topic, user, cb) => {
   const SQL = `UPDATE TEST_TOPICS
-  SET title = '123123123123123'
-  WHERE id = 39;`
+  SET title = ?,
+  updatedAt = ?,
+  content = ?,
+  originCategoryID = ?,
+  subCategoryID = ?
+  WHERE id = ? AND ownerID = ?;`
 
-  const [result] = await db.query(SQL)
+  try {
+    // title, updateAt, content, originCategoryID, subCategoryID
+    // id, ownerID
+    const [result] = await db.query(SQL, [
+      topic.title,
+      topic.date,
+      topic.content,
+      topic.category.origin,
+      topic.category.sub,
+      topic.id,
+      user.id
+    ])
 
-  if (!result.affectedRows) {
-    // 내용이 변경되지 않을 경우 (조건 값이 맞지 않을 경우)
+    if (!result.affectedRows) {
+      // 내용이 변경되지 않을 경우 (조건 값이 맞지 않을 경우)
+      throw new Error('NoAffectedRows')
+    }
+
+    cb(null, result)
+  } catch (error) {
+    return cb(error, null)
   }
 }

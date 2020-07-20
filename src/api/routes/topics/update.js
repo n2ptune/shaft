@@ -53,6 +53,12 @@ export const updateTopic = (req, res) => {
     }
 
     // TODO: Should be complete this line
-    updateTopicByID(topic, res.locals.user, (error, result) => {})
+    updateTopicByID(topic, res.locals.user, (error, result) => {
+      if (error) {
+        return res.status(500).end()
+      } else {
+        return res.status(200).send(result)
+      }
+    })
   }
 }
