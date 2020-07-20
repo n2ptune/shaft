@@ -7,7 +7,10 @@ const solid =
         'faHome',
         'faUser',
         'faCommentDots',
-        'faQuestionCircle'
+        'faQuestionCircle',
+        'faTrashAlt',
+        'faEdit',
+        'faUserClock'
       ]
 
 module.exports = solid

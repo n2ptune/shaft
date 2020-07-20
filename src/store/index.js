@@ -3,6 +3,9 @@ export const actions = {
     // 로컬 스토리지에서 토큰 가져오기
     const startToken = localStorage.getItem('at')
 
+    // 클라이언트 사이드 axios baseURL localhost -> /
+    this.$axios.defaults.baseURL = '/'
+
     // 요청 인터셉터 등록
     this.$axios.interceptors.request.use((config) => {
       // 헤더에 토큰이 담겨져 있지 않으면
