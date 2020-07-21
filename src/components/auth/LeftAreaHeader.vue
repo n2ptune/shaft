@@ -5,7 +5,7 @@
       <p class="leading-3 font-light">
         Community For Developers
       </p>
-      <div v-if="isRouteSignIn" class="mt-4">
+      <div class="mt-4">
         <p class="mb-4">
           {{ nameWithRoute }}
         </p>
