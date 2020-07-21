@@ -1,7 +1,7 @@
 <template>
   <AuthForm>
     <template slot="header">
-      REGISTER
+      <LeftAreaHeader />
     </template>
     <form ref="signUpForm" class="flex flex-col" @submit.prevent="signUp">
       <label
@@ -65,13 +65,15 @@ import {
   validateEmail,
   validatePassword
 } from '@/api/models/user/validate-universal'
-import AuthForm from '@/components/auth/AuthForm'
+import AuthForm from '@/components/auth/AuthForm.vue'
+import LeftAreaHeader from '@/components/auth/LeftAreaHeader.vue'
 
 export default {
   layout: 'auth-layout',
 
   components: {
-    AuthForm
+    AuthForm,
+    LeftAreaHeader
   },
 
   data: () => ({

@@ -1,7 +1,7 @@
 <template>
   <AuthForm>
     <template slot="header">
-      SIGN IN
+      <LeftAreaHeader />
     </template>
     <form ref="signInForm" class="flex flex-col" @submit.prevent="signIn">
       <label for="email">
@@ -31,6 +31,8 @@
         :disabled="!validated"
         @click.prevent="signIn"
       />
+      <hr class="inline-block" />
+      <p class="inline-block">OR</p>
     </form>
   </AuthForm>
 </template>
@@ -41,13 +43,15 @@ import {
   validateEmail,
   validatePassword
 } from '@/api/models/user/validate-universal'
-import AuthForm from '@/components/auth/AuthForm'
+import AuthForm from '@/components/auth/AuthForm.vue'
+import LeftAreaHeader from '@/components/auth/LeftAreaHeader.vue'
 
 export default {
   layout: 'auth-layout',
 
   components: {
-    AuthForm
+    AuthForm,
+    LeftAreaHeader
   },
 
   data: () => ({

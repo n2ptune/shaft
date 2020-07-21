@@ -1,7 +1,14 @@
 <template>
-  <div class="h-screen flex justify-center items-center wrapper">
+  <main
+    class="h-screen flex items-center justify-center bg-gray-300 overflow-y-auto"
+  >
     <nuxt />
-  </div>
+    <footer
+      class="absolute hidden lg:block bottom-0 mb-2 text-sm text-gray-600"
+    >
+      2020 Shaft.
+    </footer>
+  </main>
 </template>
 
 <script>
@@ -10,8 +17,4 @@ export default {
 }
 </script>
 
-<style lang="postcss" scoped>
-.wrapper {
-  background: linear-gradient(360deg, #242424, #111114);
-}
-</style>
+<style lang="postcss" scoped></style>
