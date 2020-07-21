@@ -7,13 +7,13 @@
       </p>
       <div v-if="isRouteSignIn" class="mt-4">
         <p class="mb-4">
-          아직 회원이 아니신가요?
+          {{ nameWithRoute }}
         </p>
         <nuxt-link
-          to="/auth/sign-up"
+          :to="pathWithRoute"
           class="px-4 py-1 border-2 border-white rounded-full text-sm transition-colors duration-200 hover:text-black hover:bg-white shadow-xl"
         >
-          SIGN UP
+          {{ isRouteSignIn ? 'SIGN-UP' : 'SIGN-IN' }}
         </nuxt-link>
       </div>
     </div>
@@ -25,6 +25,14 @@ export default {
   computed: {
     isRouteSignIn() {
       return this.$route.path.includes('sign-in')
+    },
+    nameWithRoute() {
+      return this.isRouteSignIn
+        ? '아직 회원이 아니신가요?'
+        : '이미 회원이십니까?'
+    },
+    pathWithRoute() {
+      return this.isRouteSignIn ? '/auth/sign-up' : '/auth/sign-in'
     }
   }
 }
