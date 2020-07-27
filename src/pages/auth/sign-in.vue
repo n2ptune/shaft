@@ -31,8 +31,8 @@
         :disabled="!validated"
         @click.prevent="signIn"
       />
-      <hr class="inline-block" />
-      <p class="inline-block">OR</p>
+      <!-- <hr class="inline-block my-6" /> -->
+      <Divider text="OR" />
     </form>
   </AuthForm>
 </template>
@@ -45,13 +45,15 @@ import {
 } from '@/api/models/user/validate-universal'
 import AuthForm from '@/components/auth/AuthForm.vue'
 import LeftAreaHeader from '@/components/auth/LeftAreaHeader.vue'
+import Divider from '@/components/utils/Divider.vue'
 
 export default {
   layout: 'auth-layout',
 
   components: {
     AuthForm,
-    LeftAreaHeader
+    LeftAreaHeader,
+    Divider
   },
 
   data: () => ({
