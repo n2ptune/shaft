@@ -11,7 +11,7 @@
     <div class="hidden lg:inline-block absolute bottom-0 right-0">
       <img
         src="~@/assets/images/logo_light_orange.png"
-        :style="{ opacity: '0.5' }"
+        :style="{ opacity: '0.75' }"
       />
     </div>
   </div>

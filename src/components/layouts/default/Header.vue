@@ -1,7 +1,12 @@
 <template>
   <header class="p-4 border-b border-gray-300" data-main-header>
     <div class="max-w-xl mx-auto flex justify-between items-center">
-      <div class="font-bold text-xl">Shaft</div>
+      <div>
+        <img
+          src="@/assets/images/no_bg_color_logo_light_orange.png"
+          width="150"
+        />
+      </div>
       <div>
         <ClientOnly>
           <div
