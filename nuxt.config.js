@@ -105,6 +105,8 @@ module.exports = {
   },
   srcDir: 'src/',
   dotenv: {
-    path: './'
+    path: './',
+    filename:
+      process.env.NODE_ENV === 'production' ? '.env' : '.env.development'
   }
 }
