@@ -52,9 +52,14 @@ export default {
   opacity: 1;
 }
 .dropdown {
-  top: 45px;
-  transform: translateX(-30%);
-  @apply absolute max-w-xl bg-white rounded shadow border border-gray-300;
+  width: 150px;
+  top: 110%;
+  transform: translateX(-75%);
+  @apply absolute bg-white rounded shadow-lg border border-gray-300;
+
+  @screen md {
+    transform: translateX(-35%);
+  }
 }
 .dropdown-list a:hover {
   @apply font-bold;
