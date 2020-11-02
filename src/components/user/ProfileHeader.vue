@@ -1,7 +1,7 @@
 <template>
   <section class="flex flex-wrap">
     <article class="mr-6">
-      <Avatar :src="avatar" :is-rounded="false" :style="{ width: '7rem' }" />
+      <Avatar :src="avatar" :alt="nickname" />
     </article>
     <article>
       <div class="mb-2">

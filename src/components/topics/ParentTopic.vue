@@ -17,7 +17,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import Topic from './Topic'
+import Topic from './Topic.vue'
 
 export default {
   components: {

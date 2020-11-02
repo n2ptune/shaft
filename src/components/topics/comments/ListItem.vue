@@ -69,8 +69,8 @@ export default {
             })
 
             this.$confirm.close()
-          } catch (error) {
-            console.log(error)
+          } catch (_error) {
+            // 에러 처리
           }
         },
         onCancel: () => {

@@ -11,9 +11,9 @@
 </template>
 
 <script>
-import ViewHeader from '@/components/layouts/user/ViewHeader'
-import ViewUserContainer from '@/components/layouts/user/ViewUserContainer'
-import PageContainer from '@/components/utils/PageContainer'
+import ViewHeader from '@/components/layouts/user/ViewHeader.vue'
+import ViewUserContainer from '@/components/layouts/user/ViewUserContainer.vue'
+import PageContainer from '@/components/utils/PageContainer.vue'
 
 async function fetchUsers(axios, page) {
   const { data } = await axios.get('/api/users?p=' + page)

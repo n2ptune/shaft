@@ -15,11 +15,7 @@
             @mouseover="isDropdown = true"
             @mouseleave="isDropdown = false"
           >
-            <img
-              :src="user.avatar"
-              :style="{ width: '40px' }"
-              class="rounded-full"
-            />
+            <Avatar :src="user.avatar" :alt="user.nickname" :size="35" />
             <AvatarDropdown v-if="isDropdown" />
           </div>
           <div v-else class="auth">
@@ -43,20 +39,17 @@
         </ClientOnly>
       </div>
     </div>
-    <!-- <div v-if="$route.path === '/'" class="mx-auto text-center py-32">
-      <div class="text-5xl md:text-6xl font-extrabold line leading-tight">
-        Community<br />For <br /><span class="gradient-text">Developers</span>
-      </div>
-    </div> -->
   </header>
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-import AvatarDropdown from '@/components/dropdown/AvatarDropdown'
+import Avatar from '@/components/user/Avatar.vue'
+import AvatarDropdown from '@/components/dropdown/AvatarDropdown.vue'
 
 export default {
   components: {
+    Avatar,
     AvatarDropdown
   },
 

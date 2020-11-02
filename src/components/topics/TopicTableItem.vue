@@ -24,7 +24,7 @@
         class="inline-block align-middle"
         :to="`/users/${item.ownerID}`"
       >
-        <UserAvatar :src="item.userAvatar" :alt="item.userNickname" />
+        <Avatar :src="item.userAvatar" :alt="item.userNickname" :size="25" />
       </nuxt-link>
     </td>
   </tr>
@@ -32,12 +32,12 @@
 
 <script>
 import relativeTime from 'dayjs/plugin/relativeTime'
-import CategoryBadge from './category/CategoryBadge'
-import UserAvatar from '@/components/user/Avatar'
+import CategoryBadge from './category/CategoryBadge.vue'
+import Avatar from '@/components/user/Avatar.vue'
 
 export default {
   components: {
-    UserAvatar,
+    Avatar,
     CategoryBadge
   },
 

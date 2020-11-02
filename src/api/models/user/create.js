@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt'
 import db from '../../db/connection'
 import { ValidateError } from '../../utils/errors/error'
+import generateHex from '../../utils/generate-hex'
 import { validatePassword } from './validate-universal'
 
 /**
@@ -19,7 +20,7 @@ export const createUser = async (nickname, email, password, date, cb) => {
     try {
       const salt = bcrypt.genSaltSync(saltRounds)
       const hash = bcrypt.hashSync(password, salt)
-      const avatar = `https://api.adorable.io/avatars/100/${nickname}@${nickname}`
+      const avatar = generateHex()
 
       await db.query(sql, [nickname, email, hash, avatar, date])
       cb(null, true)

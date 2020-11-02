@@ -17,10 +17,10 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import TopicMainHeader from '@/components/topics/TopicMainHeader'
-import ParentTopic from '@/components/topics/ParentTopic'
-import ChildrenTopic from '@/components/topics/ChildrenTopic'
-import EditorWrapper from '@/components/topics/editor/EditorWrapper'
+import TopicMainHeader from '@/components/topics/TopicMainHeader.vue'
+import ParentTopic from '@/components/topics/ParentTopic.vue'
+import ChildrenTopic from '@/components/topics/ChildrenTopic.vue'
+import EditorWrapper from '@/components/topics/editor/EditorWrapper.vue'
 
 export default {
   components: {

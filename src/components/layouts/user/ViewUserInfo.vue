@@ -3,11 +3,10 @@
     <section>
       <div class="flex">
         <Avatar
-          size="xl-4"
-          responsive
+          :size="50"
           :alt="user.userNickname"
           :src="user.userAvatar"
-          :is-rounded="false"
+          :custom-style="{ alignSelf: 'center', marginRight: '5px' }"
         />
         <div class="ml-2 py-1 text-sm self-start">
           <ul>

@@ -1,7 +1,7 @@
 <template>
   <section class="comments-wrap">
     <div class="comments-input flex items-center relative">
-      <UserAvatar class="self-start" />
+      <UserAvatar />
       <textarea
         v-model="inputComment"
         type="text"

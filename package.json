@@ -29,6 +29,7 @@
     "mysql2": "^2.1.0",
     "nuxt": "^2.0.0",
     "nuxt-client-init-module": "^0.1.8",
+    "vue-avatar": "^2.3.1",
     "vue-dompurify-html": "^2.2.1",
     "vue-quill-editor": "^3.0.6",
     "vue-tippy": "^4.4.0"

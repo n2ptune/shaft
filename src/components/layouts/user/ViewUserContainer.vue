@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import ViewUserInfo from '@/components/layouts/user/ViewUserInfo'
+import ViewUserInfo from '@/components/layouts/user/ViewUserInfo.vue'
 
 export default {
   components: {

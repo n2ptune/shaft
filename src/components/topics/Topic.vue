@@ -3,9 +3,9 @@
     <div class="my-2">
       <div class="user-info">
         <section>
-          <article class="inline-block mr-2">
+          <article class="inline-block mr-2 align-top">
             <nuxt-link :to="`/users/${ownerId}`">
-              <UserAvatar :src="avatar" :alt="nickname" size="xl" />
+              <UserAvatar :src="avatar" :alt="nickname" />
             </nuxt-link>
           </article>
           <article class="inline-block">
@@ -39,7 +39,7 @@
       <div class="topic-content-wrap">
         <slot name="content" />
       </div>
-      <ClientOnly>
+      <ClientOnly v-if="comments.length">
         <CommentsContainer
           :comments="pagingComments"
           :topic-id="topicId"
@@ -60,13 +60,13 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import UserAvatar from '@/components/user/Avatar'
-import CommentsContainer from '@/components/topics/comments/Container'
+import UserAvatar from '@/components/user/Avatar.vue'
+// import CommentsContainer from '@/components/topics/comments/Container.vue'
 
 export default {
   components: {
-    UserAvatar,
-    CommentsContainer
+    UserAvatar
+    // CommentsContainer
   },
 
   props: {
