@@ -2,7 +2,7 @@ export const MIN_TITLE_LENGTH = 5
 export const MIN_CONTENT_LENGTH = 10
 
 /**
- * @param {String} date
+ * @param {string} date
  */
 function validateDate(date) {
   return /[1-2][0-9]{3}-[0-1][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9]/.test(
@@ -11,9 +11,9 @@ function validateDate(date) {
 }
 
 /**
- * @param {Number} length
- * @param {String} val
- * @param {Boolean} isContent
+ * @param {number} length
+ * @param {string} val
+ * @param {boolean} isContent
  */
 function validateLength(length, val, isContent = false, isReply = false) {
   if (isContent) {

@@ -1,9 +1,9 @@
 /**
  * @typedef {import('axios').AxiosInstance} AxiosInstance
  * @param {AxiosInstance} axios
- * @param {Number} categoryID
- * @param {Number} offset
- * @param {Boolean} isOrigin
+ * @param {number} categoryID
+ * @param {number} offset
+ * @param {boolean} isOrigin
  */
 async function fetchCategoryTopics(axios, categoryID, offset, isOrigin) {
   if (!offset) offset = 1

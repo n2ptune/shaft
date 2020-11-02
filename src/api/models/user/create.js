@@ -5,10 +5,10 @@ import { validatePassword } from './validate-universal'
 
 /**
  * Insert information of user into user table
- * @param {String} nickname
- * @param {String} email
- * @param {String} password
- * @param {Function} cb
+ * @param {string} nickname
+ * @param {string} email
+ * @param {string} password
+ * @param {function} cb
  */
 export const createUser = async (nickname, email, password, date, cb) => {
   // validate password

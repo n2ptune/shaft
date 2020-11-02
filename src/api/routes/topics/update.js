@@ -26,15 +26,6 @@ export const topicDataToUpdate = (req, res) => {
 }
 
 export const updateTopic = (req, res) => {
-  // console.log(req.body)
-
-  // return res.status(200).send({
-  //   topic: {
-  //     id: 39,
-  //     parentTopicID: null
-  //   }
-  // })
-
   const { id, title, content, date, categories, parent } = req.body
 
   // 검증 실패

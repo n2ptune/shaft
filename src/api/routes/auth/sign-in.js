@@ -9,7 +9,7 @@ import {
   signAccessTokenWithRT
 } from '../../models/user/token'
 
-export default async function (req, res) {
+export default async function(req, res) {
   const { email, password } = req.body.data
 
   if (!validateEmail(email) || !validatePassword(password)) {

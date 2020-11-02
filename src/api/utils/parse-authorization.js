@@ -1,5 +1,5 @@
 /**
- * @param {String} authorization
+ * @param {string} authorization
  */
 export default function(authorization) {
   if (!authorization) {

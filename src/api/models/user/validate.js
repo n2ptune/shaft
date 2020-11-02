@@ -5,9 +5,9 @@ import { validateEmail, validateNickname } from './validate-universal'
 
 /**
  * Validate nickname and email from database
- * @param {String} nickname
- * @param {String} email
- * @param {Function} cb
+ * @param {string} nickname
+ * @param {string} email
+ * @param {function} cb
  * Callback has two arguments (error, result) result: Boolean
  * If error is falsy value then result is true or false
  * But If error is truthy value then result is always null

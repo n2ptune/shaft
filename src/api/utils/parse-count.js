@@ -1,5 +1,5 @@
 /**
- * @param {Object[]} result
+ * @param {object[]} result
  */
 export const parseCount = (result) => {
   if (!result.length) return false

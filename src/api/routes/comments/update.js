@@ -13,10 +13,8 @@ export default function(req, res) {
 
   updateComment(res.locals.user, { id, comment, date }, (error, result) => {
     if (error) {
-      console.log(error)
       return res.status(500).end()
     } else if (result) {
-      console.log(result)
       return res.status(200).send(result)
     }
   })

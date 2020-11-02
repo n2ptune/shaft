@@ -3,7 +3,7 @@
  * Least 8 characters
  * Contains lowercase characters (not and uppercase characters)
  * Contains least 1 special character (#?!@$... etc)
- * @param {String} password
+ * @param {string} password
  * @returns {boolean}
  */
 export const validatePassword = (password) => {
@@ -11,7 +11,7 @@ export const validatePassword = (password) => {
 }
 
 /**
- * @param {String} nickname
+ * @param {string} nickname
  */
 export const validateNickname = (nickname) => {
   return nickname.length >= 5 && nickname.length <= 11

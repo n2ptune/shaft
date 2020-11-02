@@ -256,8 +256,8 @@ export const topicDataToUpdateByID = async (id, user, cb) => {
  * category: {origin: String | null, sub: String | null},
  * parent: Number | null
  * }} topic
- * @param {Object} user
- * @param {Function} cb
+ * @param {object} user
+ * @param {function} cb
  */
 export const updateTopicByID = async (topic, user, cb) => {
   const SQL = `UPDATE TEST_TOPICS

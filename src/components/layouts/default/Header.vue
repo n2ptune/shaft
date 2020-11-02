@@ -43,11 +43,11 @@
         </ClientOnly>
       </div>
     </div>
-    <div v-if="$route.path === '/'" class="mx-auto text-center py-32">
+    <!-- <div v-if="$route.path === '/'" class="mx-auto text-center py-32">
       <div class="text-5xl md:text-6xl font-extrabold line leading-tight">
         Community<br />For <br /><span class="gradient-text">Developers</span>
       </div>
-    </div>
+    </div> -->
   </header>
 </template>
 

@@ -2,8 +2,8 @@ import db from '../../db/connection'
 import { multipleCondition } from '../../utils/multiple-sql'
 
 /**
- * @param {Number[]} topicID
- * @param {Function} cb
+ * @param {number[]} topicID
+ * @param {function} cb
  */
 export const getCommentsByTopicID = async (topicID, cb) => {
   const defaultSQL = `

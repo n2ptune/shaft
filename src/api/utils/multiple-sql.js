@@ -1,7 +1,7 @@
 /**
- * @param {Number[]} list
- * @param {String} compareVar
- * @param {Boolean} or
+ * @param {number[]} list
+ * @param {string} compareVar
+ * @param {boolean} or
  */
 export const multipleCondition = (
   list,
