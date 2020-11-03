@@ -39,7 +39,7 @@
       <div class="topic-content-wrap">
         <slot name="content" />
       </div>
-      <ClientOnly v-if="comments.length">
+      <ClientOnly>
         <CommentsContainer
           :comments="pagingComments"
           :topic-id="topicId"
@@ -61,12 +61,12 @@
 <script>
 import { mapGetters } from 'vuex'
 import UserAvatar from '@/components/user/Avatar.vue'
-// import CommentsContainer from '@/components/topics/comments/Container.vue'
+import CommentsContainer from '@/components/topics/comments/Container.vue'
 
 export default {
   components: {
-    UserAvatar
-    // CommentsContainer
+    UserAvatar,
+    CommentsContainer
   },
 
   props: {

@@ -1,7 +1,7 @@
 <template>
   <section class="comments-wrap">
     <div class="comments-input flex items-center relative">
-      <UserAvatar />
+      <UserAvatar v-if="isLogin" :src="avatar" :alt="nickname" />
       <textarea
         v-model="inputComment"
         type="text"
@@ -74,7 +74,9 @@ export default {
   computed: {
     ...mapGetters({
       isLogin: 'auth/getIsLogin',
-      userID: 'auth/getUserID'
+      userID: 'auth/getUserID',
+      avatar: 'auth/getUserAvatar',
+      nickname: 'auth/getUserNickname'
     })
   },
 
