@@ -113,7 +113,9 @@ module.exports = {
     bundleRenderer: {
       directives: {
         dompurifyHtml(vnode, dir) {
-          console.log(vnode.data, dir)
+          vnode.data.domProps = {
+            innerHTML: dir.value
+          }
         }
       }
     }
