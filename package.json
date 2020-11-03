@@ -30,7 +30,7 @@
     "nuxt": "^2.0.0",
     "nuxt-client-init-module": "^0.1.8",
     "vue-avatar": "^2.3.1",
-    "vue-dompurify-html": "n2ptune/vue-dompurify-html",
+    "vue-dompurify-html": "n2ptune/vue-dompurify-html#ssr",
     "vue-quill-editor": "^3.0.6",
     "vue-tippy": "^4.4.0"
   },
