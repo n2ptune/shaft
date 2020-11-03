@@ -108,5 +108,14 @@ module.exports = {
     path: './',
     filename:
       process.env.NODE_ENV === 'production' ? '.env' : '.env.development'
+  },
+  render: {
+    bundleRenderer: {
+      directives: {
+        dompurifyHtml(vnode, dir) {
+          console.log(vnode.data, dir)
+        }
+      }
+    }
   }
 }

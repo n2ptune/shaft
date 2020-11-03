@@ -9114,10 +9114,8 @@ vue-client-only@^2.0.0:
   resolved "https://registry.yarnpkg.com/vue-client-only/-/vue-client-only-2.0.0.tgz#ddad8d675ee02c761a14229f0e440e219de1da1c"
   integrity sha512-arhk1wtWAfLsJyxGMoEYhoBowM87/i6HLSG2LH/03Yog6i2d9JEN1peMP0Ceis+/n9DxdenGYZZTxbPPJyHciA==
 
-vue-dompurify-html@^2.2.1:
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/vue-dompurify-html/-/vue-dompurify-html-2.2.1.tgz#263bbbb782b08c5ec2d8080b1377f3914ca4c40b"
-  integrity sha512-ISInm/3VIeBmHy5yvmqjq6S0AVl1ozdK56d6iANd2h0jFF5W5MXBRGSnCYIb8aeJmsSqyFwnipvzfyReNmpwXA==
+"vue-dompurify-html@file:../../../../home/lkh/project/vue-dompurify-html":
+  version "2.3.0"
   dependencies:
     dompurify "^2.0.0"
 

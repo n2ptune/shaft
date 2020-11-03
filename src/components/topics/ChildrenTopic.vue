@@ -17,7 +17,7 @@
       class="child"
     >
       <template v-slot:content>
-        <p v-dompurify-html="topic.content" />
+        <div v-dompurify-html="topic.content" />
       </template>
     </Topic>
   </section>
