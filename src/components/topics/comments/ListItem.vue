@@ -10,7 +10,9 @@
         <nuxt-link :to="`/users/${item.commentOwnerID}`">
           {{ item.userNickname }}
         </nuxt-link>
-        <span class="text-gray-600 font-light ml-1">{{ convertedDate }}</span>
+        <span class="text-sm md:text-base text-gray-600 font-light ml-1">{{
+          convertedDate
+        }}</span>
         <ul v-if="item.commentOwnerID === userID" class="manage-comments">
           <li @click="updateComment">
             수정
@@ -20,7 +22,7 @@
           </li>
         </ul>
       </header>
-      <article class="mt-1 text-sm">
+      <article class="mt-1 text-sm md:text-base">
         <p>{{ item.commentContent }}</p>
       </article>
     </section>

@@ -20,6 +20,7 @@
 import TopicTableWrapper from '@/components/topics/TopicTableWrapper.vue'
 import TopicTableItem from '@/components/topics/TopicTableItem.vue'
 import PageContainer from '@/components/utils/PageContainer.vue'
+import { fetchCategoryTopics } from '@/components/utils/functions/fetch'
 
 export default {
   components: {
@@ -41,12 +42,34 @@ export default {
 
   computed: {
     computedMoveRoutePath() {
-      if (this.$route.path.indexOf('/category/')) {
+      if (this.$route.path.includes('/category/')) {
         return '/topics/category/' + this.$route.params.id
-      } else if (this.$route.path.indexOf('/sub-category/')) {
-        return '/topics/sub-category' + this.$route.params.id
+      } else if (this.$route.path.includes('/sub-category/')) {
+        return '/topics/sub-category/' + this.$route.params.id
       } else {
         return ''
+      }
+    },
+    isSub() {
+      return !this.$route.path.includes('/category/')
+    },
+    categoryId() {
+      return this.$route.params.id
+    }
+  },
+
+  watch: {
+    async '$route.query.p'(offset) {
+      try {
+        const data = await fetchCategoryTopics(
+          this.$axios,
+          this.categoryId,
+          offset,
+          !this.isSub
+        )
+        this.$emit('update', data)
+      } catch (fetchError) {
+        this.error(fetchError)
       }
     }
   }

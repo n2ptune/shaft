@@ -1,4 +1,5 @@
 import db from '../../db/connection'
+import { clean } from '../../utils/clean-html'
 import { DatabaseError, NotFoundError } from '../../utils/errors/error'
 
 async function getCountOfTopics() {
@@ -153,6 +154,8 @@ export const writeTopic = async (topic, user) => {
   (?, ?, ?, ?, ?, ?, ?)`
 
   try {
+    topic.content = clean(topic.content)
+
     const { title, date, content, category, parent } = topic
     const { id } = user
 
@@ -178,6 +181,7 @@ export const writeTopic = async (topic, user) => {
       }
     }
   } catch (error) {
+    console.error(error)
     throw new Error('Write Topic Error')
   }
 }
@@ -269,6 +273,8 @@ export const updateTopicByID = async (topic, user, cb) => {
   WHERE id = ? AND ownerID = ?;`
 
   try {
+    topic.content = clean(topic.content)
+
     // title, updateAt, content, originCategoryID, subCategoryID
     // id, ownerID
     const [result] = await db.query(SQL, [

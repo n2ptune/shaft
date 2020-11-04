@@ -11,7 +11,7 @@
         <nuxt-link
           v-for="tag in sortedTags"
           :key="tag.title"
-          :to="categoryRoute(tag)"
+          :to="{ path: categoryRoute(tag), query: { p: 1 } }"
         >
           <li class="inline-block mr-2 mb-2">
             <button

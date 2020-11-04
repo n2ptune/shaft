@@ -143,20 +143,22 @@ export default {
   async created() {
     this.initialize()
 
+    // 메인 토픽인 경우
+    if (!this.isReply) {
+      // 부모 토픽 카테고리 설정
+      try {
+        const { data } = await this.$axios.get('/api/topics/category')
+
+        data.category.forEach((item) => (item.selected = false))
+        data.sub.forEach((item) => (item.selected = false))
+
+        this.category.origin = data.category
+        this.category.sub = data.sub
+      } catch (error) {}
+    }
+
     // 모드가 수정 모드일 경우
     if (this.isEdit) {
-      // 부모 토픽 카테고리 설정
-      if (!this.isReply) {
-        try {
-          const { data } = await this.$axios.get('/api/topics/category')
-
-          data.category.forEach((item) => (item.selected = false))
-          data.sub.forEach((item) => (item.selected = false))
-
-          this.category.origin = data.category
-          this.category.sub = data.sub
-        } catch (error) {}
-      }
       // 카테고리 선택
       // 메인 카테고리
       if (this.isEdit.originCategoryID) {

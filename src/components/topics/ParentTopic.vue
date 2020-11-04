@@ -10,7 +10,7 @@
     class="parent"
   >
     <template v-slot:content>
-      <div v-dompurify-html="parentTopic.content" />
+      <div v-dompurify-html="parentTopic.content" class="content" />
     </template>
   </Topic>
 </template>
@@ -31,5 +31,3 @@ export default {
   }
 }
 </script>
-
-<style lang="postcss" scoped></style>

@@ -1,6 +1,6 @@
 <template>
   <main class="mb-12">
-    <CategoryPage :topics="topics" :pages="pages" />
+    <CategoryPage :topics="topics" :pages="pages" @update="onUpdatePages" />
   </main>
 </template>
 
@@ -19,7 +19,7 @@ export default {
         $axios,
         parseInt(params.id),
         query.p,
-        false
+        0
       )
 
       return {
@@ -28,6 +28,13 @@ export default {
       }
     } catch (fetchError) {
       error(fetchError)
+    }
+  },
+
+  methods: {
+    onUpdatePages(data) {
+      this.topics = data.topics
+      this.pages = data.head
     }
   }
 }

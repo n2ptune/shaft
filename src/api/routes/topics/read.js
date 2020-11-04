@@ -2,8 +2,8 @@ import {
   readTopicByCategoryID,
   readTopicByID,
   readAllTopics
-} from '../../models/topics/index'
-import { getCommentsByTopicID } from '../../models/comments/index'
+} from '../../models/topics'
+import { getCommentsByTopicID } from '../../models/comments'
 import { NotFoundError } from '../../utils/errors/error'
 
 export const topicByCategoryID = function(req, res) {

@@ -15,7 +15,7 @@
             @click.prevent="onClickAvatar"
           >
             <Avatar :src="user.avatar" :alt="user.nickname" :size="35" />
-            <AvatarDropdown v-if="isDropdown" />
+            <AvatarDropdown v-show="isDropdown" />
           </div>
           <div v-else class="auth">
             <nuxt-link to="/auth/sign-in">
@@ -61,6 +61,12 @@ export default {
       isAuth: 'auth/getIsLogin',
       user: 'auth/getUser'
     })
+  },
+
+  watch: {
+    $route(_) {
+      this.isDropdown = false
+    }
   },
 
   methods: {

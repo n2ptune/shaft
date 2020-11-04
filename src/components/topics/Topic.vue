@@ -11,7 +11,9 @@
           <article class="inline-block">
             <div class="font-bold">
               {{ nickname }}
-              <span class="font-normal text-gray-600">({{ email }})</span>
+              <span class="hidden md:inline-block font-normal text-gray-600"
+                >({{ email }})</span
+              >
             </div>
             <div class="flex items-center">
               <div>
@@ -27,7 +29,7 @@
             </div>
           </article>
         </section>
-        <section v-if="userID === ownerId" class="pr-2 edit-container">
+        <section v-if="userID === ownerId" class="edit-container">
           <button class="mr-2" @click="deleteTopic">
             <fa :icon="['fas', 'trash-alt']" class="text-gray-600" />
           </button>
@@ -39,21 +41,16 @@
       <div class="topic-content-wrap">
         <slot name="content" />
       </div>
-      <ClientOnly>
-        <CommentsContainer
-          :comments="pagingComments"
-          :topic-id="topicId"
-          :origin-length="comments.length"
-        />
-        <footer
-          v-if="!isCommentOffset && isCommentOverFive"
-          class="inline-block"
-        >
-          <p class="underline cursor-pointer" @click="loadMoreComment">
-            댓글 {{ lengthOfComments }}개 더보기
-          </p>
-        </footer>
-      </ClientOnly>
+      <CommentsContainer
+        :comments="pagingComments"
+        :topic-id="topicId"
+        :origin-length="comments.length"
+      />
+      <footer v-if="!isCommentOffset && isCommentOverFive" class="inline-block">
+        <p class="underline cursor-pointer" @click="loadMoreComment">
+          댓글 {{ lengthOfComments }}개 더보기
+        </p>
+      </footer>
     </div>
   </div>
 </template>
@@ -186,12 +183,17 @@ export default {
       })
     },
     editTopic() {
+      const query = {
+        id: this.topicId
+      }
+
+      if (this.parent) {
+        query.parent = this.parent
+      }
+
       this.$router.push({
         path: '/topics/new',
-        query: {
-          id: this.topicId,
-          parent: this.parent
-        }
+        query
       })
     }
   }
@@ -200,11 +202,19 @@ export default {
 
 <style lang="postcss" scoped>
 .user-info {
-  @apply flex items-start justify-between mb-4;
+  @apply flex flex-row items-start justify-between mb-4;
+
+  & .edit-container {
+    @apply text-sm;
+
+    @screen md {
+      @apply text-base;
+    }
+  }
 }
 
-.user-info > :last-child {
-  @apply ml-4;
+.topic-content-wrap {
+  @apply px-1 py-3;
 }
 
 .edit-container {

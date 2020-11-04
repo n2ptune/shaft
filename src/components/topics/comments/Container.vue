@@ -42,7 +42,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import UserAvatar from '@/components/user/Avatar'
-import CommentListItem from '@/components/topics/comments/ListItem'
+import CommentListItem from '@/components/topics/comments/ListItem.vue'
 
 export default {
   components: {
