@@ -13,7 +13,8 @@ export default {
   layout: 'error-layout',
 
   created() {
-    console.log(this.error)
+    // eslint-disable-next-line
+    console.error(this.error)
   }
 }
 </script>

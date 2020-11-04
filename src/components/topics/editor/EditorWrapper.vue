@@ -143,18 +143,20 @@ export default {
   async created() {
     this.initialize()
 
-    try {
-      const { data } = await this.$axios.get('/api/topics/category')
-
-      data.category.forEach((item) => (item.selected = false))
-      data.sub.forEach((item) => (item.selected = false))
-
-      this.category.origin = data.category
-      this.category.sub = data.sub
-    } catch (error) {}
-
     // 모드가 수정 모드일 경우
     if (this.isEdit) {
+      // 부모 토픽 카테고리 설정
+      if (!this.isReply) {
+        try {
+          const { data } = await this.$axios.get('/api/topics/category')
+
+          data.category.forEach((item) => (item.selected = false))
+          data.sub.forEach((item) => (item.selected = false))
+
+          this.category.origin = data.category
+          this.category.sub = data.sub
+        } catch (error) {}
+      }
       // 카테고리 선택
       // 메인 카테고리
       if (this.isEdit.originCategoryID) {
@@ -233,6 +235,7 @@ export default {
       }
 
       if (!this.isReply) {
+        // 자식 토픽 X 부모 토픽 O
         // 선택된 카테고리만 추출
         const extractCategory = (o, s) => {
           const origin = o.filter((item) => item.selected)
@@ -252,39 +255,52 @@ export default {
         topic.categories = categories
         topic.parent = null
       } else {
+        // 자식 토픽
         topic.categories = {
           origin: [],
           sub: []
         }
-        topic.parent = this.parentTopic.id
+        // 수정 모드일 때 부모 토픽 지정해주기
+        topic.parent = this.isEdit
+          ? this.isEdit.parentTopicID
+          : this.parentTopic.id
       }
 
       try {
         let topicData
+        let route
 
         if (this.isEdit) {
           topic.id = this.isEdit.id
+          route = this.isEdit.parentTopicID || this.isEdit.id
 
-          const { data } = await this.$axios.put(
-            `/api/topics/update/${this.isEdit.id}`,
-            topic
-          )
-
-          topicData = data
-
-          return this.$router.push('/topics/' + this.isEdit.id)
+          await this.$axios.put(`/api/topics/update/${this.isEdit.id}`, topic)
         } else {
           const { data } = await this.$axios.post('/api/topics/new', topic)
 
           topicData = data
+          route = topicData.topic.parentTopicID || topicData.topic.id
         }
 
-        if (topicData.topic.parentTopicID) {
-          this.$router.go()
+        const topicID = route
+        route = '/topics/' + route
+
+        if (this.$route.path === route) {
+          // 토픽 업데이트
+          try {
+            await this.$store.dispatch('topic/fetchTopics', topicID)
+            this.initialize()
+          } catch (fetchError) {
+            this.error({
+              statusCode: fetchError.response.status,
+              message: fetchError.response.data.message
+            })
+          }
         } else {
-          this.$router.push('/topics/' + topicData.topic.id)
+          this.$router.push(route)
         }
       } catch (error) {
+        this.error(error)
       } finally {
         // 버튼 상태 변경
         this.writing = false

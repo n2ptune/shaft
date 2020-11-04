@@ -189,7 +189,8 @@ export default {
       this.$router.push({
         path: '/topics/new',
         query: {
-          id: this.topicId
+          id: this.topicId,
+          parent: this.parent
         }
       })
     }
