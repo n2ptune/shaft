@@ -22,7 +22,7 @@ export const signAccessTokenWithRT = (refreshToken) => {
 
     const accessToken = sign(userData, process.env.PRIVATE_KEY, {
       expiresIn: '30m',
-      issuer: '.shaft.kr'
+      issuer: '.shaft.imkh.dev'
     })
 
     return accessToken
@@ -41,7 +41,7 @@ export const signRefreshToken = (userData, callback) => {
     process.env.PRIVATE_KEY,
     {
       expiresIn: '7d',
-      issuer: '.shaft.kr'
+      issuer: '.shaft.imkh.dev'
     },
     (err, token) => {
       if (err) return callback(err, null)
