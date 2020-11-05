@@ -192,6 +192,9 @@ export default {
         this.topic.title = this.isEdit.title
         // 내용 바인딩
         this.topic.content = this.isEdit.content
+      } else {
+        // 해당 토픽이 자식 토픽일 경우
+        this.topic.content = this.isEdit.content
       }
     }
   },

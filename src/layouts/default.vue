@@ -11,21 +11,19 @@
         <nuxt class="mt-8 px-3 lg:px-8" />
       </section>
     </section>
-    <footer
-      class="flex justify-center items-center px-4 py-12 bg-gray-900 text-white"
-    >
-      <div class="font-bold text-xl">Footer</div>
-    </footer>
+    <Footer />
   </div>
 </template>
 
 <script>
-import Header from '@/components/layouts/default/Header'
-import LeftSidebar from '@/components/layouts/topic/LeftSidebar'
+import Header from '@/components/layouts/default/Header.vue'
+import Footer from '@/components/layouts/default/Footer.vue'
+import LeftSidebar from '@/components/layouts/topic/LeftSidebar.vue'
 
 export default {
   components: {
     Header,
+    Footer,
     LeftSidebar
   }
 }

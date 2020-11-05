@@ -1,5 +1,8 @@
 <template>
-  <div>error</div>
+  <div class="flex flex-col justify-center items-center h-screen w-screen">
+    <div class="text-lg font-bold text-gray-800">{{ error.statusCode }}</div>
+    <div class="text-xl">{{ error.message }}</div>
+  </div>
 </template>
 
 <script>

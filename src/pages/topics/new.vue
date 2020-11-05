@@ -12,6 +12,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import EditorWrapper from '@/components/topics/editor/EditorWrapper.vue'
 import LoadingSpinner from '@/components/utils/LoadingSpinner.vue'
 
@@ -33,7 +34,10 @@ export default {
       } else {
         return false
       }
-    }
+    },
+    ...mapGetters({
+      login: 'auth/getIsLogin'
+    })
   },
 
   async created() {
@@ -43,6 +47,10 @@ export default {
       // 유저 정보가 필요하므로 클라이언트 측에서
       // 토픽 값 가져오기 권한이 없으면 에러 페이지로 리다이렉트
       try {
+        if (!this.login) {
+          throw new Error('로그인 필요')
+        }
+
         const { data: topicData } = await this.$axios.get(
           '/api/topics/update/' + this.$route.query.id
         )
@@ -50,8 +58,13 @@ export default {
         this.topicDataToEdit = topicData
         this.isLoadingEditData = true
       } catch (fetchError) {
-        if (fetchError.response.status >= 400) {
-          this.$nuxt.error({
+        if (fetchError instanceof Error) {
+          return this.$nuxt.error({
+            statusCode: 403,
+            message: fetchError.message
+          })
+        } else if (fetchError.response.status >= 400) {
+          return this.$nuxt.error({
             statusCode: fetchError.response.status,
             message: fetchError.response.data || fetchError.response.statusText
           })

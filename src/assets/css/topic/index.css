@@ -29,4 +29,15 @@
   & ol {
     list-style: decimal;
   }
+  & a {
+    @apply cursor-pointer no-underline text-blue-600;
+
+    &:hover {
+      @apply underline;
+    }
+
+    &:visited {
+      @apply text-purple-600;
+    }
+  }
 }
