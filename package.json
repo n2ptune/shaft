@@ -22,7 +22,7 @@
     "@nuxtjs/fontawesome": "^1.1.2",
     "@nuxtjs/tailwindcss": "^2.0.0",
     "bcrypt": "^4.0.1",
-    "cross-env": "^5.2.0",
+    "cross-env": "^7.0.3",
     "dompurify": "^2.2.2",
     "express": "^4.16.4",
     "jsdom": "^16.4.0",
